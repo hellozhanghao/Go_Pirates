@@ -1,6 +1,5 @@
-package com.go.gopirates;
+package com.go.gopirates.temp;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -21,9 +20,9 @@ public class GameOverScreen implements Screen {
     private Viewport viewport;
     private Stage stage;
 
-    private Game game;
+    private MarioBros game;
 
-    public GameOverScreen(Game game){
+    public GameOverScreen(MarioBros game){
         this.game = game;
         viewport = new FitViewport(MarioBros.V_WIDTH,MarioBros.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((MarioBros) game).batch);
@@ -41,6 +40,8 @@ public class GameOverScreen implements Screen {
         table.row();
         table.add(playAgainLabel).expandX().padTop(10f);
         stage.addActor(table);
+
+        game.playServices.signIn();
     }
     @Override
     public void show() {

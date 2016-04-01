@@ -1,11 +1,10 @@
-package com.go.gopirates;
+package com.go.gopirates.temp;
 
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.go.gopirates.PlayServices;
 
 public class MarioBros extends Game {
     //Virtual Screen size and Box2D Scale(Pixels Per Meter)

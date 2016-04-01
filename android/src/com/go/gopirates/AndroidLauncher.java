@@ -1,14 +1,13 @@
 package com.go.gopirates;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.go.gopirates.PirateGame;
-import com.google.android.gms.games.Games;
+import com.go.gopirates.temp.MarioBros;
 import com.google.example.games.basegameutils.GameHelper;
 
 public class AndroidLauncher extends AndroidApplication implements PlayServices{
@@ -74,11 +73,14 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices{
 				{
 					gameHelper.beginUserInitiatedSignIn();
 				}
+
 			});
+			Log.d("Game", " Log in successful");
 		}
 		catch (Exception e)
 		{
 			Gdx.app.log("MainActivity", "Log in failed: " + e.getMessage() + ".");
+			Log.d("Game"," Log in failed");
 		}
 	}
 
@@ -94,10 +96,12 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices{
 					gameHelper.signOut();
 				}
 			});
+			Log.d("Game", " Log out successful");
 		}
 		catch (Exception e)
 		{
 			Gdx.app.log("MainActivity", "Log out failed: " + e.getMessage() + ".");
+			Log.d("Game","Log out failed");
 		}
 	}
 
