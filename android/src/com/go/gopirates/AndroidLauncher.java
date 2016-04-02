@@ -10,7 +10,7 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.go.gopirates.temp.MarioBros;
 import com.google.example.games.basegameutils.GameHelper;
 
-public class AndroidLauncher extends AndroidApplication implements PlayServices{
+public class AndroidLauncher extends AndroidApplication implements PlayServices {
 
 
 	private GameHelper gameHelper;
@@ -36,7 +36,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices{
 
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new MarioBros(this), config);
+		initialize(new PirateGame(this), config);
 
 
 	}
@@ -109,5 +109,11 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices{
 	@Override
 	public boolean isSignedIn() {
 		return gameHelper.isSignedIn();
+	}
+
+
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
 	}
 }

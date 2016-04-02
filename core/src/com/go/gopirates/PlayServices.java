@@ -12,7 +12,7 @@ public interface PlayServices
     public void signOut();
     public boolean isSignedIn();
 
-    public void goToWaitingRoom();
+//    public void goToWaitingRoom();
 
     //submit a score to a leaderboard
 //    public void submitScore(int score);
@@ -65,7 +65,7 @@ public interface PlayServices
     //Start auto-matching
 //    public void quickGame();
 
-    // Yes I’ve added few ads hopefully they don’t disturb gaming experience
+
 //    public void showAds(boolean show);
 //    public void showAchievements();
 //    public void unlockAchievement(int i);

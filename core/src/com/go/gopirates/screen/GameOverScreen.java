@@ -1,5 +1,6 @@
-package com.go.gopirates.temp;
+package com.go.gopirates.screen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.go.gopirates.PirateGame;
 
 
 /**
@@ -20,12 +22,12 @@ public class GameOverScreen implements Screen {
     private Viewport viewport;
     private Stage stage;
 
-    private MarioBros game;
+    private Game game;
 
-    public GameOverScreen(MarioBros game){
+    public GameOverScreen(Game game){
         this.game = game;
-        viewport = new FitViewport(MarioBros.V_WIDTH,MarioBros.V_HEIGHT, new OrthographicCamera());
-        stage = new Stage(viewport, ((MarioBros) game).batch);
+        viewport = new FitViewport(PirateGame.V_WIDTH,PirateGame.V_HEIGHT, new OrthographicCamera());
+        stage = new Stage(viewport, PirateGame.batch);
 
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
@@ -40,8 +42,6 @@ public class GameOverScreen implements Screen {
         table.row();
         table.add(playAgainLabel).expandX().padTop(10f);
         stage.addActor(table);
-
-        game.playServices.signIn();
     }
     @Override
     public void show() {
@@ -50,6 +50,10 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if(Gdx.input.justTouched()) {
+            game.setScreen(new PlayScreen((PirateGame) game,PirateGame.THIS_PLAYER));
+            dispose();
+        }
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
