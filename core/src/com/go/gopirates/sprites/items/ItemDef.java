@@ -1,4 +1,4 @@
-package com.go.gopirates.Sprites.Items;
+package com.go.gopirates.sprites.items;
 
 import com.badlogic.gdx.math.Vector2;
 

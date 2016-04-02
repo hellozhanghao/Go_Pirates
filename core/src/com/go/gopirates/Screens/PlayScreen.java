@@ -1,11 +1,11 @@
-package com.go.gopirates.Screens;
+package com.go.gopirates.screens;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -13,36 +13,32 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.go.gopirates.Control.Controller;
 import com.go.gopirates.PirateGame;
-import com.go.gopirates.Scenes.Hud;
-import com.go.gopirates.Sprites.Enemies.Enemy;
-import com.go.gopirates.Sprites.Items.Item;
-import com.go.gopirates.Sprites.Items.ItemDef;
-import com.go.gopirates.Sprites.Items.Mushroom;
-import com.go.gopirates.Sprites.Pirate;
-import com.go.gopirates.Tools.B2WorldCreator;
-import com.go.gopirates.Tools.WorldContactListener;
+import com.go.gopirates.control.Controller;
+import com.go.gopirates.sprites.Pirate;
+import com.go.gopirates.sprites.items.ItemDef;
 
+import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
 /**
  * Created by Amy on 25/2/16.
  */
-public class PlayScreen implements Screen{
+public class PlayScreen implements Screen {
+    public static boolean alreadyDestroyed = false;
     //Reference to our Game, used to set Screens
     private PirateGame game;
     private TextureAtlas atlas;
-    public static boolean alreadyDestroyed = false;
 
     //basic playscreen variables
     private OrthographicCamera gamecam;
     private Viewport gamePort;
-    private Hud hud;
+//    private Hud hud;
 
     //Tiled map variables
     private TmxMapLoader maploader;
@@ -52,58 +48,67 @@ public class PlayScreen implements Screen{
     //Box2d variables
     private World world;
     private Box2DDebugRenderer b2dr;
-    private B2WorldCreator creator;
+//    private B2WorldCreator creator;
 
     //sprites
     private Pirate player;
+    private ArrayList<Pirate> players = new ArrayList<Pirate>(4);
+    private int thisPlayerIndex;
 
     private Music music;
 
-    private Array<Item> items;
+    private boolean changeScreen;
+    private Stage stage;
+    private Texture fadeOutTexture;
+
+//    private Array<PowerUp> items;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
     private Controller controller;
 
     public PlayScreen(PirateGame game){
-        atlas = new TextureAtlas("Mario_and_Enemies.pack");
-
+        atlas = new TextureAtlas("img/pirates.pack");
         this.game = game;
+//        this.thisPlayerIndex=thisPlayerIndex;
         //create cam used to follow mario through cam world
         gamecam = new OrthographicCamera();
-
+        gamecam.setToOrtho(false,PirateGame.V_WIDTH,PirateGame.V_HEIGHT);
         //create a FitViewport to maintain virtual aspect ratio despite screen size
         gamePort = new FitViewport(PirateGame.V_WIDTH / PirateGame.PPM, PirateGame.V_HEIGHT / PirateGame.PPM, gamecam);
 
-        //create our game HUD for scores/timers/level info
-        hud = new Hud(game.batch);
-
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
-        map = maploader.load("level1.tmx");
+//        map=maploader.load("bigTestWorld.tmx");
+        map=maploader.load("tiled_map/map0.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1  / PirateGame.PPM);
-
-        //initially set our gamcam to be centered correctly at the start of of map
+        //initialize gamecame
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         //create our Box2D world, setting no gravity in X, -10 gravity in Y, and allow bodies to sleep
-        world = new World(new Vector2(0, -10), true);
+        world = new World(new Vector2(0, 0), true);
         //allows for debug lines of our box2d world.
         b2dr = new Box2DDebugRenderer();
-
-        creator = new B2WorldCreator(this);
-
+//        creator = new B2WorldCreator(this);
         //create mario in our game world
+        for (int i = 0; i < 4; i++) {
+            players.add(new Pirate(this));
+        }
         player = new Pirate(this);
 
+
+        //create our game HUD for scores/timers/level info
+//        hud = new Hud(PirateGame.batch,players.get(thisPlayerIndex));
+
         controller = new Controller();
-        world.setContactListener(new WorldContactListener());
 
-        music = PirateGame.manager.get("audio/music/mario_music.ogg", Music.class);
-        music.setLooping(true);
-        music.setVolume(0.3f);
-        music.play();
-
-        items = new Array<Item>();
+//        world.setContactListener(new WorldContactListener(this));
+//
+//        music = PirateGame.manager.get("audio/music/mario_music.ogg", Music.class);
+//        music.setLooping(true);
+//        music.setVolume(0.3f);
+//        music.play();
+//
+//        items = new Array<PowerUp>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
     }
 
@@ -111,74 +116,99 @@ public class PlayScreen implements Screen{
         itemsToSpawn.add(idef);
     }
 
-
-    public void handleSpawningItems(){
-        if(!itemsToSpawn.isEmpty()){
-            ItemDef idef = itemsToSpawn.poll();
-            if(idef.type == Mushroom.class){
-                items.add(new Mushroom(this, idef.position.x, idef.position.y));
-            }
-        }
-    }
-
+//    public void handleSpawningItems(){
+//        if(!itemsToSpawn.isEmpty()){
+//            ItemDef idef = itemsToSpawn.poll();
+//            if (idef.type == Shield.class) {
+//                items.add(new Shield(this, idef.position.x, idef.position.y));
+//            }
+//            if (idef.type == Shoes.class) {
+//                items.add(new Shoes(this, idef.position.x, idef.position.y));
+//            }
+//            if (idef.type == Tnt.class) {
+//                items.add(new Tnt(this, idef.position.x, idef.position.y));
+//            }
+//        }
+//    }
 
     public TextureAtlas getAtlas(){
         return atlas;
     }
 
-    @Override
-    public void show() {
-
-
-    }
-
     public void handleInput(float dt){
-        if(player.currentState != Pirate.State.DEAD) {
-            if (controller.isUpPressed())
-                player.jump();
-            if (controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 2)
-                player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-            if (controller.isLeftPressed() && player.b2body.getLinearVelocity().x >= -2)
-                player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
-            if (controller.isDownPressed())
-                player.fire();
-        }
-
+        Pirate player=players.get(thisPlayerIndex);
+        if (controller.isUpPressed() && player.b2body.getLinearVelocity().y <= 4)
+            player.b2body.applyLinearImpulse(new Vector2(0, 100f), player.b2body.getWorldCenter(), true);
+        if (controller.isDownPressed() && player.b2body.getLinearVelocity().y >= -4)
+            player.b2body.applyLinearImpulse(new Vector2(0,-0.2f), player.b2body.getWorldCenter(), true);
+        if (controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 4)
+            player.b2body.applyLinearImpulse(new Vector2(0.2f, 0), player.b2body.getWorldCenter(), true);
+        if (controller.isLeftPressed() && player.b2body.getLinearVelocity().x >= -4)
+            player.b2body.applyLinearImpulse(new Vector2(-0.2f, 0), player.b2body.getWorldCenter(), true);
+//        if (controller.isPistolPressed())
+//            player.fire();
+//        else if (controller.isSwordPressed())
+//            player.useSword();
+//        else if (controller.isPowerUpPressed())
+//            player.usePowerUp();
+//        else if (controller.isBombPressed())
+//            player.plantBomb();
+//        else if (controller.isTntPressed())
+//            player.useTNT();
     }
+
 
     public void update(float dt){
         //handle user input first
-        handleInput(dt);
-        handleSpawningItems();
+//        handleInput(dt);
+//        handleSpawningItems();
 
         //takes 1 step in the physics simulation(60 times per second)
         world.step(1 / 60f, 6, 2);
-
+//        for (int i = 0; i < 4; i++) {
+//            players.get(i).update(dt);
+//        }
         player.update(dt);
-        for(Enemy enemy : creator.getEnemies()) {
-            enemy.update(dt);
-            if(enemy.getX() < player.getX() + 224 / PirateGame.PPM) {
-                enemy.b2body.setActive(true);
-            }
-        }
+//        for (PowerUp item : items)
+//            item.update(dt);
+//
+//        hud.update(dt);
 
-        for(Item item : items)
-            item.update(dt);
-
-        hud.update(dt);
-
-        //attach our gamecam to our players.x coordinate
+        /*//attach our gamecam to our players.x coordinate
         if(player.currentState != Pirate.State.DEAD) {
             gamecam.position.x = player.b2body.getPosition().x;
-        }
+        }*/
 
+        Pirate player=players.get(thisPlayerIndex);
         //update our gamecam with correct coordinates after changes
+        //x position
+        gamecam.setToOrtho(false, PirateGame.V_WIDTH / PirateGame.PPM, PirateGame.V_HEIGHT / PirateGame.PPM);
+        if (player.b2body.getPosition().x<(PirateGame.V_WIDTH / PirateGame.PPM)/2){
+            gamecam.position.x=gamePort.getWorldWidth()/2;
+        }else {
+            if (player.b2body.getPosition().x>PirateGame.EDGE_POSITION_X)
+                gamecam.position.x=PirateGame.EDGE_POSITION_X;
+            else
+                gamecam.position.x = player.b2body.getPosition().x;
+        }
+        //y position
+        if (player.b2body.getPosition().y<(PirateGame.V_HEIGHT / PirateGame.PPM) /2){
+            gamecam.position.y = gamePort.getWorldHeight()/2;
+        }else {
+            if (player.b2body.getPosition().y>PirateGame.EDGE_POSITION_Y)
+                gamecam.position.y=PirateGame.EDGE_POSITION_Y;
+            else
+                gamecam.position.y = player.b2body.getPosition().y;
+        }
         gamecam.update();
         //tell our renderer to draw only what our camera can see in our game world.
         renderer.setView(gamecam);
-
     }
 
+    @Override
+    public void show() {
+
+    }
 
     @Override
     public void render(float delta) {
@@ -189,46 +219,43 @@ public class PlayScreen implements Screen{
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         //render our game map
         renderer.render();
 
         //renderer our Box2DDebugLines
         b2dr.render(world, gamecam.combined);
 
-        game.batch.setProjectionMatrix(gamecam.combined);
-        game.batch.begin();
-        player.draw(game.batch);
-        for (Enemy enemy : creator.getEnemies())
-            enemy.draw(game.batch);
-        for (Item item : items)
-            item.draw(game.batch);
-        game.batch.end();
+        PirateGame.batch.begin();
+        PirateGame.batch.setProjectionMatrix(gamecam.combined);
+//        for (int i = 0; i < 4; i++) {
+//            players.get(i).draw(PirateGame.batch);
+//        }
+        player.draw(PirateGame.batch);
+        PirateGame.batch.end();
 
         //Set our batch to now draw what the Hud camera sees.
-        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
-        if(Gdx.app.getType() == Application.ApplicationType.Android)
-            controller.draw();
+//        PirateGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 
-        if(gameOver()){
-            game.setScreen(new GameOverScreen(game));
-            dispose();
-        }
+
+//        Gdx.gl.glViewport(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        controller.draw();
+
+
+//        if(gameOver()){
+//            game.setScreen(new GameOverScreen(game));
+//            dispose();
+//        }
 
     }
 
-    public boolean gameOver(){
-        if(player.currentState == Pirate.State.DEAD && player.getStateTimer() > 3){
-            return true;
-        }
-        return false;
-    }
+
 
     @Override
     public void resize(int width, int height) {
         //updated our game viewport
         gamePort.update(width,height);
-        controller.resize(width,height);
+//        controller.resize(width, height);
     }
 
     public TiledMap getMap(){
@@ -240,7 +267,6 @@ public class PlayScreen implements Screen{
 
     @Override
     public void pause() {
-
     }
 
     @Override
@@ -260,8 +286,14 @@ public class PlayScreen implements Screen{
         renderer.dispose();
         world.dispose();
         b2dr.dispose();
-        hud.dispose();
+//        hud.dispose();
     }
 
-    public Hud getHud(){ return hud; }
+
+//    public Hud getHud(){ return hud; }
+
+    public Pirate getPirate(int id){
+        return players.get(id);
+    }
+
 }

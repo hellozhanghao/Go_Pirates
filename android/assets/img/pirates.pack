@@ -1,0 +1,18 @@
+pirates.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+pirate0
+  rotate: false
+  xy: 970, 2
+  size: 2949, 253
+  orig: 3072, 256
+  offset: 61, 2
+  index: -1
+test2
+  rotate: false
+  xy: 2, 2
+  size: 966, 957
+  orig: 1024, 1024
+  offset: 0, 67
+  index: -1

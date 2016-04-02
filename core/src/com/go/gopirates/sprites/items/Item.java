@@ -1,4 +1,4 @@
-package com.go.gopirates.Sprites.Items;
+package com.go.gopirates.sprites.items;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -7,8 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.go.gopirates.PirateGame;
-import com.go.gopirates.Screens.PlayScreen;
-import com.go.gopirates.Sprites.Pirate;
+import com.go.gopirates.screens.PlayScreen;
 
 /**
  * Created by Amy on 26/2/16.
@@ -25,14 +24,14 @@ public abstract class Item extends Sprite {
         this.screen = screen;
         this.world = screen.getWorld();
         setPosition(x, y);
-        setBounds(getX(),getY(), 16 / PirateGame.PPM, 16 / PirateGame.PPM);
+        setBounds(getX(),getY(), PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM);
         defineItem();
         toDestroy = false;
         destroyed = false;
     }
 
     public abstract void defineItem();
-    public abstract void use(Pirate pirate);
+//    public abstract void use(Mario mario);
     public void update(float dt){
         if(toDestroy && !destroyed){
             world.destroyBody(body);
@@ -48,10 +47,4 @@ public abstract class Item extends Sprite {
         toDestroy = true;
     }
 
-    public void reverseVelocity(boolean x, boolean y){
-        if(x)
-            velocity.x = - velocity.x;
-        if(y)
-            velocity.y = - velocity.y;
-    }
 }

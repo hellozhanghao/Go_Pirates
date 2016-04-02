@@ -3,30 +3,42 @@ package com.go.gopirates;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.go.gopirates.Screens.PlayScreen;
+import com.go.gopirates.screens.PlayScreen;
+
 
 public class PirateGame extends Game {
     //Virtual Screen size and Box2D Scale(Pixels Per Meter)
-    public static final int V_WIDTH = 1280;
-    public static final int V_HEIGHT = 720;
-    public static final float PPM = 100;
+    public static final int V_WIDTH = 3840;
+    public static final int V_HEIGHT = 2160;
+    public static final float PPM = 10;
+    public static final float EDGE_POSITION_X = 15f;
+    public static final float EDGE_POSITION_Y = 16.3f;
+
+    //Tile Map setting
+    public static final int TILE_SIZE=256;
+    public static final int MAP_SIZE=19;
+
+    //User Selct
+    public static final int PLAYER_ID=0;
+
 
     //Box2D Collision Bits
+    //Box2D Collision Bits
     public static final short NOTHING_BIT = 0;
-    public static final short GROUND_BIT = 1;
-    public static final short MARIO_BIT = 2;
-    public static final short BRICK_BIT = 4;
-    public static final short COIN_BIT = 8;
-    public static final short DESTROYED_BIT = 16;
-    public static final short OBJECT_BIT = 32;
-    public static final short ENEMY_BIT = 64;
-    public static final short ENEMY_HEAD_BIT = 128;
-    public static final short ITEM_BIT = 256;
-    public static final short MARIO_HEAD_BIT = 512;
-    public static final short FIREBALL_BIT = 1024;
+    public static final short HIT_BIT = 1;
+    public static final short PLAYER_BIT = 2;
+    public static final short ROCK_BIT = 4;
+    public static final short BARREL_BIT = 8;
+    public static final short EXPLOSION_BIT = 16;
+    public static final short TNT_BIT = 32;
+    public static final short TREASURE_BIT = 64;
+    public static final short OTHER_PLAYER_BIT = 128;
+    public static final short BOMB_BIT = 256;
+    public static final short COCONUT_BIT = 2048;
+    public static final short SWORD_BIT = 4096;
+    public static final short SHIELD_BIT = 8192;
+    public static final short POWERUP_BIT = 16384;
 
     public static SpriteBatch batch;
 
@@ -39,16 +51,6 @@ public class PirateGame extends Game {
     public void create () {
         batch = new SpriteBatch();
         manager = new AssetManager();
-        manager.load("audio/music/mario_music.ogg", Music.class);
-        manager.load("audio/sounds/coin.wav", Sound.class);
-        manager.load("audio/sounds/bump.wav", Sound.class);
-        manager.load("audio/sounds/breakblock.wav", Sound.class);
-        manager.load("audio/sounds/powerup_spawn.wav", Sound.class);
-        manager.load("audio/sounds/powerup.wav", Sound.class);
-        manager.load("audio/sounds/powerdown.wav", Sound.class);
-        manager.load("audio/sounds/stomp.wav", Sound.class);
-        manager.load("audio/sounds/mariodie.wav", Sound.class);
-
         manager.finishLoading();
 
         setScreen(new PlayScreen(this));
