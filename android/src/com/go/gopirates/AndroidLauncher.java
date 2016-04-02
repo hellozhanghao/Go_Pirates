@@ -7,7 +7,7 @@ import android.util.Log;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.go.gopirates.temp.MarioBros;
+
 import com.google.example.games.basegameutils.GameHelper;
 
 public class AndroidLauncher extends AndroidApplication implements PlayServices {
@@ -36,7 +36,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new PirateGame(this), config);
+		initialize(new MarioBros(this), config);
 
 
 	}

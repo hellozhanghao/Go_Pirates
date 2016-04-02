@@ -1,8 +1,5 @@
-package com.go.gopirates.sprites.tileObjects;
+package com.go.gopirates.Sprites.TileObjects;
 
-/**
- * Created by Amy on 1/3/16.
- */
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -16,10 +13,9 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.go.gopirates.PirateGame;
-import com.go.gopirates.screen.PlayScreen;
-import com.go.gopirates.sprites.Pirate;
-
+import com.go.gopirates.MarioBros;
+import com.go.gopirates.Screens.PlayScreen;
+import com.go.gopirates.Sprites.Mario;
 
 /**
  * Created by brentaureli on 8/28/15.
@@ -46,42 +42,27 @@ public abstract class InteractiveTileObject {
         PolygonShape shape = new PolygonShape();
 
         bdef.type = BodyDef.BodyType.StaticBody;
-        bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / PirateGame.PPM, (bounds.getY() + bounds.getHeight() / 2) / PirateGame.PPM);
+        bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / MarioBros.PPM, (bounds.getY() + bounds.getHeight() / 2) / MarioBros.PPM);
 
         body = world.createBody(bdef);
 
-        shape.setAsBox(bounds.getWidth() / 2 / PirateGame.PPM, bounds.getHeight() / 2 / PirateGame.PPM);
+        shape.setAsBox(bounds.getWidth() / 2 / MarioBros.PPM, bounds.getHeight() / 2 / MarioBros.PPM);
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
 
     }
 
+    public abstract void onHeadHit(Mario mario);
     public void setCategoryFilter(short filterBit){
         Filter filter = new Filter();
         filter.categoryBits = filterBit;
         fixture.setFilterData(filter);
     }
 
-    public abstract void onHit();
-
-    public void onHit(Pirate pirate){};
-
     public TiledMapTileLayer.Cell getCell(){
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
-        return layer.getCell((int)(body.getPosition().x * PirateGame.PPM / 16),
-                (int)(body.getPosition().y * PirateGame.PPM / 16));
+        return layer.getCell((int)(body.getPosition().x * MarioBros.PPM / 16),
+                (int)(body.getPosition().y * MarioBros.PPM / 16));
     }
-
-
-
-    // TODO: 27/3/16 Handle hit by TNT
-    public void hitByTNT(Pirate pirate) {
-        pirate.decreaseHealth(50);
-    }
-
-
-
-
-
 
 }

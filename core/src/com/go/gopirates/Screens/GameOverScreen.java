@@ -1,4 +1,5 @@
-package com.go.gopirates.screen;
+package com.go.gopirates.Screens;
+
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -12,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.go.gopirates.PirateGame;
+import com.go.gopirates.MarioBros;
 
 
 /**
@@ -26,8 +27,8 @@ public class GameOverScreen implements Screen {
 
     public GameOverScreen(Game game){
         this.game = game;
-        viewport = new FitViewport(PirateGame.V_WIDTH,PirateGame.V_HEIGHT, new OrthographicCamera());
-        stage = new Stage(viewport, PirateGame.batch);
+        viewport = new FitViewport(MarioBros.V_WIDTH,MarioBros.V_HEIGHT, new OrthographicCamera());
+        stage = new Stage(viewport, ((MarioBros) game).batch);
 
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
@@ -51,7 +52,7 @@ public class GameOverScreen implements Screen {
     @Override
     public void render(float delta) {
         if(Gdx.input.justTouched()) {
-            game.setScreen(new PlayScreen((PirateGame) game,PirateGame.THIS_PLAYER));
+            game.setScreen(new PlayScreen((MarioBros) game));
             dispose();
         }
         Gdx.gl.glClearColor(0,0,0,1);
