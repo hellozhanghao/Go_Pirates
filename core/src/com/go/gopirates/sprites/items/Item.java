@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.go.gopirates.MarioBros;
+import com.go.gopirates.PirateGame;
 import com.go.gopirates.Screens.PlayScreen;
-import com.go.gopirates.Sprites.Mario;
+import com.go.gopirates.Sprites.Pirate;
 
 /**
  * Created by Amy on 26/2/16.
@@ -25,14 +25,14 @@ public abstract class Item extends Sprite {
         this.screen = screen;
         this.world = screen.getWorld();
         setPosition(x, y);
-        setBounds(getX(),getY(), 16 / MarioBros.PPM, 16 / MarioBros.PPM);
+        setBounds(getX(),getY(), 16 / PirateGame.PPM, 16 / PirateGame.PPM);
         defineItem();
         toDestroy = false;
         destroyed = false;
     }
 
     public abstract void defineItem();
-    public abstract void use(Mario mario);
+    public abstract void use(Pirate pirate);
     public void update(float dt){
         if(toDestroy && !destroyed){
             world.destroyBody(body);

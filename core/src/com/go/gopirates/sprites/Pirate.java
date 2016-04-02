@@ -1,9 +1,9 @@
-package com.go.gopirates.sprites;
+package com.go.gopirates.Sprites;
 
-/**
- * Created by Amy on 1/3/16.
- */
 
+
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -12,245 +12,136 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.go.gopirates.PirateGame;
-import com.go.gopirates.scene.Hud;
-import com.go.gopirates.screen.PlayScreen;
-import com.go.gopirates.sprites.items.Bomb;
-import com.go.gopirates.sprites.items.TNT;
-import com.go.gopirates.sprites.powerUp.Shield;
-import com.go.gopirates.weapon.Pistol;
-import com.go.gopirates.weapon.Sword;
-
-import java.util.HashMap;
+import com.go.gopirates.Other.FireBall;
+import com.go.gopirates.Screens.PlayScreen;
+import com.go.gopirates.Sprites.Enemies.Enemy;
+import com.go.gopirates.Sprites.Enemies.Turtle;
 
 
 /**
  * Created by Amy on 25/2/16.
  */
 public class Pirate extends Sprite {
-    public Direction direction;
+    public enum State { FALLING, JUMPING, STANDING, RUNNING, GROWING, DEAD };
     public State currentState;
     public State previousState;
+
     public World world;
     public Body b2body;
-    private PowerUp extraWeapon;
-    private Animation swimUp,swimDown,swimRight,swimLeft,idleUp,idleDown,idleLeft,idleRight,pirateDead;
+
+    private TextureRegion marioStand;
+    private Animation marioRun;
+    private TextureRegion marioJump;
+    private TextureRegion marioDead;
+    private TextureRegion bigMarioStand;
+    private TextureRegion bigMarioJump;
+    private Animation bigMarioRun;
+    private Animation growMario;
+
     private float stateTimer;
-    private boolean pirateIsDead;
+    private boolean runningRight;
+    private boolean marioIsBig;
+    private boolean runGrowAnimation;
+    private boolean timeToDefineBigMario;
+    private boolean timeToRedefineMario;
+    private boolean marioIsDead;
     private PlayScreen screen;
-    private Sword sword;
-    private Bomb bomb;
-    private Shield shield;
-    private TNT tnt;
-    private float powerUpTime;
-    private Array<Pistol> bullets;
-    private HandledWeapon weapon;
-    private PowerUp nextPowerUp;
-    private boolean plantBomb;
-    private boolean plantTNT;
-    private boolean timeToRedefinePirate, timeToDefineShield, timeToDefineShoes;
 
-    private int health;
-    private int player_id;
+    private Array<FireBall> fireballs;
 
-    public Pirate(PlayScreen screen, int player_id) {
+    public Pirate(PlayScreen screen){
         //initialize default values
         this.screen = screen;
         this.world = screen.getWorld();
-        this.player_id=player_id;
-        currentState = State.SWIMMING;
-        previousState = State.SWIMMING;
-        direction = Direction.DOWN;
+        currentState = State.STANDING;
+        previousState = State.STANDING;
         stateTimer = 0;
-        weapon = HandledWeapon.NONE;
-        extraWeapon = PowerUp.NONE;
-        nextPowerUp = PowerUp.NONE;
-//        extraWeapon = PowerUp.SHIELD; // for test only
-        timeToRedefinePirate = timeToDefineShield = timeToDefineShield = false;
-        health=100;
-        plantBomb = false;
-        plantTNT=false;
-        // animation
-        HashMap<String, Animation> anims = new HashMap<String, Animation>();
+        runningRight = true;
 
-        Animation anim;
+        Array<TextureRegion> frames = new Array<TextureRegion>();
 
-        Array<TextureRegion> keyFrames = new Array<TextureRegion>();
-        // walking up
-        for (int i = 0; i < 3; i++) {
-            keyFrames.add(new TextureRegion(screen.getAtlas().findRegion("Bomberman1"), i * 16, 0, 16, 24));
-        }
-        anim = new Animation(0.1f, keyFrames, Animation.PlayMode.LOOP);
-        anims.put("walking_up", anim);
-        swimUp = anim;
+        //get run animation frames and add them to marioRun Animation
+        for(int i = 1; i < 4; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("little_mario"), i * 16, 0, 16, 16));
+        marioRun = new Animation(0.1f, frames);
 
-        // walking left
-        keyFrames.clear();
-        for (int i = 3; i < 6; i++) {
-            keyFrames.add(new TextureRegion(screen.getAtlas().findRegion("Bomberman1"), i * 16, 0, 16, 24));
-        }
-        anim = new Animation(0.1f, keyFrames);
-        anims.put("walking_left", anim);
-        swimLeft = anim;
+        frames.clear();
 
-        // walking down
-        keyFrames.clear();
-        for (int i = 6; i < 9; i++) {
-            keyFrames.add(new TextureRegion(screen.getAtlas().findRegion("Bomberman1"), i * 16, 0, 16, 24));
-        }
-        anim = new Animation(0.1f, keyFrames, Animation.PlayMode.LOOP);
-        anims.put("walking_down", anim);
-        swimDown = anim;
+        for(int i = 1; i < 4; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), i * 16, 0, 16, 32));
+        bigMarioRun = new Animation(0.1f, frames);
 
-        // walking right
-        keyFrames.clear();
-        for (int i = 9; i < 12; i++) {
-            keyFrames.add(new TextureRegion(screen.getAtlas().findRegion("Bomberman1"), i * 16, 0, 16, 24));
-        }
-        anim = new Animation(0.1f, keyFrames, Animation.PlayMode.LOOP);
-        anims.put("walking_right", anim);
-        swimRight = anim;
+        frames.clear();
 
-        // idling up
-        keyFrames.clear();
-        keyFrames.add(new TextureRegion(screen.getAtlas().findRegion("Bomberman1"), 1 * 16, 0, 16, 24));
-        anim = new Animation(0.1f, keyFrames, Animation.PlayMode.NORMAL);
-        anims.put("idling_up", anim);
-        idleUp = anim;
+        //get set animation frames from growing mario
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), 240, 0, 16, 32));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), 240, 0, 16, 32));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32));
+        growMario = new Animation(0.2f, frames);
 
-        // idling left
-        keyFrames.clear();
-        keyFrames.add(new TextureRegion(screen.getAtlas().findRegion("Bomberman1"), 3 * 16, 0, 16, 24));
-        anim = new Animation(0.1f, keyFrames, Animation.PlayMode.NORMAL);
-        anims.put("idling_left", anim);
-        idleLeft = anim;
 
-        // idling down
-        keyFrames.clear();
-        keyFrames.add(new TextureRegion(screen.getAtlas().findRegion("Bomberman1"), 7 * 16, 0, 16, 24));
-        anim = new Animation(0.1f, keyFrames, Animation.PlayMode.NORMAL);
-        anims.put("idling_down", anim);
-        idleDown = anim;
+        //get jump animation frames and add them to marioJump Animation
+        marioJump = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 80, 0, 16, 16);
+        bigMarioJump = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 80, 0, 16, 32);
 
-        // idling right
-        keyFrames.clear();
-        keyFrames.add(new TextureRegion(screen.getAtlas().findRegion("Bomberman1"), 9 * 16, 0, 16, 24));
-        anim = new Animation(0.1f, keyFrames, Animation.PlayMode.NORMAL);
-        anims.put("idling_right", anim);
-        idleRight = anim;
+        //create texture region for mario standing
+        marioStand = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16);
+        bigMarioStand = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32);
 
-        // dying
-        keyFrames.clear();
-        for (int i = 12; i < 18; i++) {
-            keyFrames.add(new TextureRegion(screen.getAtlas().findRegion("Bomberman1"), i * 16, 0, 16, 24));
-        }
-        anim = new Animation(0.1f, keyFrames, Animation.PlayMode.NORMAL);
-        anims.put("dying", anim);
-        pirateDead = anim;
+        //create dead mario texture region
+        marioDead = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 96, 0, 16, 16);
 
-        //define pirates
+        //define mario in Box2d
+        defineMario();
 
-        switch (player_id){
-            case 0:
-                definePirate(PirateGame.BOARDER_OFFSET, PirateGame.BOARDER_OFFSET,player_id);
-                break;
-            case 1:
-                definePirate(PirateGame.EDGE_POSITION_X- PirateGame.BOARDER_OFFSET+ PirateGame.PLAYER_OFFSET_X, PirateGame.BOARDER_OFFSET,player_id);
-                break;
-            case 2:
-                definePirate(PirateGame.BOARDER_OFFSET, PirateGame.EDGE_POSITION_Y- PirateGame.BOARDER_OFFSET+ PirateGame.PLAYER_OFFSET_Y,player_id);
-                break;
-            case 3:
-                definePirate(PirateGame.EDGE_POSITION_X- PirateGame.BOARDER_OFFSET+ PirateGame.PLAYER_OFFSET_X, PirateGame.EDGE_POSITION_Y- PirateGame.BOARDER_OFFSET+ PirateGame.PLAYER_OFFSET_Y,player_id);
-                break;
-        }
+        //set initial values for marios location, width and height. And initial frame as marioStand.
         setBounds(0, 0, 16 / PirateGame.PPM, 16 / PirateGame.PPM);
-        setRegion(idleUp.getKeyFrame(stateTimer, true));
+        setRegion(marioStand);
 
-        bullets = new Array<Pistol>();
+        fireballs = new Array<FireBall>();
 
     }
 
+    public void update(float dt){
 
-    public void plantBomb() {
-        if (!plantBomb) {
-            System.out.println("Plant bomb");
-            bomb = new Bomb(screen, b2body.getPosition().x, b2body.getPosition().y);
-            plantBomb = true;
-        }
-    }
-
-
-    public void update(float dt) {
-        if (weapon == HandledWeapon.SHIELD || weapon == HandledWeapon.SHOES)
-            powerUpTime += dt;
-
-        if (nextPowerUp != PowerUp.NONE) {
-            extraWeapon = nextPowerUp;
-            nextPowerUp = PowerUp.NONE;
-            System.out.println("3 " + extraWeapon);
-            Hud.updatePowerUp(extraWeapon);
-        }
-
+        // time is up : too late mario dies T_T
+        // the !isDead() method is used to prevent multiple invocation
+        // of "die music" and jumping
+        // there is probably better ways to do that but it works for now.
         if (screen.getHud().isTimeUp() && !isDead()) {
             die();
         }
+
         //update our sprite to correspond with the position of our Box2D body
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+        if(marioIsBig)
+            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2 - 6 / PirateGame.PPM);
+        else
+            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         //update sprite with the correct frame depending on marios current action
         setRegion(getFrame(dt));
+        if(timeToDefineBigMario)
+            defineBigMario();
+        if(timeToRedefineMario)
+            redefineMario();
 
-        if (timeToDefineShield)
-            defineShield();
-        if (timeToRedefinePirate)
-            redefinePirate();
-        if (timeToDefineShoes)
-            defineShoes();
-
-        for (Pistol bullet : bullets) {
-            bullet.update(dt);
-            if (bullet.isDestroyed())
-                bullets.removeValue(bullet, true);
+        for(FireBall  ball : fireballs) {
+            ball.update(dt);
+            if(ball.isDestroyed())
+                fireballs.removeValue(ball, true);
         }
-
-        if (weapon == HandledWeapon.SWORD) {
-            if (sword.isDestroyed()) {
-                weapon = HandledWeapon.NONE;
-            } else sword.update(dt, b2body.getPosition().x, b2body.getPosition().y,this);
-        }
-        // TODO: 21/3/16 Set an accurate timing
-        if (powerUpTime >= 12) {
-            weapon = HandledWeapon.NONE;
-            powerUpTime = 0;
-            timeToRedefinePirate = true;
-            extraWeapon = PowerUp.NONE;
-        }
-//        else if (weapon == HandledWeapon.SHIELD) {
-//            if (shield.isDestroyed()) {
-//                weapon = HandledWeapon.NONE;
-//            } else shield.update(dt, b2body.getPosition().x, b2body.getPosition().y,this);
-//        }
-        if (plantBomb) {
-            if (bomb.isDestroyed()) {
-                plantBomb = false;
-            } else bomb.update(dt);
-        }
-        if (plantTNT) {
-            if (tnt.isDestroyed()) {
-                plantTNT = false;
-            } else tnt.update(dt);
-        }
-
 
     }
 
     public TextureRegion getFrame(float dt){
-        //get pirate current state. ie. swimming, running, standing...
+        //get marios current state. ie. jumping, running, standing...
         currentState = getState();
 
         TextureRegion region;
@@ -258,49 +149,37 @@ public class Pirate extends Sprite {
         //depending on the state, get corresponding animation keyFrame.
         switch(currentState){
             case DEAD:
-                region = pirateDead.getKeyFrame(stateTimer, true);
+                region = marioDead;
                 break;
-            case WALKING:
-            case SWIMMING:
-                switch (direction){
-                    case DOWN:
-                        region = swimDown.getKeyFrame(stateTimer,true);
-                        break;
-                    case LEFT:
-                        region = swimLeft.getKeyFrame(stateTimer,true);
-                        break;
-                    case RIGHT:
-                        region = swimRight.getKeyFrame(stateTimer,true);
-                        break;
-                    case UP:
-                        region = swimUp.getKeyFrame(stateTimer,true);
-                        break;
-                    default:
-                        region = swimUp.getKeyFrame(stateTimer,true);
-                        break;
+            case GROWING:
+                region = growMario.getKeyFrame(stateTimer);
+                if(growMario.isAnimationFinished(stateTimer)) {
+                    runGrowAnimation = false;
                 }
                 break;
-            case HIT:
-            case IDLING:
+            case JUMPING:
+                region = marioIsBig ? bigMarioJump : marioJump;
+                break;
+            case RUNNING:
+                region = marioIsBig ? bigMarioRun.getKeyFrame(stateTimer, true) : marioRun.getKeyFrame(stateTimer, true);
+                break;
+            case FALLING:
+            case STANDING:
             default:
-                switch (direction){
-                    case UP:
-                        region = idleUp.getKeyFrame(stateTimer,true);
-                        break;
-                    case DOWN:
-                        region = idleDown.getKeyFrame(stateTimer,true);
-                        break;
-                    case LEFT:
-                        region = idleLeft.getKeyFrame(stateTimer,true);
-                        break;
-                    case RIGHT:
-                        region = idleRight.getKeyFrame(stateTimer,true);
-                        break;
-                    default:
-                        region = idleUp.getKeyFrame(stateTimer,true);
-                        break;
-                }
+                region = marioIsBig ? bigMarioStand : marioStand;
                 break;
+        }
+
+        //if mario is running left and the texture isnt facing left... flip it.
+        if((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()){
+            region.flip(true, false);
+            runningRight = false;
+        }
+
+        //if mario is running right and the texture isnt facing right... flip it.
+        else if((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()){
+            region.flip(true, false);
+            runningRight = true;
         }
 
         //if the current state is the same as the previous state increase the state timer.
@@ -310,331 +189,200 @@ public class Pirate extends Sprite {
         previousState = currentState;
         //return our final adjusted frame
         return region;
+
     }
 
     public State getState(){
-        if(pirateIsDead)
+        //Test to Box2D for velocity on the X and Y-Axis
+        //if mario is going positive in Y-Axis he is jumping... or if he just jumped and is falling remain in jump state
+        if(marioIsDead)
             return State.DEAD;
-        if (b2body.getLinearVelocity().x > 0.08) {
-            direction = Direction.RIGHT;
-            return State.SWIMMING;
-        } else if (b2body.getLinearVelocity().x < -0.08) {
-            direction = Direction.LEFT;
-            return State.SWIMMING;
-        } else if (b2body.getLinearVelocity().y > 0.08) {
-            direction = Direction.UP;
-            return State.SWIMMING;
-        } else if (b2body.getLinearVelocity().y < -0.08) {
-            direction = Direction.DOWN;
-            return State.SWIMMING;
-        }
+        else if(runGrowAnimation)
+            return State.GROWING;
+        else if((b2body.getLinearVelocity().y > 0 && currentState == State.JUMPING) || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
+            return State.JUMPING;
+            //if negative in Y-Axis mario is falling
+        else if(b2body.getLinearVelocity().y < 0)
+            return State.FALLING;
+            //if mario is positive or negative in the X axis he is running
+        else if(b2body.getLinearVelocity().x != 0)
+            return State.RUNNING;
+            //if none of these return then he must be standing
         else
-            return State.IDLING;
+            return State.STANDING;
     }
 
-    // TODO: 18/3/16 GameOver screen and some animation (to be decided later)
+    public void grow(){
+        if( !isBig() ) {
+            runGrowAnimation = true;
+            marioIsBig = true;
+            timeToDefineBigMario = true;
+            setBounds(getX(), getY(), getWidth(), getHeight() * 2);
+            PirateGame.manager.get("audio/sounds/powerup.wav", Sound.class).play();
+        }
+    }
+
     public void die() {
 
         if (!isDead()) {
-//
-//            PirateGame.manager.get("audio/music/mario_music.ogg", Music.class).stop();
-//            PirateGame.manager.get("audio/sounds/mariodie.wav", Sound.class).play();
-            //test commit
-            pirateIsDead = true;
+
+            PirateGame.manager.get("audio/music/mario_music.ogg", Music.class).stop();
+            PirateGame.manager.get("audio/sounds/mariodie.wav", Sound.class).play();
+            marioIsDead = true;
             Filter filter = new Filter();
             filter.maskBits = PirateGame.NOTHING_BIT;
 
             for (Fixture fixture : b2body.getFixtureList()) {
                 fixture.setFilterData(filter);
             }
+
+            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
         }
     }
 
     public boolean isDead(){
-        return pirateIsDead;
+        return marioIsDead;
     }
 
     public float getStateTimer(){
         return stateTimer;
     }
 
-    public void definePirate(float x, float y,int player_id){
-        BodyDef bdef = new BodyDef();
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.position.set(x, y);
-        bdef.linearDamping = 11f;
-
-        b2body = world.createBody(bdef);
-        CircleShape shape = new CircleShape();
-        shape.setRadius(7 / PirateGame.PPM);
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-
-
-        switch (player_id){
-            case PirateGame.THIS_PLAYER:
-                fixtureDef.filter.categoryBits = PirateGame.PLAYER_BIT;
-                break;
-            default:
-                fixtureDef.filter.categoryBits = PirateGame.OTHER_PLAYER_BIT;
-        }
-
-        if (player_id== PirateGame.THIS_PLAYER){
-            fixtureDef.filter.maskBits =
-                            PirateGame.ROCK_BIT |
-                            PirateGame.REEF_BIT |
-                            PirateGame.BOMB_BIT |
-                            PirateGame.BULLET_BIT|
-                                    PirateGame.TREASURE_BIT |
-                                    PirateGame.POWERUP_BIT| PirateGame.EXPLOSION_BIT;
-        }else {
-            fixtureDef.filter.maskBits =
-                    PirateGame.ROCK_BIT;
-        }
-        b2body.createFixture(fixtureDef);
-        shape.dispose();
-
-        b2body.createFixture(fixtureDef).setUserData(this);
+    public boolean isBig(){
+        return marioIsBig;
     }
 
-    //Put the pirate in a spherical shield
-    public void defineShield() {
-        System.out.println("Use shield");
+    public void jump(){
+        if ( currentState != State.JUMPING ) {
+            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+            currentState = State.JUMPING;
+        }
+    }
+
+    public void hit(Enemy enemy){
+        if(enemy instanceof Turtle && ((Turtle) enemy).currentState == Turtle.State.STANDING_SHELL)
+            ((Turtle) enemy).kick(enemy.b2body.getPosition().x > b2body.getPosition().x ? Turtle.KICK_RIGHT : Turtle.KICK_LEFT);
+        else {
+            if (marioIsBig) {
+                marioIsBig = false;
+                timeToRedefineMario = true;
+                setBounds(getX(), getY(), getWidth(), getHeight() / 2);
+                PirateGame.manager.get("audio/sounds/powerdown.wav", Sound.class).play();
+            } else {
+                die();
+            }
+        }
+    }
+
+    public void redefineMario(){
         Vector2 position = b2body.getPosition();
         world.destroyBody(b2body);
 
         BodyDef bdef = new BodyDef();
         bdef.position.set(position);
         bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.linearDamping = 11f;
         b2body = world.createBody(bdef);
-
 
         FixtureDef fdef = new FixtureDef();
-        CircleShape shield = new CircleShape();
-        shield.setRadius(10 / PirateGame.PPM);
-        fdef.filter.categoryBits = PirateGame.PLAYER_BIT;
-        fdef.filter.maskBits = PirateGame.PLAYER_BIT |
-                PirateGame.BULLET_BIT;
+        CircleShape shape = new CircleShape();
+        shape.setRadius(6 / PirateGame.PPM);
+        fdef.filter.categoryBits = PirateGame.MARIO_BIT;
+        fdef.filter.maskBits = PirateGame.GROUND_BIT |
+                PirateGame.COIN_BIT |
+                PirateGame.BRICK_BIT |
+                PirateGame.ENEMY_BIT |
+                PirateGame.OBJECT_BIT |
+                PirateGame.ENEMY_HEAD_BIT |
+                PirateGame.ITEM_BIT;
 
-        fdef.shape = shield;
+        fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
 
-        CircleShape body = new CircleShape();
-        body.setRadius(7 / PirateGame.PPM);
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = body;
-        fixtureDef.filter.categoryBits = PirateGame.PLAYER_BIT;
-        fixtureDef.filter.maskBits = PirateGame.PLAYER_BIT |
-                PirateGame.ROCK_BIT |
-                PirateGame.REEF_BIT |
-                PirateGame.BOMB_BIT |
-                PirateGame.BULLET_BIT|
-                PirateGame.TREASURE_BIT |
-                PirateGame.POWERUP_BIT;
-        b2body.createFixture(fixtureDef);
-//        shape.dispose();
-        b2body.createFixture(fixtureDef).setUserData(this);
-        timeToDefineShield = false;
+        EdgeShape head = new EdgeShape();
+        head.set(new Vector2(-2 / PirateGame.PPM, 6 / PirateGame.PPM), new Vector2(2 / PirateGame.PPM, 6 / PirateGame.PPM));
+        fdef.filter.categoryBits = PirateGame.MARIO_HEAD_BIT;
+        fdef.shape = head;
+        fdef.isSensor = true;
+
+        b2body.createFixture(fdef).setUserData(this);
+
+        timeToRedefineMario = false;
 
     }
 
-    public void defineShoes() {
-        Vector2 position = b2body.getPosition();
+    public void defineBigMario(){
+        Vector2 currentPosition = b2body.getPosition();
         world.destroyBody(b2body);
 
         BodyDef bdef = new BodyDef();
-        bdef.position.set(position);
+        bdef.position.set(currentPosition.add(0, 10 / PirateGame.PPM));
         bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.linearDamping = 5f;
         b2body = world.createBody(bdef);
 
-
-        FixtureDef fixtureDef = new FixtureDef();
+        FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(7 / PirateGame.PPM);
-        switch (player_id) {
-            case PirateGame.THIS_PLAYER:
-                fixtureDef.filter.categoryBits = PirateGame.PLAYER_BIT;
-                break;
-            default:
-                fixtureDef.filter.categoryBits = PirateGame.OTHER_PLAYER_BIT;
-        }
+        shape.setRadius(6 / PirateGame.PPM);
+        fdef.filter.categoryBits = PirateGame.MARIO_BIT;
+        fdef.filter.maskBits = PirateGame.GROUND_BIT |
+                PirateGame.COIN_BIT |
+                PirateGame.BRICK_BIT |
+                PirateGame.ENEMY_BIT |
+                PirateGame.OBJECT_BIT |
+                PirateGame.ENEMY_HEAD_BIT |
+                PirateGame.ITEM_BIT;
 
-        if (player_id == PirateGame.THIS_PLAYER) {
-            fixtureDef.filter.maskBits =
-                    PirateGame.ROCK_BIT |
-                            PirateGame.REEF_BIT |
-                            PirateGame.BOMB_BIT |
-                            PirateGame.BULLET_BIT |
-                            PirateGame.TREASURE_BIT |
-                            PirateGame.POWERUP_BIT | PirateGame.EXPLOSION_BIT;
-        } else {
-            fixtureDef.filter.maskBits =
-                    PirateGame.ROCK_BIT;
-        }
+        fdef.shape = shape;
+        b2body.createFixture(fdef).setUserData(this);
+        shape.setPosition(new Vector2(0, -14 / PirateGame.PPM));
+        b2body.createFixture(fdef).setUserData(this);
 
-        fixtureDef.shape = shape;
-        b2body.createFixture(fixtureDef).setUserData(this);
+        EdgeShape head = new EdgeShape();
+        head.set(new Vector2(-2 / PirateGame.PPM, 6 / PirateGame.PPM), new Vector2(2 / PirateGame.PPM, 6 / PirateGame.PPM));
+        fdef.filter.categoryBits = PirateGame.MARIO_HEAD_BIT;
+        fdef.shape = head;
+        fdef.isSensor = true;
 
-        b2body.createFixture(fixtureDef).setUserData(this);
-
-        timeToDefineShoes = false;
-
+        b2body.createFixture(fdef).setUserData(this);
+        timeToDefineBigMario = false;
     }
 
-    //After shield is gone
-    public void redefinePirate() {
-        Vector2 position = b2body.getPosition();
-        world.destroyBody(b2body);
-
+    public void defineMario(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(position);
+        bdef.position.set(256 / PirateGame.PPM, 32 / PirateGame.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.linearDamping = 11f;
         b2body = world.createBody(bdef);
 
-
-        FixtureDef fixtureDef = new FixtureDef();
+        FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(7 / PirateGame.PPM);
-//        fdef.filter.categoryBits = PirateGame.PLAYER_BIT;
-//        fdef.filter.maskBits = PirateGame.PLAYER_BIT |
-//                PirateGame.ROCK_BIT |
-//                PirateGame.REEF_BIT ;
-        switch (player_id){
-            case PirateGame.THIS_PLAYER:
-                fixtureDef.filter.categoryBits = PirateGame.PLAYER_BIT;
-                break;
-            default:
-                fixtureDef.filter.categoryBits = PirateGame.OTHER_PLAYER_BIT;
-        }
+        shape.setRadius(6 / PirateGame.PPM);
+        fdef.filter.categoryBits = PirateGame.MARIO_BIT;
+        fdef.filter.maskBits = PirateGame.GROUND_BIT |
+                PirateGame.COIN_BIT |
+                PirateGame.BRICK_BIT |
+                PirateGame.ENEMY_BIT |
+                PirateGame.OBJECT_BIT |
+                PirateGame.ENEMY_HEAD_BIT |
+                PirateGame.ITEM_BIT;
 
-        if (player_id== PirateGame.THIS_PLAYER){
-            fixtureDef.filter.maskBits =
-                    PirateGame.ROCK_BIT |
-                            PirateGame.REEF_BIT |
-                            PirateGame.BOMB_BIT |
-                            PirateGame.BULLET_BIT|
-                            PirateGame.TREASURE_BIT |
-                            PirateGame.POWERUP_BIT;
-        }else {
-            fixtureDef.filter.maskBits =
-                    PirateGame.ROCK_BIT;
-        }
+        fdef.shape = shape;
+        b2body.createFixture(fdef).setUserData(this);
 
-        fixtureDef.shape = shape;
-        b2body.createFixture(fixtureDef).setUserData(this);
+        EdgeShape head = new EdgeShape();
+        head.set(new Vector2(-2 / PirateGame.PPM, 6 / PirateGame.PPM), new Vector2(2 / PirateGame.PPM, 6 / PirateGame.PPM));
+        fdef.filter.categoryBits = PirateGame.MARIO_HEAD_BIT;
+        fdef.shape = head;
+        fdef.isSensor = true;
 
-        b2body.createFixture(fixtureDef).setUserData(this);
-
-        timeToRedefinePirate = false;
+        b2body.createFixture(fdef).setUserData(this);
     }
 
-    public void fire() {
-        if (bullets.size == 0) {
-            weapon = HandledWeapon.PISTOL;
-            bullets.add(new Pistol(screen, b2body.getPosition().x, b2body.getPosition().y, direction));
-        }
+    public void fire(){
+        fireballs.add(new FireBall(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight ? true : false));
     }
 
-    public void draw(Batch batch) {
+    public void draw(Batch batch){
         super.draw(batch);
-        for (Pistol bullet : bullets)
-            bullet.draw(batch);
-        // TODO: 18/3/16 draw other weapon also 
+        for(FireBall ball : fireballs)
+            ball.draw(batch);
     }
-
-    /*Not used for now
-    public String getDirection() {
-        switch (direction) {
-            case DOWN:
-                return "Down";
-            case LEFT:
-                return "Left";
-            case RIGHT:
-                return "Right";
-            case UP:
-                return "Up";
-            default:
-                return "IDK";
-        }
-    }*/
-
-    public void useSword() {
-        if (weapon != HandledWeapon.SWORD) {
-            weapon = HandledWeapon.SWORD;
-            sword = new Sword(screen, b2body.getPosition().x, b2body.getPosition().y, direction);
-        }
-    }
-
-    public void usePowerUp() {
-        System.out.println(extraWeapon);
-        if (extraWeapon == PowerUp.NONE) return;
-        else if (extraWeapon == PowerUp.SHIELD) useShield();
-        else if (extraWeapon == PowerUp.SHOES) useShoes();
-        else if (extraWeapon == PowerUp.TNT) useTNT();
-        extraWeapon = PowerUp.NONE;
-        Hud.updatePowerUp(extraWeapon);
-
-    }
-
-    public void useShield() {
-        if (weapon != HandledWeapon.SHIELD) {
-            timeToDefineShield = true;
-            weapon = HandledWeapon.SHIELD;
-            // TODO: 21/3/16 decide whether we want it to be like pistol or just a sphere around the player
-//            shield = new Shield(screen, b2body.getPosition().x, b2body.getPosition().y, direction);
-        }
-    }
-
-    // TODO: 18/3/16
-    public void useShoes() {
-        if (weapon != HandledWeapon.SHOES) {
-            timeToDefineShoes = true;
-            weapon = HandledWeapon.SHOES;
-        }
-    }
-
-    // TODO: 18/3/16 DO THIS
-    public void useTNT() {
-        if (!plantTNT) {
-            System.out.println("Plant bomb");
-            tnt= new TNT(screen, b2body.getPosition().x, b2body.getPosition().y);
-            plantTNT = true;
-        }
-    }
-
-    public void decreaseHealth(int value){
-        health-=value;
-    }
-
-    public int getHealth(){
-        return health;
-    }
-    //Note: This will be needed for Contact Listener
-    public boolean shieldOn() {
-        return (weapon == HandledWeapon.SHIELD);
-    }
-
-    public void takePowerUp(PowerUp pu) {
-
-        System.out.println("1 " + extraWeapon);
-        if (extraWeapon == PowerUp.NONE)
-            nextPowerUp = pu;
-        System.out.println("2 " + nextPowerUp);
-    }
-
-    public void hitByBullet() {
-        screen.getPirate(PirateGame.THIS_PLAYER).decreaseHealth(20);
-        System.out.println("Shot by bullet");
-    }
-
-    public enum State {SWIMMING, WALKING, HIT, DEAD, IDLING}
-
-    public enum Direction {UP, DOWN, LEFT, RIGHT}
-
-    public enum HandledWeapon {PISTOL, SWORD, SHIELD, SHOES, NONE}
-
-    public enum PowerUp {SHOES, SHIELD, TNT, NONE}
 }

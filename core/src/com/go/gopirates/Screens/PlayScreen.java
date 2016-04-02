@@ -17,13 +17,13 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.go.gopirates.Control.Controller;
-import com.go.gopirates.MarioBros;
+import com.go.gopirates.PirateGame;
 import com.go.gopirates.Scenes.Hud;
 import com.go.gopirates.Sprites.Enemies.Enemy;
 import com.go.gopirates.Sprites.Items.Item;
 import com.go.gopirates.Sprites.Items.ItemDef;
 import com.go.gopirates.Sprites.Items.Mushroom;
-import com.go.gopirates.Sprites.Mario;
+import com.go.gopirates.Sprites.Pirate;
 import com.go.gopirates.Tools.B2WorldCreator;
 import com.go.gopirates.Tools.WorldContactListener;
 
@@ -35,7 +35,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class PlayScreen implements Screen{
     //Reference to our Game, used to set Screens
-    private MarioBros game;
+    private PirateGame game;
     private TextureAtlas atlas;
     public static boolean alreadyDestroyed = false;
 
@@ -55,7 +55,7 @@ public class PlayScreen implements Screen{
     private B2WorldCreator creator;
 
     //sprites
-    private Mario player;
+    private Pirate player;
 
     private Music music;
 
@@ -64,7 +64,7 @@ public class PlayScreen implements Screen{
 
     private Controller controller;
 
-    public PlayScreen(MarioBros game){
+    public PlayScreen(PirateGame game){
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
 
         this.game = game;
@@ -72,7 +72,7 @@ public class PlayScreen implements Screen{
         gamecam = new OrthographicCamera();
 
         //create a FitViewport to maintain virtual aspect ratio despite screen size
-        gamePort = new FitViewport(MarioBros.V_WIDTH / MarioBros.PPM, MarioBros.V_HEIGHT / MarioBros.PPM, gamecam);
+        gamePort = new FitViewport(PirateGame.V_WIDTH / PirateGame.PPM, PirateGame.V_HEIGHT / PirateGame.PPM, gamecam);
 
         //create our game HUD for scores/timers/level info
         hud = new Hud(game.batch);
@@ -80,7 +80,7 @@ public class PlayScreen implements Screen{
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
         map = maploader.load("level1.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1  / MarioBros.PPM);
+        renderer = new OrthogonalTiledMapRenderer(map, 1  / PirateGame.PPM);
 
         //initially set our gamcam to be centered correctly at the start of of map
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
@@ -93,12 +93,12 @@ public class PlayScreen implements Screen{
         creator = new B2WorldCreator(this);
 
         //create mario in our game world
-        player = new Mario(this);
+        player = new Pirate(this);
 
         controller = new Controller();
         world.setContactListener(new WorldContactListener());
 
-        music = MarioBros.manager.get("audio/music/mario_music.ogg", Music.class);
+        music = PirateGame.manager.get("audio/music/mario_music.ogg", Music.class);
         music.setLooping(true);
         music.setVolume(0.3f);
         music.play();
@@ -133,7 +133,7 @@ public class PlayScreen implements Screen{
     }
 
     public void handleInput(float dt){
-        if(player.currentState != Mario.State.DEAD) {
+        if(player.currentState != Pirate.State.DEAD) {
             if (controller.isUpPressed())
                 player.jump();
             if (controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 2)
@@ -157,7 +157,7 @@ public class PlayScreen implements Screen{
         player.update(dt);
         for(Enemy enemy : creator.getEnemies()) {
             enemy.update(dt);
-            if(enemy.getX() < player.getX() + 224 / MarioBros.PPM) {
+            if(enemy.getX() < player.getX() + 224 / PirateGame.PPM) {
                 enemy.b2body.setActive(true);
             }
         }
@@ -168,7 +168,7 @@ public class PlayScreen implements Screen{
         hud.update(dt);
 
         //attach our gamecam to our players.x coordinate
-        if(player.currentState != Mario.State.DEAD) {
+        if(player.currentState != Pirate.State.DEAD) {
             gamecam.position.x = player.b2body.getPosition().x;
         }
 
@@ -218,7 +218,7 @@ public class PlayScreen implements Screen{
     }
 
     public boolean gameOver(){
-        if(player.currentState == Mario.State.DEAD && player.getStateTimer() > 3){
+        if(player.currentState == Pirate.State.DEAD && player.getStateTimer() > 3){
             return true;
         }
         return false;

@@ -13,9 +13,9 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.go.gopirates.MarioBros;
+import com.go.gopirates.PirateGame;
 import com.go.gopirates.Screens.PlayScreen;
-import com.go.gopirates.Sprites.Mario;
+import com.go.gopirates.Sprites.Pirate;
 
 /**
  * Created by brentaureli on 8/28/15.
@@ -42,17 +42,17 @@ public abstract class InteractiveTileObject {
         PolygonShape shape = new PolygonShape();
 
         bdef.type = BodyDef.BodyType.StaticBody;
-        bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / MarioBros.PPM, (bounds.getY() + bounds.getHeight() / 2) / MarioBros.PPM);
+        bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / PirateGame.PPM, (bounds.getY() + bounds.getHeight() / 2) / PirateGame.PPM);
 
         body = world.createBody(bdef);
 
-        shape.setAsBox(bounds.getWidth() / 2 / MarioBros.PPM, bounds.getHeight() / 2 / MarioBros.PPM);
+        shape.setAsBox(bounds.getWidth() / 2 / PirateGame.PPM, bounds.getHeight() / 2 / PirateGame.PPM);
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
 
     }
 
-    public abstract void onHeadHit(Mario mario);
+    public abstract void onHeadHit(Pirate pirate);
     public void setCategoryFilter(short filterBit){
         Filter filter = new Filter();
         filter.categoryBits = filterBit;
@@ -61,8 +61,8 @@ public abstract class InteractiveTileObject {
 
     public TiledMapTileLayer.Cell getCell(){
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
-        return layer.getCell((int)(body.getPosition().x * MarioBros.PPM / 16),
-                (int)(body.getPosition().y * MarioBros.PPM / 16));
+        return layer.getCell((int)(body.getPosition().x * PirateGame.PPM / 16),
+                (int)(body.getPosition().y * PirateGame.PPM / 16));
     }
 
 }

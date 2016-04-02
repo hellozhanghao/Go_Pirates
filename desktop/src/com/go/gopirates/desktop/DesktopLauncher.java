@@ -2,7 +2,7 @@ package com.go.gopirates.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.go.gopirates.MarioBros;
+import com.go.gopirates.PirateGame;
 
 
 public class DesktopLauncher {
@@ -10,6 +10,6 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width=1280;
 		config.height=720;
-		new LwjglApplication(new MarioBros(), config);
+		new LwjglApplication(new PirateGame(), config);
 	}
 }

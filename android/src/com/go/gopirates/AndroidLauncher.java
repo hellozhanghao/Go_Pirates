@@ -36,7 +36,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new MarioBros(this), config);
+		initialize(new PirateGame(this), config);
 
 
 	}

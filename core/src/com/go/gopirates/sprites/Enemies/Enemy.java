@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.go.gopirates.Screens.PlayScreen;
-import com.go.gopirates.Sprites.Mario;
+import com.go.gopirates.Sprites.Pirate;
 
 /**
  * Created by Amy on 25/2/16.
@@ -28,7 +28,7 @@ public abstract class Enemy extends Sprite {
 
     protected abstract void defineEnemy();
 
-    public abstract void hitOnHead(Mario mario);
+    public abstract void hitOnHead(Pirate pirate);
 
     public void reverseVelocity(boolean x, boolean y){
         if(x)

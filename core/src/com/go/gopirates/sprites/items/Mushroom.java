@@ -5,9 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.go.gopirates.MarioBros;
+import com.go.gopirates.PirateGame;
 import com.go.gopirates.Screens.PlayScreen;
-import com.go.gopirates.Sprites.Mario;
+import com.go.gopirates.Sprites.Pirate;
 
 /**
  * Created by Amy on 26/2/16.
@@ -28,22 +28,22 @@ public class Mushroom extends Item {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / MarioBros.PPM);
-        fdef.filter.categoryBits = MarioBros.ITEM_BIT;
-        fdef.filter.maskBits = MarioBros.MARIO_BIT |
-                MarioBros.OBJECT_BIT |
-                MarioBros.GROUND_BIT |
-                MarioBros.COIN_BIT |
-                MarioBros.BRICK_BIT;
+        shape.setRadius(6 / PirateGame.PPM);
+        fdef.filter.categoryBits = PirateGame.ITEM_BIT;
+        fdef.filter.maskBits = PirateGame.MARIO_BIT |
+                PirateGame.OBJECT_BIT |
+                PirateGame.GROUND_BIT |
+                PirateGame.COIN_BIT |
+                PirateGame.BRICK_BIT;
 
         fdef.shape = shape;
         body.createFixture(fdef).setUserData(this);
     }
 
     @Override
-    public void use(Mario mario) {
+    public void use(Pirate pirate) {
         destroy();
-        mario.grow();
+        pirate.grow();
     }
 
     @Override

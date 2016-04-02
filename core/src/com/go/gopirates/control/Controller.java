@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.go.gopirates.MarioBros;
+import com.go.gopirates.PirateGame;
 
 /**
  * Created by Amy on 26/2/16.
@@ -26,7 +26,7 @@ public class Controller {
     public Controller(){
         cam = new OrthographicCamera();
         viewport = new FitViewport(800, 480, cam);
-        stage = new Stage(viewport, MarioBros.batch);
+        stage = new Stage(viewport, PirateGame.batch);
         Gdx.input.setInputProcessor(stage);
 
         stage.addListener(new InputListener() {

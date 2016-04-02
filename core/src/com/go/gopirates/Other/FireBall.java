@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.go.gopirates.MarioBros;
+import com.go.gopirates.PirateGame;
 import com.go.gopirates.Screens.PlayScreen;
 
 
@@ -44,26 +44,26 @@ public class FireBall extends Sprite {
         }
         fireAnimation = new Animation(0.2f, frames);
         setRegion(fireAnimation.getKeyFrame(0));
-        setBounds(x, y, 6 / MarioBros.PPM, 6 / MarioBros.PPM);
+        setBounds(x, y, 6 / PirateGame.PPM, 6 / PirateGame.PPM);
         defineFireBall();
     }
 
     public void defineFireBall(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(fireRight ? getX() + 12 /MarioBros.PPM : getX() - 12 /MarioBros.PPM, getY());
+        bdef.position.set(fireRight ? getX() + 12 / PirateGame.PPM : getX() - 12 / PirateGame.PPM, getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
         if(!world.isLocked())
             b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(3 / MarioBros.PPM);
-        fdef.filter.categoryBits = MarioBros.FIREBALL_BIT;
-        fdef.filter.maskBits = MarioBros.GROUND_BIT |
-                MarioBros.COIN_BIT |
-                MarioBros.BRICK_BIT |
-                MarioBros.ENEMY_BIT |
-                MarioBros.OBJECT_BIT;
+        shape.setRadius(3 / PirateGame.PPM);
+        fdef.filter.categoryBits = PirateGame.FIREBALL_BIT;
+        fdef.filter.maskBits = PirateGame.GROUND_BIT |
+                PirateGame.COIN_BIT |
+                PirateGame.BRICK_BIT |
+                PirateGame.ENEMY_BIT |
+                PirateGame.OBJECT_BIT;
 
         fdef.shape = shape;
         fdef.restitution = 1;

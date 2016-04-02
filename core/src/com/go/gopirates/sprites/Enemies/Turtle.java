@@ -9,9 +9,9 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
-import com.go.gopirates.MarioBros;
+import com.go.gopirates.PirateGame;
 import com.go.gopirates.Screens.PlayScreen;
-import com.go.gopirates.Sprites.Mario;
+import com.go.gopirates.Sprites.Pirate;
 
 /**
  * Created by Amy on 26/2/16.
@@ -41,7 +41,7 @@ public class Turtle extends Enemy {
         walkAnimation = new Animation(0.2f, frames);
         currentState = previousState = State.WALKING;
 
-        setBounds(getX(), getY(), 16 / MarioBros.PPM, 24 / MarioBros.PPM);
+        setBounds(getX(), getY(), 16 / PirateGame.PPM, 24 / PirateGame.PPM);
 
     }
 
@@ -54,14 +54,14 @@ public class Turtle extends Enemy {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / MarioBros.PPM);
-        fdef.filter.categoryBits = MarioBros.ENEMY_BIT;
-        fdef.filter.maskBits = MarioBros.GROUND_BIT |
-                MarioBros.COIN_BIT |
-                MarioBros.BRICK_BIT |
-                MarioBros.ENEMY_BIT |
-                MarioBros.OBJECT_BIT |
-                MarioBros.MARIO_BIT;
+        shape.setRadius(6 / PirateGame.PPM);
+        fdef.filter.categoryBits = PirateGame.ENEMY_BIT;
+        fdef.filter.maskBits = PirateGame.GROUND_BIT |
+                PirateGame.COIN_BIT |
+                PirateGame.BRICK_BIT |
+                PirateGame.ENEMY_BIT |
+                PirateGame.OBJECT_BIT |
+                PirateGame.MARIO_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -69,15 +69,15 @@ public class Turtle extends Enemy {
         //Create the Head here:
         PolygonShape head = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-5, 8).scl(1 / MarioBros.PPM);
-        vertice[1] = new Vector2(5, 8).scl(1 / MarioBros.PPM);
-        vertice[2] = new Vector2(-3, 3).scl(1 / MarioBros.PPM);
-        vertice[3] = new Vector2(3, 3).scl(1 / MarioBros.PPM);
+        vertice[0] = new Vector2(-5, 8).scl(1 / PirateGame.PPM);
+        vertice[1] = new Vector2(5, 8).scl(1 / PirateGame.PPM);
+        vertice[2] = new Vector2(-3, 3).scl(1 / PirateGame.PPM);
+        vertice[3] = new Vector2(3, 3).scl(1 / PirateGame.PPM);
         head.set(vertice);
 
         fdef.shape = head;
         fdef.restitution = 1.8f;
-        fdef.filter.categoryBits = MarioBros.ENEMY_HEAD_BIT;
+        fdef.filter.categoryBits = PirateGame.ENEMY_HEAD_BIT;
         b2body.createFixture(fdef).setUserData(this);
     }
 
@@ -117,14 +117,14 @@ public class Turtle extends Enemy {
             System.out.println("WAKE UP SHELL");
         }
 
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / MarioBros.PPM);
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / PirateGame.PPM);
         b2body.setLinearVelocity(velocity);
     }
 
     @Override
-    public void hitOnHead(Mario mario) {
+    public void hitOnHead(Pirate pirate) {
         if (currentState == State.STANDING_SHELL) {
-            if (mario.b2body.getPosition().x > b2body.getPosition().x)
+            if (pirate.b2body.getPosition().x > b2body.getPosition().x)
                 velocity.x = -2;
             else
                 velocity.x = 2;

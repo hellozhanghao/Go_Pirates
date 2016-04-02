@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.go.gopirates.MarioBros;
+import com.go.gopirates.PirateGame;
 import com.go.gopirates.Screens.PlayScreen;
 import com.go.gopirates.Sprites.Enemies.Enemy;
 import com.go.gopirates.Sprites.Enemies.Goomba;
@@ -41,11 +41,11 @@ public class B2WorldCreator {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / MarioBros.PPM, (rect.getY() + rect.getHeight() / 2) / MarioBros.PPM);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / PirateGame.PPM, (rect.getY() + rect.getHeight() / 2) / PirateGame.PPM);
 
             body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth() / 2 / MarioBros.PPM, rect.getHeight() / 2 / MarioBros.PPM);
+            shape.setAsBox(rect.getWidth() / 2 / PirateGame.PPM, rect.getHeight() / 2 / PirateGame.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
@@ -55,13 +55,13 @@ public class B2WorldCreator {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / MarioBros.PPM, (rect.getY() + rect.getHeight() / 2) / MarioBros.PPM);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / PirateGame.PPM, (rect.getY() + rect.getHeight() / 2) / PirateGame.PPM);
 
             body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth() / 2 / MarioBros.PPM, rect.getHeight() / 2 / MarioBros.PPM);
+            shape.setAsBox(rect.getWidth() / 2 / PirateGame.PPM, rect.getHeight() / 2 / PirateGame.PPM);
             fdef.shape = shape;
-            fdef.filter.categoryBits = MarioBros.OBJECT_BIT;
+            fdef.filter.categoryBits = PirateGame.OBJECT_BIT;
             body.createFixture(fdef);
         }
 
@@ -80,12 +80,12 @@ public class B2WorldCreator {
         goombas = new Array<Goomba>();
         for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            goombas.add(new Goomba(screen, rect.getX() / MarioBros.PPM, rect.getY() / MarioBros.PPM));
+            goombas.add(new Goomba(screen, rect.getX() / PirateGame.PPM, rect.getY() / PirateGame.PPM));
         }
         turtles = new Array<Turtle>();
         for(MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            turtles.add(new Turtle(screen, rect.getX() / MarioBros.PPM, rect.getY() / MarioBros.PPM));
+            turtles.add(new Turtle(screen, rect.getX() / PirateGame.PPM, rect.getY() / PirateGame.PPM));
         }
     }
 

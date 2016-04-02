@@ -8,10 +8,10 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.go.gopirates.Screens.PlayScreen;
 
-public class MarioBros extends Game {
+public class PirateGame extends Game {
     //Virtual Screen size and Box2D Scale(Pixels Per Meter)
-    public static final int V_WIDTH = 400;
-    public static final int V_HEIGHT = 208;
+    public static final int V_WIDTH = 1280;
+    public static final int V_HEIGHT = 720;
     public static final float PPM = 100;
 
     //Box2D Collision Bits
@@ -69,9 +69,9 @@ public class MarioBros extends Game {
 
     private PlayServices playServices;
 
-    public MarioBros(PlayServices playServices){
+    public PirateGame(PlayServices playServices){
         this.playServices=playServices;
     }
 
-    public MarioBros(){}
+    public PirateGame(){}
 }

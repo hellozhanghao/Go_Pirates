@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.go.gopirates.MarioBros;
+import com.go.gopirates.PirateGame;
 
 
 /**
@@ -23,7 +23,7 @@ public class Hud implements Disposable {
     public Stage stage;
     private Viewport viewport;
 
-    //Mario score/time Tracking Variables
+    //Pirate score/time Tracking Variables
     private Integer worldTimer;
     private boolean timeUp; // true when the world timer reaches 0
     private float timeCount;
@@ -44,7 +44,7 @@ public class Hud implements Disposable {
 
         //setup the HUD viewport using a new camera seperate from our gamecam
         //define our stage using that viewport and our games spritebatch
-        viewport = new FitViewport(MarioBros.V_WIDTH, MarioBros.V_HEIGHT, new OrthographicCamera());
+        viewport = new FitViewport(PirateGame.V_WIDTH, PirateGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
         //define a table used to organize our hud's labels
