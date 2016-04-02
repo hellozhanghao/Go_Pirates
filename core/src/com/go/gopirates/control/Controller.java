@@ -1,5 +1,6 @@
 package com.go.gopirates.control;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -8,7 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.go.gopirates.PirateGame;
@@ -17,18 +21,72 @@ import com.go.gopirates.PirateGame;
 /**
  * Created by Amy on 26/2/16.
  */
-public class Controller {
+public class Controller implements ApplicationListener {
     Viewport viewport;
     Stage stage;
     boolean upPressed, downPressed, leftPressed, rightPressed;
     boolean pistolPressed, powerUpPressed, bombPressed, swordPressed,tntPressed;
     OrthographicCamera cam;
+    private Skin touchpadSkin;
+    public Touchpad touchpad;
+    private Drawable touchBackground;
+    private Drawable touchKnob;
+    private Touchpad.TouchpadStyle touchpadStyle;
+    private Image upImg;
+    private Image emptyImg;
+    private Image bombImg;
+    private Image swordImg;
 
-    public Controller() {
+//    public Controller() {
+//
+//    }
+
+//    public void draw(){
+//        stage.draw();
+//    }
+
+    public boolean isUpPressed(){
+        return upPressed;
+    }
+
+    public boolean isDownPressed(){
+        return downPressed;
+    }
+
+    public boolean isLeftPressed(){
+        return leftPressed;
+    }
+
+    public boolean isRightPressed(){
+        return rightPressed;
+    }
+
+    public boolean isPistolPressed() {
+        return pistolPressed;
+    }
+
+    public boolean isPowerUpPressed() {
+        return powerUpPressed;
+    }
+
+    public boolean isBombPressed() {
+        return bombPressed;
+    }
+
+    public boolean isSwordPressed() {
+        return swordPressed;
+    }
+    public boolean isTntPressed() {
+        return tntPressed;
+    }
+
+    @Override
+    public void create() {
+        System.out.println("Controller");
         cam = new OrthographicCamera();
-        viewport = new FitViewport(800, 480, cam);
+        viewport = new FitViewport(800, 450, cam);
         stage = new Stage(viewport, PirateGame.batch);
-        Gdx.input.setInputProcessor(stage);
+//        Gdx.input.setInputProcessor(stage);
 
         stage.addListener(new InputListener() {
 
@@ -96,10 +154,11 @@ public class Controller {
             }
         });
 
-        Table left = new Table();
+
+       /* Table left = new Table();
         left.left().bottom();
 
-        Image upImg = new Image(new Texture("controller/flatDark25.png"));
+        upImg = new Image(new Texture("controller/flatDark25.png"));
         upImg.setSize(50, 50);
         upImg.addListener(new InputListener() {
 
@@ -115,7 +174,7 @@ public class Controller {
             }
         });
 
-        Image emptyImg = new Image(new Texture("controller/flatDark26.png"));
+        emptyImg = new Image(new Texture("controller/flatDark26.png"));
         emptyImg.setSize(50, 50);
         emptyImg.addListener(new InputListener() {
 
@@ -131,7 +190,7 @@ public class Controller {
             }
         });
 
-        Image bombImg = new Image(new Texture("controller/flatDark23.png"));
+        bombImg = new Image(new Texture("controller/flatDark23.png"));
         bombImg.setSize(50, 50);
         bombImg.addListener(new InputListener() {
 
@@ -147,7 +206,7 @@ public class Controller {
             }
         });
 
-        Image swordImg = new Image(new Texture("controller/flatDark24.png"));
+        swordImg = new Image(new Texture("controller/flatDark24.png"));
         swordImg.setSize(50, 50);
         swordImg.addListener(new InputListener() {
 
@@ -176,13 +235,13 @@ public class Controller {
         left.add();
 
         stage.addActor(left);
-
+        */
 
         //right
         Table right = new Table();
         right.bottom().left();
-        right.setPosition(left.getX()+620,left.getY());
-
+        right.setX(620);
+        right.setY(30);
         Image bomb = new Image(new Texture("controller/Pistol.png"));
         bomb.setSize(50, 50);
         bomb.addListener(new InputListener() {
@@ -227,6 +286,7 @@ public class Controller {
                 bombPressed = true;
                 return true;
             }
+
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 bombPressed = false;
@@ -264,48 +324,57 @@ public class Controller {
 
         stage.addActor(right);
 
-    }
+        //Create a touchpad skin
+        touchpadSkin = new Skin();
+        //Set background image
+        touchpadSkin.add("touchBackground", new Texture("controller/touchBackground.png"));
+        //Set knob image
+        touchpadSkin.add("touchKnob", new Texture("controller/touchKnob.png"));
+        //Create TouchPad Style
+        touchpadStyle = new Touchpad.TouchpadStyle();
+        //Create Drawable's from TouchPad skin
+        touchBackground = touchpadSkin.getDrawable("touchBackground");
+        touchKnob = touchpadSkin.getDrawable("touchKnob");
+        //Apply the Drawables to the TouchPad Style
+        touchpadStyle.background = touchBackground;
+        touchpadStyle.knob = touchKnob;
+        //Create new TouchPad with the created style
+        touchpad = new Touchpad(10, touchpadStyle);
+        //setBounds(x,y,width,height)
+        touchpad.setBounds(15, 15, 200, 200);
 
-    public void draw(){
-        stage.draw();
-    }
+        //Create a Stage and add TouchPad
+//        stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, PirateGame.batch);
+        stage.addActor(touchpad);
+        Gdx.input.setInputProcessor(stage);
 
-    public boolean isUpPressed(){
-        return upPressed;
-    }
-
-    public boolean isDownPressed(){
-        return downPressed;
-    }
-
-    public boolean isLeftPressed(){
-        return leftPressed;
-    }
-
-    public boolean isRightPressed(){
-        return rightPressed;
-    }
-
-    public boolean isPistolPressed() {
-        return pistolPressed;
-    }
-
-    public boolean isPowerUpPressed() {
-        return powerUpPressed;
-    }
-
-    public boolean isBombPressed() {
-        return bombPressed;
-    }
-
-    public boolean isSwordPressed() {
-        return swordPressed;
-    }
-    public boolean isTntPressed() {
-        return tntPressed;
+        System.out.println(touchpad.getKnobPercentX() + " " + touchpad.getKnobPercentY());
     }
 
     public void resize(int width, int height){
-        viewport.update(width,height);
+        viewport.update(width, height);
+    }
+
+    @Override
+    public void render() {
+        stage.act(Gdx.graphics.getDeltaTime());
+//        System.out.println(touchpad.getKnobPercentX() + " " + touchpad.getKnobPercentY());
+        stage.draw();
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void dispose() {
+
     }
 }

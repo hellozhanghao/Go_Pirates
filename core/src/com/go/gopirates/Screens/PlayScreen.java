@@ -102,6 +102,7 @@ public class PlayScreen implements Screen {
 //        hud = new Hud(PirateGame.batch,players.get(thisPlayerIndex));
 
         controller = new Controller();
+        controller.create();
 
         world.setContactListener(new WorldContactListener(this));
 //
@@ -139,6 +140,12 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt){
 
+
+
+
+
+        player.b2body.setLinearVelocity(controller.touchpad.getKnobPercentX()*PirateGame.VELOCITY,
+                                        controller.touchpad.getKnobPercentY()*PirateGame.VELOCITY);
         if (controller.isUpPressed())
             player.b2body.setLinearVelocity(0,PirateGame.VELOCITY);
         if (controller.isDownPressed())
@@ -238,7 +245,7 @@ public class PlayScreen implements Screen {
 
 
 //        Gdx.gl.glViewport(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        controller.draw();
+        controller.render();
 
 
 //        if(gameOver()){

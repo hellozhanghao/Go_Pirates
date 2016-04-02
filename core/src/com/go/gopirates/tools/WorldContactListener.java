@@ -30,7 +30,6 @@ public class WorldContactListener implements ContactListener {
         Fixture fixB = contact.getFixtureB();
 
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
-        System.out.println(cDef);
 
         switch (cDef) {
 
