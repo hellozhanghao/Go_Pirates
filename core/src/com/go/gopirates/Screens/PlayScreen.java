@@ -21,6 +21,8 @@ import com.go.gopirates.PirateGame;
 import com.go.gopirates.control.Controller;
 import com.go.gopirates.sprites.Pirate;
 import com.go.gopirates.sprites.items.ItemDef;
+import com.go.gopirates.tools.B2WorldCreator;
+import com.go.gopirates.tools.WorldContactListener;
 
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -48,7 +50,7 @@ public class PlayScreen implements Screen {
     //Box2d variables
     private World world;
     private Box2DDebugRenderer b2dr;
-//    private B2WorldCreator creator;
+    private B2WorldCreator creator;
 
     //sprites
     private Pirate player;
@@ -77,7 +79,9 @@ public class PlayScreen implements Screen {
 
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
-        map=maploader.load("tiled_map/map0.tmx");
+//        map=maploader.load("tiled_map/map0.tmx");
+        map=maploader.load("tiled_map/testMap.tmx");
+
         renderer = new OrthogonalTiledMapRenderer(map, 1  / PirateGame.PPM);
         //initialize gamecame
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
@@ -86,7 +90,7 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, 0), true);
         //allows for debug lines of our box2d world.
         b2dr = new Box2DDebugRenderer();
-//        creator = new B2WorldCreator(this);
+        creator = new B2WorldCreator(this);
         //create mario in our game world
 //        for (int i = 0; i < 4; i++) {
 //            players.add(new Pirate(this));
@@ -99,7 +103,7 @@ public class PlayScreen implements Screen {
 
         controller = new Controller();
 
-//        world.setContactListener(new WorldContactListener(this));
+        world.setContactListener(new WorldContactListener(this));
 //
 //        music = PirateGame.manager.get("audio/music/mario_music.ogg", Music.class);
 //        music.setLooping(true);
@@ -182,7 +186,6 @@ public class PlayScreen implements Screen {
         gamecam.setToOrtho(false, PirateGame.V_WIDTH / PirateGame.PPM, PirateGame.V_HEIGHT / PirateGame.PPM);
 
 
-        System.out.println(player.b2body.getPosition().x+" "+player.b2body.getPosition().y);
         if (player.b2body.getPosition().x<(PirateGame.V_WIDTH / PirateGame.PPM)/2)
             gamecam.position.x=gamePort.getWorldWidth()/2;
         else if (player.b2body.getPosition().x>(PirateGame.TILE_SIZE*PirateGame.MAP_SIZE/PirateGame.PPM)-(PirateGame.V_WIDTH / PirateGame.PPM)/2)
@@ -251,7 +254,7 @@ public class PlayScreen implements Screen {
     public void resize(int width, int height) {
         //updated our game viewport
         gamePort.update(width,height);
-//        controller.resize(width, height);
+        controller.resize(width, height);
     }
 
     public TiledMap getMap(){

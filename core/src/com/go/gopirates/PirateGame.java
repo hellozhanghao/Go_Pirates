@@ -28,7 +28,7 @@ public class PirateGame extends Game {
     //Box2D Collision Bits
     //Box2D Collision Bits
     public static final short NOTHING_BIT = 0;
-    public static final short HIT_BIT = 1;
+    public static final short COCONUT_TREE_BIT = 1;
     public static final short PLAYER_BIT = 2;
     public static final short ROCK_BIT = 4;
     public static final short BARREL_BIT = 8;
