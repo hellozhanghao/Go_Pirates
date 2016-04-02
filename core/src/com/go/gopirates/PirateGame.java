@@ -9,11 +9,11 @@ import com.go.gopirates.screens.PlayScreen;
 
 public class PirateGame extends Game {
     //Virtual Screen size and Box2D Scale(Pixels Per Meter)
-    public static final int V_WIDTH = 3840;
-    public static final int V_HEIGHT = 2160;
+    public static final int V_WIDTH = 3200;
+    public static final int V_HEIGHT = 1800;
     public static final float PPM = 10;
-    public static final float EDGE_POSITION_X = 15f;
-    public static final float EDGE_POSITION_Y = 16.3f;
+    public static final float EDGE_POSITION_X = 400f;
+    public static final float EDGE_POSITION_Y = 400f;
 
     //Tile Map setting
     public static final int TILE_SIZE=256;
@@ -21,6 +21,8 @@ public class PirateGame extends Game {
 
     //User Selct
     public static final int PLAYER_ID=0;
+
+    public static final int VELOCITY=150;
 
 
     //Box2D Collision Bits
@@ -37,8 +39,7 @@ public class PirateGame extends Game {
     public static final short BOMB_BIT = 256;
     public static final short COCONUT_BIT = 2048;
     public static final short SWORD_BIT = 4096;
-    public static final short SHIELD_BIT = 8192;
-    public static final short POWERUP_BIT = 16384;
+    public static final short POWERUP_BIT = 8192;
 
     public static SpriteBatch batch;
 

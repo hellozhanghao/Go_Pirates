@@ -52,7 +52,6 @@ public class PlayScreen implements Screen {
 
     //sprites
     private Pirate player;
-    private ArrayList<Pirate> players = new ArrayList<Pirate>(4);
     private int thisPlayerIndex;
 
     private Music music;
@@ -78,7 +77,6 @@ public class PlayScreen implements Screen {
 
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
-//        map=maploader.load("bigTestWorld.tmx");
         map=maploader.load("tiled_map/map0.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1  / PirateGame.PPM);
         //initialize gamecame
@@ -90,9 +88,9 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 //        creator = new B2WorldCreator(this);
         //create mario in our game world
-        for (int i = 0; i < 4; i++) {
-            players.add(new Pirate(this));
-        }
+//        for (int i = 0; i < 4; i++) {
+//            players.add(new Pirate(this));
+//        }
         player = new Pirate(this);
 
 
@@ -136,15 +134,15 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput(float dt){
-        Pirate player=players.get(thisPlayerIndex);
-        if (controller.isUpPressed() && player.b2body.getLinearVelocity().y <= 4)
-            player.b2body.applyLinearImpulse(new Vector2(0, 100f), player.b2body.getWorldCenter(), true);
-        if (controller.isDownPressed() && player.b2body.getLinearVelocity().y >= -4)
-            player.b2body.applyLinearImpulse(new Vector2(0,-0.2f), player.b2body.getWorldCenter(), true);
-        if (controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 4)
-            player.b2body.applyLinearImpulse(new Vector2(0.2f, 0), player.b2body.getWorldCenter(), true);
-        if (controller.isLeftPressed() && player.b2body.getLinearVelocity().x >= -4)
-            player.b2body.applyLinearImpulse(new Vector2(-0.2f, 0), player.b2body.getWorldCenter(), true);
+
+        if (controller.isUpPressed())
+            player.b2body.setLinearVelocity(0,PirateGame.VELOCITY);
+        if (controller.isDownPressed())
+            player.b2body.setLinearVelocity(0,-PirateGame.VELOCITY);
+        if (controller.isLeftPressed())
+            player.b2body.setLinearVelocity(-PirateGame.VELOCITY,0);
+        if (controller.isRightPressed())
+            player.b2body.setLinearVelocity(PirateGame.VELOCITY,0);
 //        if (controller.isPistolPressed())
 //            player.fire();
 //        else if (controller.isSwordPressed())
@@ -160,7 +158,7 @@ public class PlayScreen implements Screen {
 
     public void update(float dt){
         //handle user input first
-//        handleInput(dt);
+        handleInput(dt);
 //        handleSpawningItems();
 
         //takes 1 step in the physics simulation(60 times per second)
@@ -179,27 +177,25 @@ public class PlayScreen implements Screen {
             gamecam.position.x = player.b2body.getPosition().x;
         }*/
 
-        Pirate player=players.get(thisPlayerIndex);
         //update our gamecam with correct coordinates after changes
         //x position
         gamecam.setToOrtho(false, PirateGame.V_WIDTH / PirateGame.PPM, PirateGame.V_HEIGHT / PirateGame.PPM);
-        if (player.b2body.getPosition().x<(PirateGame.V_WIDTH / PirateGame.PPM)/2){
+
+
+        System.out.println(player.b2body.getPosition().x+" "+player.b2body.getPosition().y);
+        if (player.b2body.getPosition().x<(PirateGame.V_WIDTH / PirateGame.PPM)/2)
             gamecam.position.x=gamePort.getWorldWidth()/2;
-        }else {
-            if (player.b2body.getPosition().x>PirateGame.EDGE_POSITION_X)
-                gamecam.position.x=PirateGame.EDGE_POSITION_X;
-            else
+        else if (player.b2body.getPosition().x>(PirateGame.TILE_SIZE*PirateGame.MAP_SIZE/PirateGame.PPM)-(PirateGame.V_WIDTH / PirateGame.PPM)/2)
+                gamecam.position.x=(PirateGame.TILE_SIZE*PirateGame.MAP_SIZE/PirateGame.PPM)-(PirateGame.V_WIDTH / PirateGame.PPM)/2;
+        else
                 gamecam.position.x = player.b2body.getPosition().x;
-        }
         //y position
-        if (player.b2body.getPosition().y<(PirateGame.V_HEIGHT / PirateGame.PPM) /2){
-            gamecam.position.y = gamePort.getWorldHeight()/2;
-        }else {
-            if (player.b2body.getPosition().y>PirateGame.EDGE_POSITION_Y)
-                gamecam.position.y=PirateGame.EDGE_POSITION_Y;
-            else
-                gamecam.position.y = player.b2body.getPosition().y;
-        }
+        if (player.b2body.getPosition().y<(PirateGame.V_HEIGHT / PirateGame.PPM)/2)
+            gamecam.position.y=gamePort.getWorldHeight()/2;
+        else if (player.b2body.getPosition().y>(PirateGame.TILE_SIZE*PirateGame.MAP_SIZE/PirateGame.PPM)-(PirateGame.V_HEIGHT / PirateGame.PPM)/2)
+            gamecam.position.y=(PirateGame.TILE_SIZE*PirateGame.MAP_SIZE/PirateGame.PPM)-(PirateGame.V_HEIGHT / PirateGame.PPM)/2;
+        else
+            gamecam.position.y = player.b2body.getPosition().y;
         gamecam.update();
         //tell our renderer to draw only what our camera can see in our game world.
         renderer.setView(gamecam);
@@ -292,8 +288,5 @@ public class PlayScreen implements Screen {
 
 //    public Hud getHud(){ return hud; }
 
-    public Pirate getPirate(int id){
-        return players.get(id);
-    }
 
 }

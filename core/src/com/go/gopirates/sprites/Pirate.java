@@ -1,6 +1,7 @@
 package com.go.gopirates.sprites;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -56,26 +57,37 @@ public class Pirate extends Sprite {
         Array<TextureRegion> frames = new Array<TextureRegion>();
         String pirate="pirate"+PirateGame.PLAYER_ID;
 
-        for (int i = 0; i < 3; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),i*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),0*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),1*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),0*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),2*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
         pirateWalkingDown=new Animation(FRAME_DURATION,frames);
         frames.clear();
         pirateStandingDown=new TextureRegion(screen.getAtlas().findRegion(pirate),0*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE);
 
-        for (int i = 3; i < 6; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),i*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),3*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),4*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),3*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),5*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
         pirateWalkingLeft=new Animation(FRAME_DURATION,frames);
         frames.clear();
         pirateStandingLeft=new TextureRegion(screen.getAtlas().findRegion(pirate),3*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE);
 
-        for (int i = 6; i < 9; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),i*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),6*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),7*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),6*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),8*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
         pirateWalkingRight=new Animation(FRAME_DURATION,frames);
         frames.clear();
         pirateStandingRight=new TextureRegion(screen.getAtlas().findRegion(pirate),6*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE);
 
-        for (int i = 9; i < 12; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),i*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),9*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),10*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),9*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),11*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
         pirateWalkingUp=new Animation(FRAME_DURATION,frames);
         frames.clear();
         pirateStandingUp=new TextureRegion(screen.getAtlas().findRegion(pirate),9*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE);
@@ -88,6 +100,7 @@ public class Pirate extends Sprite {
     }
 
     public void update(float dt){
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
     }
 
@@ -97,22 +110,27 @@ public class Pirate extends Sprite {
         BodyDef bodyDef = new BodyDef();
         switch (PirateGame.PLAYER_ID){
             case 0:
-                bodyDef.position.set(2*PirateGame.TILE_SIZE/PirateGame.PPM,2*PirateGame.TILE_SIZE/PirateGame.PPM);
+                bodyDef.position.set(PirateGame.TILE_SIZE/PirateGame.PPM+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
+                                     PirateGame.TILE_SIZE/PirateGame.PPM+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
         }
 
         bodyDef.type= BodyDef.BodyType.DynamicBody;
+        bodyDef.linearDamping = 5f;
         b2body=world.createBody(bodyDef);
 
         FixtureDef fixtureDef=new FixtureDef();
         CircleShape shape=new CircleShape();
-        shape.setRadius(96/PirateGame.PPM);
+        shape.setRadius(80/PirateGame.PPM);
         fixtureDef.filter.categoryBits = PirateGame.PLAYER_BIT;
         fixtureDef.filter.maskBits = PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
                                      PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT | PirateGame.POWERUP_BIT|
                                      PirateGame.EXPLOSION_BIT;
 
         fixtureDef.shape=shape;
+        b2body.createFixture(fixtureDef);
+        shape.dispose();
         b2body.createFixture(fixtureDef).setUserData(this);
+
     }
 
     private State getState(){
@@ -187,4 +205,9 @@ public class Pirate extends Sprite {
         return region;
 
     }
+
+    public void draw(Batch batch){
+        super.draw(batch);
+    }
+
 }
