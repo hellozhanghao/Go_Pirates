@@ -1,7 +1,6 @@
 package com.go.gopirates.sprites.items.noneInteractiveItems;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -13,7 +12,7 @@ import com.go.gopirates.screen.PlayScreen;
 /**
  * Created by zhanghao on 3/4/16.
  */
-public class ShieldSprite extends Sprite {
+public class ShieldSprite extends NonInteractiveSprites {
     PlayScreen screen;
     World world;
     float stateTime;

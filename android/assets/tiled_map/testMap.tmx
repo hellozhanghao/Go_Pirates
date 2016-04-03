@@ -85,7 +85,11 @@
   <object id="76" x="2560" y="4096" width="256" height="256"/>
  </objectgroup>
  <objectgroup name="Barrels">
-  <object id="77" x="768" y="256" width="256" height="256"/>
+  <object id="77" x="768" y="256" width="256" height="256">
+   <properties>
+    <property name="TNT" value=""/>
+   </properties>
+  </object>
   <object id="78" x="1024" y="256" width="256" height="256"/>
   <object id="79" x="1280" y="256" width="256" height="256"/>
   <object id="81" x="1792" y="256" width="256" height="256"/>
@@ -98,7 +102,11 @@
   <object id="89" x="2816" y="512" width="256" height="256"/>
   <object id="91" x="3328" y="512" width="256" height="256"/>
   <object id="92" x="3840" y="512" width="256" height="256"/>
-  <object id="93" x="256" y="768" width="256" height="256"/>
+  <object id="93" x="256" y="768" width="256" height="256">
+   <properties>
+    <property name="shoes" value=""/>
+   </properties>
+  </object>
   <object id="94" x="512" y="768" width="256" height="256"/>
   <object id="95" x="768" y="768" width="256" height="256"/>
   <object id="96" x="1024" y="768" width="256" height="256"/>

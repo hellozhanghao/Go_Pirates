@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.items.explosiveItems.ExplosiveItem;
-import com.go.gopirates.sprites.items.noneInteractiveItems.ShieldSprite;
+import com.go.gopirates.sprites.items.noneInteractiveItems.NonInteractiveSprites;
 
 import java.util.ArrayList;
 
@@ -52,7 +52,7 @@ public class Pirate extends Sprite {
     private final float FRAME_DURATION=0.1f;
 
     public ArrayList<ExplosiveItem> explosiveItems;
-    public ArrayList<ShieldSprite> otherSprites;
+    public ArrayList<NonInteractiveSprites> otherSprites;
 
     private enum PirateState{ PIRATE, PIRATE_WITH_SHIELD}
     private PirateState pirateState;
@@ -68,7 +68,7 @@ public class Pirate extends Sprite {
         powerUpHolding=PowerUpHolding.NONE;
         stateTimer = 0;
         explosiveItems=new ArrayList<ExplosiveItem>();
-        otherSprites=new ArrayList<ShieldSprite>();
+        otherSprites=new ArrayList<NonInteractiveSprites>();
         pirateState=PirateState.PIRATE;
         powerUpTimer=0;
         this.playerId=playerId;
@@ -129,7 +129,6 @@ public class Pirate extends Sprite {
         if (powerUpTimer>PirateGame.POWERUP_TIME & pirateState!=PirateState.PIRATE){
             redefinePirate();
         }
-        System.out.println(pirateState+" "+powerUpTimer);
     }
 
 

@@ -23,7 +23,7 @@ public class PirateGame extends Game {
     public static final int PLAYER_ID=2;
 
     //Settings:
-    public static final int VELOCITY=150;
+    public static  int DEFAULT_VELOCITY =40;
     public static final float BUTTON_INTERVAL=1f;
     public static final float POWERUP_TIME=10f;
 

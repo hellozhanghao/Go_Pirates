@@ -27,7 +27,6 @@ public class Bomb extends ExplosiveItem {
     boolean redefined;
     Body b2body;
     private int bombExplosionCountDown=4;
-    private final  int BOMB_RADIUS=80;
 
     public Bomb(PlayScreen screen, float x, float y) {
         setBounds(x, y, PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE/ PirateGame.PPM);
@@ -58,6 +57,7 @@ public class Bomb extends ExplosiveItem {
 
     @Override
     public void redefineItem() {
+
         Vector2 position = b2body.getPosition();
         world.destroyBody(b2body);
 

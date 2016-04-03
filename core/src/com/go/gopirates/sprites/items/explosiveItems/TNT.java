@@ -1,5 +1,6 @@
 package com.go.gopirates.sprites.items.explosiveItems;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g3d.model.Animation;
 import com.badlogic.gdx.math.Vector2;
@@ -46,13 +47,14 @@ public class TNT extends ExplosiveItem {
 
     @Override
     public void defineItem() {
+        Gdx.app.log("Explosive","TXT placed");
         BodyDef bdef = new BodyDef();
         bdef.position.set(getX(), getY());
         bdef.type = BodyDef.BodyType.StaticBody;
         b2body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / PirateGame.PPM);
+        shape.setRadius(BOMB_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = PirateGame.NOTHING_BIT;
         fdef.filter.maskBits = PirateGame.BARREL_BIT |
@@ -73,15 +75,14 @@ public class TNT extends ExplosiveItem {
         b2body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / PirateGame.PPM);
+        shape.setRadius(BOMB_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
-        fdef.filter.categoryBits = PirateGame.TNT_BIT;
+        fdef.filter.categoryBits = PirateGame.BOMB_BIT;
         fdef.filter.maskBits = PirateGame.BARREL_BIT |
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
-
     }
 
     @Override
@@ -105,7 +106,7 @@ public class TNT extends ExplosiveItem {
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
         EdgeShape exploEdge1 = new EdgeShape();
-        exploEdge1.set(new Vector2(-20/ PirateGame.PPM, 0 / PirateGame.PPM), new Vector2(20 / PirateGame.PPM, 0 / PirateGame.PPM));
+        exploEdge1.set(new Vector2(-PirateGame.TILE_SIZE/ PirateGame.PPM, 0 / PirateGame.PPM), new Vector2(PirateGame.TILE_SIZE / PirateGame.PPM, 0 / PirateGame.PPM));
 
         fdef.shape = exploEdge1;
         fdef.isSensor = true;
@@ -116,7 +117,7 @@ public class TNT extends ExplosiveItem {
                 PirateGame.ROCK_BIT;
 
         EdgeShape exploEdge2 = new EdgeShape();
-        exploEdge2.set(new Vector2(-20 / PirateGame.PPM, 20 / PirateGame.PPM), new Vector2(20 / PirateGame.PPM, 20/ PirateGame.PPM));
+        exploEdge2.set(new Vector2(-PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(20 / PirateGame.PPM, 20/ PirateGame.PPM));
 
         fdef.shape = exploEdge2;
         fdef.isSensor = true;
@@ -126,7 +127,7 @@ public class TNT extends ExplosiveItem {
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
         EdgeShape exploEdge3 = new EdgeShape();
-        exploEdge3.set(new Vector2(-20 / PirateGame.PPM, -20 / PirateGame.PPM), new Vector2(20 / PirateGame.PPM, -20 / PirateGame.PPM));
+        exploEdge3.set(new Vector2(-PirateGame.TILE_SIZE / PirateGame.PPM, -PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(20 / PirateGame.PPM, -20 / PirateGame.PPM));
 
         fdef.shape = exploEdge3;
         fdef.isSensor = true;
@@ -137,7 +138,7 @@ public class TNT extends ExplosiveItem {
                 PirateGame.ROCK_BIT;
 
         EdgeShape exploEdge4 = new EdgeShape();
-        exploEdge4.set(new Vector2(-20 / PirateGame.PPM, 20 / PirateGame.PPM), new Vector2(-20 / PirateGame.PPM, -20 / PirateGame.PPM));
+        exploEdge4.set(new Vector2(-PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(-20 / PirateGame.PPM, -20 / PirateGame.PPM));
 
         fdef.shape = exploEdge4;
         fdef.isSensor = true;
@@ -148,7 +149,7 @@ public class TNT extends ExplosiveItem {
                 PirateGame.ROCK_BIT;
 
         EdgeShape exploEdge5 = new EdgeShape();
-        exploEdge5.set(new Vector2(0 / PirateGame.PPM, 20 / PirateGame.PPM), new Vector2(0 / PirateGame.PPM, -20 / PirateGame.PPM));
+        exploEdge5.set(new Vector2(0 / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(0 / PirateGame.PPM, -20 / PirateGame.PPM));
         fdef.shape = exploEdge5;
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("VerticalCross2");
@@ -158,7 +159,7 @@ public class TNT extends ExplosiveItem {
                 PirateGame.ROCK_BIT;
 
         EdgeShape exploEdge6 = new EdgeShape();
-        exploEdge6.set(new Vector2(20 / PirateGame.PPM, 20 / PirateGame.PPM), new Vector2(20 / PirateGame.PPM, -20 / PirateGame.PPM));
+        exploEdge6.set(new Vector2(PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(20 / PirateGame.PPM, -20 / PirateGame.PPM));
 
         fdef.shape = exploEdge6;
         fdef.isSensor = true;
@@ -202,9 +203,6 @@ public class TNT extends ExplosiveItem {
         setToDestroy = true;
     }
 
-    public boolean isDestroyed() {
-        return destroyed;
-    }
 
 }
 

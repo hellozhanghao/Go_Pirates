@@ -7,6 +7,8 @@ import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.items.ItemDef;
 import com.go.gopirates.sprites.items.powerUps.Shield;
+import com.go.gopirates.sprites.items.powerUps.Shoe;
+import com.go.gopirates.sprites.items.powerUps.TNTPowerUp;
 
 
 /**
@@ -31,12 +33,12 @@ public class Barrel extends InteractiveTileObject {
         if (object.getProperties().containsKey("shield")) {
             screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y),
                     Shield.class));
-//        } else if (object.getProperties().containsKey("shoes")) {
-//            screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y),
-//                    Shoes.class));
-//        } else if (object.getProperties().containsKey("TNT")) {
-//            screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y),
-//                    Tnt.class));
+        } else if (object.getProperties().containsKey("shoes")) {
+            screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y),
+                    Shoe.class));
+        } else if (object.getProperties().containsKey("TNT")) {
+            screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y),
+                    TNTPowerUp.class));
         }
     }
 //

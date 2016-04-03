@@ -23,9 +23,14 @@ import com.go.gopirates.sprites.Pirate;
 import com.go.gopirates.sprites.items.ItemDef;
 import com.go.gopirates.sprites.items.explosiveItems.Bomb;
 import com.go.gopirates.sprites.items.explosiveItems.ExplosiveItem;
+import com.go.gopirates.sprites.items.explosiveItems.TNT;
+import com.go.gopirates.sprites.items.noneInteractiveItems.NonInteractiveSprites;
 import com.go.gopirates.sprites.items.noneInteractiveItems.ShieldSprite;
+import com.go.gopirates.sprites.items.noneInteractiveItems.ShoeSprite;
 import com.go.gopirates.sprites.items.powerUps.PowerUp;
 import com.go.gopirates.sprites.items.powerUps.Shield;
+import com.go.gopirates.sprites.items.powerUps.Shoe;
+import com.go.gopirates.sprites.items.powerUps.TNTPowerUp;
 import com.go.gopirates.tools.B2WorldCreator;
 import com.go.gopirates.tools.WorldContactListener;
 
@@ -58,7 +63,6 @@ public class PlayScreen implements Screen {
     private B2WorldCreator creator;
 
     //sprites
-//    private Pirate player;
     private ArrayList<Pirate> players;
 
     private Music music;
@@ -142,12 +146,12 @@ public class PlayScreen implements Screen {
             if (idef.type == Shield.class) {
                 powerUps.add(new Shield(this, idef.position.x, idef.position.y));
             }
-//            if (idef.type == Shoes.class) {
-//                powerUps.add(new Shoes(this, idef.position.x, idef.position.y));
-//            }
-//            if (idef.type == Tnt.class) {
-//                powerUps.add(new Tnt(this, idef.position.x, idef.position.y));
-//            }
+            if (idef.type == Shoe.class) {
+                powerUps.add(new Shoe(this, idef.position.x, idef.position.y));
+            }
+            if (idef.type == TNTPowerUp.class) {
+                powerUps.add(new TNTPowerUp(this, idef.position.x, idef.position.y));
+            }
         }
     }
 
@@ -166,18 +170,18 @@ public class PlayScreen implements Screen {
         Pirate player = players.get(PirateGame.PLAYER_ID);
 
         //For phone:
-        player.b2body.setLinearVelocity(controller.touchpad.getKnobPercentX() * PirateGame.VELOCITY,
-                controller.touchpad.getKnobPercentY() * PirateGame.VELOCITY);
+        player.b2body.setLinearVelocity(controller.touchpad.getKnobPercentX() * PirateGame.DEFAULT_VELOCITY,
+                controller.touchpad.getKnobPercentY() * PirateGame.DEFAULT_VELOCITY);
 
         //for keyboard:
         if (controller.upPressed)
-            player.b2body.setLinearVelocity(0, PirateGame.VELOCITY);
+            player.b2body.setLinearVelocity(0, PirateGame.DEFAULT_VELOCITY);
         if (controller.downPressed)
-            player.b2body.setLinearVelocity(0, -PirateGame.VELOCITY);
+            player.b2body.setLinearVelocity(0, -PirateGame.DEFAULT_VELOCITY);
         if (controller.leftPressed)
-            player.b2body.setLinearVelocity(-PirateGame.VELOCITY, 0);
+            player.b2body.setLinearVelocity(-PirateGame.DEFAULT_VELOCITY, 0);
         if (controller.rightPressed)
-            player.b2body.setLinearVelocity(PirateGame.VELOCITY, 0);
+            player.b2body.setLinearVelocity(PirateGame.DEFAULT_VELOCITY, 0);
 
         if (!controller.previousBombPress & controller.bombPress & bombConfirm) {
             player.explosiveItems.add(new Bomb(this, player.b2body.getPosition().x, player.b2body.getPosition().y));
@@ -190,6 +194,14 @@ public class PlayScreen implements Screen {
                     player.redefinePirateWithShield();
                     player.otherSprites.add(new ShieldSprite(this, player.b2body.getPosition().x, player.b2body.getPosition().y));
                     break;
+                case SHOE:
+                    player.powerUpHolding = Pirate.PowerUpHolding.NONE;
+                    player.otherSprites.add(new ShoeSprite());
+                    break;
+                case TNT:
+                    player.powerUpHolding = Pirate.PowerUpHolding.NONE;
+                    player.explosiveItems.add(new TNT(this,player.b2body.getPosition().x, player.b2body.getPosition().y));
+
                 case NONE:
 
             }
@@ -220,7 +232,7 @@ public class PlayScreen implements Screen {
                 explosiveItems.update(dt);
             }
 
-            for (ShieldSprite sprite : player.otherSprites) {
+            for (NonInteractiveSprites sprite : player.otherSprites) {
                 sprite.update(dt);
             }
         }

@@ -12,6 +12,8 @@ import com.go.gopirates.screen.PlayScreen;
  * Created by zhaojuan on 20/3/16.
  */
 public abstract class ExplosiveItem extends Sprite {
+
+    final  int BOMB_RADIUS=80;
     protected PlayScreen screen;
     protected World world;
     protected boolean toDestroy;
