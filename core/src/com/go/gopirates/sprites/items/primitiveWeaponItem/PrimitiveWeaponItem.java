@@ -44,6 +44,8 @@ public abstract class PrimitiveWeaponItem  extends Sprite{
             super.draw(batch);
     }
 
+    public abstract void hitOnPlayer();
+
 
     public void destroy(){
         toDestroy = true;

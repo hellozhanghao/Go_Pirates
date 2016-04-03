@@ -1,5 +1,6 @@
 package com.go.gopirates.sprites.items.primitiveWeaponItem;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -37,7 +38,7 @@ public class Coconut extends PrimitiveWeaponItem {
         CircleShape shape=new CircleShape();
         shape.setRadius(80/ PirateGame.PPM);
         fixtureDef.filter.categoryBits = PirateGame.COCONUT_BIT;
-        fixtureDef.filter.maskBits = PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
+        fixtureDef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
                 PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT |  PirateGame.COCONUT_TREE_BIT;
 
 
@@ -60,6 +61,11 @@ public class Coconut extends PrimitiveWeaponItem {
         }
     }
 
+    @Override
+    public void hitOnPlayer() {
+        Gdx.app.log("Weapon","Hit by coconut");
+        destroy();
+    }
 
 
 }

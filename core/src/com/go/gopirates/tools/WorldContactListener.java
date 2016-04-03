@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.items.powerUps.PowerUp;
+import com.go.gopirates.sprites.items.primitiveWeaponItem.Coconut;
 import com.go.gopirates.sprites.tileObjects.Barrel;
 import com.go.gopirates.sprites.tileObjects.CoconutTree;
 import com.go.gopirates.sprites.tileObjects.Treasure;
@@ -64,6 +65,33 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((PowerUp) fixB.getUserData()).use();
                 break;
+
+            case PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT:
+                if(fixA.getFilterData().categoryBits == PirateGame.COCONUT_BIT)
+                    ((Coconut) fixA.getUserData()).destroy();
+                else
+                    ((Coconut) fixB.getUserData()).destroy();
+                break;
+
+            case PirateGame.COCONUT_BIT | PirateGame.COCONUT_TREE_BIT:
+                if(fixA.getFilterData().categoryBits == PirateGame.COCONUT_BIT)
+                    ((Coconut) fixA.getUserData()).destroy();
+                else
+                    ((Coconut) fixB.getUserData()).destroy();
+                break;
+            case PirateGame.COCONUT_BIT | PirateGame.BARREL_BIT:
+                if(fixA.getFilterData().categoryBits == PirateGame.COCONUT_BIT)
+                    ((Coconut) fixA.getUserData()).destroy();
+                else
+                    ((Coconut) fixB.getUserData()).destroy();
+                break;
+            case PirateGame.COCONUT_BIT | PirateGame.PLAYER_BIT:
+                if(fixA.getFilterData().categoryBits == PirateGame.COCONUT_BIT)
+                    ((Coconut) fixA.getUserData()).hitOnPlayer();
+                else
+                    ((Coconut) fixB.getUserData()).hitOnPlayer();
+                break;
+
 
 
 
