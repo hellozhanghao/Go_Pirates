@@ -13,6 +13,8 @@ import com.go.gopirates.screen.PlayScreen;
  */
 public class Coconut extends PrimitiveWeaponItem {
 
+    private final float COCONUT_RADIUS=80;
+
     private final float COCONUT_SPEED=100;
     public Coconut(PlayScreen screen) {
         super(screen);
@@ -29,14 +31,32 @@ public class Coconut extends PrimitiveWeaponItem {
     @Override
     public void defineItem() {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(screen.getPirate().b2body.getPosition().x,screen.getPirate().b2body.getPosition().y);
+
+
+        float posX=screen.getPirate().b2body.getPosition().x;
+        float posY=screen.getPirate().b2body.getPosition().y;
+
+        switch (screen.getPirate().direction){
+            case UP:
+                bodyDef.position.set(posX, posY + ((PirateGame.TILE_SIZE/2+COCONUT_RADIUS))/PirateGame.PPM);
+                break;
+            case DOWN:
+                bodyDef.position.set(posX, posY - ((PirateGame.TILE_SIZE/2+COCONUT_RADIUS))/PirateGame.PPM);
+                break;
+            case LEFT:
+                bodyDef.position.set(posX - ((PirateGame.TILE_SIZE/2+COCONUT_RADIUS))/PirateGame.PPM,posY);
+                break;
+            case RIGHT:
+                bodyDef.position.set(posX + ((PirateGame.TILE_SIZE/2+COCONUT_RADIUS))/PirateGame.PPM,posY);
+                break;
+        }
         bodyDef.type= BodyDef.BodyType.DynamicBody;
 
         body=world.createBody(bodyDef);
 
         FixtureDef fixtureDef=new FixtureDef();
         CircleShape shape=new CircleShape();
-        shape.setRadius(80/ PirateGame.PPM);
+        shape.setRadius(COCONUT_RADIUS/ PirateGame.PPM);
         fixtureDef.filter.categoryBits = PirateGame.COCONUT_BIT;
         fixtureDef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
                 PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT |  PirateGame.COCONUT_TREE_BIT;
