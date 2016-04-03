@@ -39,6 +39,9 @@ public class Pirate extends Sprite {
     public World world;
     public Body b2body;
 
+    private int health;
+    private float healthTimer;
+
 
     private TextureRegion pirateStandingDown;
     private TextureRegion pirateStandingUp;
@@ -75,7 +78,8 @@ public class Pirate extends Sprite {
         pirateState=PirateState.PIRATE;
         powerUpTimer=0;
         this.playerId=playerId;
-
+        health=PirateGame.ININTIAL_HEALTH;
+        healthTimer=0;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         String pirate="pirate0";
@@ -125,6 +129,7 @@ public class Pirate extends Sprite {
 
 
     public void update(float dt){
+        healthTimer+=dt;
         powerUpTimer+=dt;
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
@@ -309,7 +314,20 @@ public class Pirate extends Sprite {
     }
 
     public void hitInExplosion(){
-        Gdx.app.log("Pirate","Hit in explosion");
+        decreaseHealth();
+    }
+
+    public void decreaseHealth(){
+        if (healthTimer>PirateGame.PROTECTED_TIME_AFTER_DECREASE_HEALTH){
+            if (health>0){
+                health--;
+                Gdx.app.log("Pirate", "Health decrease 1, Current Health "+health);
+                healthTimer=0;
+            }else {
+                healthTimer=0;
+                Gdx.app.log("Pirate", "Pirated is dead.");
+            }
+        }
     }
 
 }

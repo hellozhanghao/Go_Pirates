@@ -155,7 +155,7 @@ public class Bomb extends ExplosiveItem {
             use();
             exploded=true;
         }
-        if ((stateTime > bombExplosionCountDown+1 || setToDestroy) && !destroyed && exploded){
+        if ((stateTime > bombExplosionCountDown+0.1 || setToDestroy) && !destroyed && exploded){
             setToDestroy();
             world.destroyBody(b2body);
             destroyed=true;

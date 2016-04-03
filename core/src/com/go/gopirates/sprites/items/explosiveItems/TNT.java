@@ -194,7 +194,7 @@ public class TNT extends ExplosiveItem {
             use();
             exploded=true;
         }
-        if ((stateTime > tntExplosionCountDown+1 || setToDestroy) && !destroyed && exploded){
+        if ((stateTime > tntExplosionCountDown+0.1 || setToDestroy) && !destroyed && exploded){
             setToDestroy();
             world.destroyBody(b2body);
             destroyed=true;
