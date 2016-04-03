@@ -29,12 +29,8 @@ public class WorldContactListener implements ContactListener {
     public void beginContact(Contact contact) {
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
-
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
-
         switch (cDef) {
-
-            //**************FINISHED*************//
             // Player vs. treasure
             case PirateGame.PLAYER_BIT | PirateGame.TREASURE_BIT:
                 if(fixA.getFilterData().categoryBits == PirateGame.PLAYER_BIT)
@@ -42,8 +38,7 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Treasure) fixA.getUserData()).onHit();
                 break;
-            // Reef vs. bomb
-            // Reef vs. bomb
+
             case PirateGame.BARREL_BIT | PirateGame.EXPLOSION_BIT:
                 if(fixA.getFilterData().categoryBits == PirateGame.BARREL_BIT)
                     ((Barrel) fixA.getUserData()).onHit();
@@ -95,37 +90,6 @@ public class WorldContactListener implements ContactListener {
 
 
 
-            // Pistol vs. Reef 
-            // TODO: 31/3/16 destroy bullet
-//            case PirateGame.COCONUT_BIT | PirateGame.BARREL_BIT:
-//                if (fixA.getFilterData().categoryBits != PirateGame.BARREL_BIT)
-//                    ((Pistol) fixA.getUserData()).setToDestroy();
-//                else
-//                    ((Pistol) fixB.getUserData()).setToDestroy();
-//                hitReef = true;
-//                break;
-
-//            // TODO: 27/3/16 fix pistol
-//            // Player vs. bullet(pistol)
-//            case PirateGame.PLAYER_BIT | PirateGame.COCONUT_BIT:
-//                if (hitReef) {
-//                    hitReef = false;
-//                    break;
-//                }
-//                if(fixA.getFilterData().categoryBits != PirateGame.PLAYER_BIT)
-//                    ((Pistol) fixA.getUserData()).hitByBullet();
-//                else
-//                    ((Pistol) fixB.getUserData()).hitByBullet();
-//                break;
-            // Player vs. bomb || TNT
-
-//            case PirateGame.PLAYER_BIT | PirateGame.TNT_BIT:
-//                if(fixA.getFilterData().categoryBits == PirateGame.PLAYER_BIT)
-//                    ((InteractiveTileObject) fixA.getUserData()).hitByTNT((Pirate) fixB.getUserData());
-//                else
-//                    ((InteractiveTileObject) fixB.getUserData()).hitByTNT((Pirate) fixA.getUserData());
-//                break;
-//
 //            //  Player vs. sword
 //            case PirateGame.PLAYER_BIT | PirateGame.SWORD_BIT:
 //                if(fixA.getFilterData().categoryBits == PirateGame.PLAYER_BIT)
@@ -134,13 +98,6 @@ public class WorldContactListener implements ContactListener {
 //                    ((Sword) fixB.getUserData()).hitBySword();
 //                break;
 //
-
-
-//            case PirateGame.PLAYER_BIT | PirateGame.EXPLOSION_BIT:
-//                screen.getPirate(PirateGame.THIS_PLAYER).decreaseHealth(25);
-//                break;
-
-
 
         }
     }

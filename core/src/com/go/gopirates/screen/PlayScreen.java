@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -13,7 +12,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -55,6 +53,8 @@ public class PlayScreen implements Screen {
     private Viewport gamePort;
 //    private Hud hud;
 
+    private Controller controller;
+
     //Tiled map variables
     private TmxMapLoader maploader;
     private TiledMap map;
@@ -70,15 +70,12 @@ public class PlayScreen implements Screen {
 
     private Music music;
 
-    private boolean changeScreen;
-    private Stage stage;
-    private Texture fadeOutTexture;
-
+    //powerups
     private Array<PowerUp> powerUps;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
 
-    private Controller controller;
+
 
     //Control number of bombs:
     private float bombConfirmTimer;
@@ -88,7 +85,6 @@ public class PlayScreen implements Screen {
     public PlayScreen(PirateGame game) {
         atlas = new TextureAtlas("img/pirates.pack");
         this.game = game;
-//        this.thisPlayerIndex=thisPlayerIndex;
         //create cam used to follow mario through cam world
         gamecam = new OrthographicCamera();
         gamecam.setToOrtho(false, PirateGame.V_WIDTH, PirateGame.V_HEIGHT);
@@ -97,7 +93,6 @@ public class PlayScreen implements Screen {
 
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
-//        map=maploader.load("tiled_map/map0.tmx");
         map = maploader.load("tiled_map/testMap.tmx");
 
         renderer = new OrthogonalTiledMapRenderer(map, 1 / PirateGame.PPM);
@@ -109,15 +104,11 @@ public class PlayScreen implements Screen {
         //allows for debug lines of our box2d world.
         b2dr = new Box2DDebugRenderer();
         creator = new B2WorldCreator(this);
-        //create mario in our game world
-//        for (int i = 0; i < 4; i++) {
-//            players.add(new Pirate(this));
-//        }
+        //create pirates in our game world
         players = new ArrayList<Pirate>();
         for (int i = 0; i < 4; i++) {
             players.add(new Pirate(this, i));
         }
-//
 
         //create our game HUD for scores/timers/level info
 //        hud = new Hud(PirateGame.batch,players.get(thisPlayerIndex));
@@ -126,12 +117,11 @@ public class PlayScreen implements Screen {
         controller.create();
 
         world.setContactListener(new WorldContactListener(this));
-//
         music = PirateGame.manager.get("audio/music/pirate.mp3", Music.class);
         music.setLooping(true);
         music.setVolume(0.2f);
         music.play();
-//
+
         powerUps = new Array<PowerUp>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
 
@@ -139,9 +129,7 @@ public class PlayScreen implements Screen {
         bombConfirm = true;
     }
 
-    public void spawnItem(ItemDef idef) {
-        itemsToSpawn.add(idef);
-    }
+
 
     public void handleSpawningItems() {
         if (!itemsToSpawn.isEmpty()) {
@@ -161,9 +149,7 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public TextureAtlas getAtlas() {
-        return atlas;
-    }
+
 
     public void handleInput(float dt) {
         bombConfirmTimer += dt;
@@ -171,14 +157,11 @@ public class PlayScreen implements Screen {
             bombConfirmTimer = 0;
             bombConfirm = true;
         }
-
-
         Pirate player = players.get(PirateGame.PLAYER_ID);
 
         //For phone:
         player.b2body.setLinearVelocity(controller.touchpad.getKnobPercentX() * PirateGame.DEFAULT_VELOCITY,
                 controller.touchpad.getKnobPercentY() * PirateGame.DEFAULT_VELOCITY);
-
         //for keyboard:
         if (controller.upPressed)
             player.b2body.setLinearVelocity(0, PirateGame.DEFAULT_VELOCITY);
@@ -189,10 +172,12 @@ public class PlayScreen implements Screen {
         if (controller.rightPressed)
             player.b2body.setLinearVelocity(PirateGame.DEFAULT_VELOCITY, 0);
 
+        //Bomb Press:
         if (!controller.previousBombPress & controller.bombPress & bombConfirm) {
             player.explosiveItems.add(new Bomb(this, player.b2body.getPosition().x, player.b2body.getPosition().y));
             bombConfirm = false;
         }
+        //Powerup Press
         if (!controller.previousPowerUpPress & controller.powerUpPress) {
             switch (player.powerUpHolding) {
                 case SHIED:
@@ -214,13 +199,6 @@ public class PlayScreen implements Screen {
                     break;
             }
         }
-//        else if (controller.isPistolPressed())
-//            player.fire();
-//        else if (controller.isSwordPressed())
-//            player.useSword();
-//        else if (controller.isPowerUpPressed())
-//            player.usePowerUp();
-
     }
 
 
@@ -248,21 +226,13 @@ public class PlayScreen implements Screen {
                 primitiveWeaponItem.update(dt);
             }
         }
-
-
-//
 //        hud.update(dt);
 
-        /*//attach our gamecam to our players.x coordinate
-        if(player.currentState != Pirate.State.DEAD) {
-            gamecam.position.x = player.b2body.getPosition().x;
-        }*/
 
         Pirate player = getPirate();
         //update our gamecam with correct coordinates after changes
         //x position
         gamecam.setToOrtho(false, PirateGame.V_WIDTH / PirateGame.PPM, PirateGame.V_HEIGHT / PirateGame.PPM);
-
 
         if (player.b2body.getPosition().x < (PirateGame.V_WIDTH / PirateGame.PPM) / 2)
             gamecam.position.x = gamePort.getWorldWidth() / 2;
@@ -334,13 +304,7 @@ public class PlayScreen implements Screen {
         controller.resize(width, height);
     }
 
-    public TiledMap getMap() {
-        return map;
-    }
 
-    public World getWorld() {
-        return world;
-    }
 
     @Override
     public void pause() {
@@ -370,9 +334,25 @@ public class PlayScreen implements Screen {
 //    public Hud getHud(){ return hud; }
 
 
-    // TODO: 3/4/16 Add multiplayer support
+    //Getters
     public Pirate getPirate() {
         return players.get(PirateGame.PLAYER_ID);
+    }
+    public TiledMap getMap() {
+        return map;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public TextureAtlas getAtlas() {
+        return atlas;
+    }
+
+    //Spawing item helper
+    public void spawnItem(ItemDef idef) {
+        itemsToSpawn.add(idef);
     }
 
 }
