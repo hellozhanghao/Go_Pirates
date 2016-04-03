@@ -24,6 +24,8 @@ import java.util.ArrayList;
  */
 public class Pirate extends Sprite {
 
+    public int playerId;
+
     public enum Direction {UP, DOWN, LEFT, RIGHT}
     public enum State { WALKING, STANDING}
 
@@ -55,7 +57,7 @@ public class Pirate extends Sprite {
     private PirateState pirateState;
     private float stateTimer;
     private float powerUpTimer;
-    public Pirate(PlayScreen screen){
+    public Pirate(PlayScreen screen, int playerId){
         //initialize default values
         this.screen = screen;
         this.world = screen.getWorld();
@@ -68,10 +70,11 @@ public class Pirate extends Sprite {
         otherSprites=new ArrayList<ShieldSprite>();
         pirateState=PirateState.PIRATE;
         powerUpTimer=0;
+        this.playerId=playerId;
 
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        String pirate="pirate"+PirateGame.PLAYER_ID;
+        String pirate="pirate0";
 
 
         frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),0*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
@@ -132,10 +135,27 @@ public class Pirate extends Sprite {
 
     private void definePirate() {
         BodyDef bodyDef = new BodyDef();
-        switch (PirateGame.PLAYER_ID){
+        switch (playerId){
             case 0:
                 bodyDef.position.set(PirateGame.TILE_SIZE/PirateGame.PPM+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
                                      PirateGame.TILE_SIZE/PirateGame.PPM+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
+                break;
+            case 1:
+                bodyDef.position.set((PirateGame.TILE_SIZE/PirateGame.PPM)*(PirateGame.MAP_SIZE-2)+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
+                                      PirateGame.TILE_SIZE/PirateGame.PPM+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
+                break;
+            case 2:
+                bodyDef.position.set(PirateGame.TILE_SIZE/PirateGame.PPM+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
+                                    (PirateGame.TILE_SIZE/PirateGame.PPM)*(PirateGame.MAP_SIZE-2)+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
+                break;
+            case 3:
+                bodyDef.position.set((PirateGame.TILE_SIZE/PirateGame.PPM)*(PirateGame.MAP_SIZE-2)+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
+                                     (PirateGame.TILE_SIZE/PirateGame.PPM)*(PirateGame.MAP_SIZE-2)+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
+                break;
+            default:
+                bodyDef.position.set(PirateGame.TILE_SIZE/PirateGame.PPM+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
+                        PirateGame.TILE_SIZE/PirateGame.PPM+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
+
         }
 
         bodyDef.type= BodyDef.BodyType.DynamicBody;

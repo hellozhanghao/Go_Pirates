@@ -10,13 +10,9 @@ import com.go.gopirates.sprites.Pirate;
 /**
  * Created by zhanghao on 3/4/16.
  */
-public class Shield extends PowerUp {
-    public Shield(PlayScreen screen, float x, float y) {
+public class Shoe extends PowerUp {
+    public Shoe(PlayScreen screen, float x, float y) {
         super(screen, x, y);
-
-//        setRegion(screen.getAtlas().findRegion("shield"), 0, 0, 4, 4);
-//        velocity = new Vector2(0.7f, 0);
-
     }
 
     @Override
@@ -39,11 +35,7 @@ public class Shield extends PowerUp {
     @Override
     public void use() {
         destroy();
-        System.out.println("Take shield");
-        screen.getPirate().powerUpHolding= Pirate.PowerUpHolding.SHIED;
-    }
-
-    public void update (float dt) {
-        super.update(dt);
+        System.out.println("Take SHOE");
+        screen.getPirate().powerUpHolding= Pirate.PowerUpHolding.SHOE;
     }
 }

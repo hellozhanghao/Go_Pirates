@@ -20,7 +20,7 @@ public class PirateGame extends Game {
     public static final int MAP_SIZE=19;
 
     //User Selct
-    public static final int PLAYER_ID=0;
+    public static final int PLAYER_ID=2;
 
     //Settings:
     public static final int VELOCITY=150;
