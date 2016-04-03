@@ -41,9 +41,5 @@ public class Barrel extends InteractiveTileObject {
                     TNTPowerUp.class));
         }
     }
-//
-//    // TODO: 27/3/16 Handle reef destroyed
-//    public void destroyReef() {
-//
-//    }
+
 }

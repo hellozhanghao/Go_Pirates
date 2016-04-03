@@ -16,6 +16,7 @@ import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.items.explosiveItems.ExplosiveItem;
 import com.go.gopirates.sprites.items.noneInteractiveItems.NonInteractiveSprites;
+import com.go.gopirates.sprites.items.primitiveWeaponItem.PrimitiveWeaponItem;
 
 import java.util.ArrayList;
 
@@ -52,7 +53,8 @@ public class Pirate extends Sprite {
     private final float FRAME_DURATION=0.1f;
 
     public ArrayList<ExplosiveItem> explosiveItems;
-    public ArrayList<NonInteractiveSprites> otherSprites;
+    public ArrayList<NonInteractiveSprites> nonInteractiveSprites;
+    public ArrayList<PrimitiveWeaponItem> primitiveWeaponItems;
 
     private enum PirateState{ PIRATE, PIRATE_WITH_SHIELD}
     private PirateState pirateState;
@@ -68,7 +70,8 @@ public class Pirate extends Sprite {
         powerUpHolding=PowerUpHolding.NONE;
         stateTimer = 0;
         explosiveItems=new ArrayList<ExplosiveItem>();
-        otherSprites=new ArrayList<NonInteractiveSprites>();
+        nonInteractiveSprites =new ArrayList<NonInteractiveSprites>();
+        primitiveWeaponItems = new ArrayList<PrimitiveWeaponItem>();
         pirateState=PirateState.PIRATE;
         powerUpTimer=0;
         this.playerId=playerId;

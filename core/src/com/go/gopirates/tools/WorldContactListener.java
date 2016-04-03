@@ -9,6 +9,7 @@ import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.items.powerUps.PowerUp;
 import com.go.gopirates.sprites.tileObjects.Barrel;
+import com.go.gopirates.sprites.tileObjects.CoconutTree;
 import com.go.gopirates.sprites.tileObjects.Treasure;
 
 
@@ -49,6 +50,13 @@ public class WorldContactListener implements ContactListener {
                     ((Barrel) fixB.getUserData()).onHit();
                 break;
 
+            case PirateGame.COCONUT_TREE_BIT | PirateGame.EXPLOSION_BIT:
+                if(fixA.getFilterData().categoryBits == PirateGame.COCONUT_TREE_BIT)
+                    ((CoconutTree) fixA.getUserData()).onHit();
+                else
+                    ((CoconutTree) fixB.getUserData()).onHit();
+                break;
+
              //Player vs. power up
             case PirateGame.POWERUP_BIT | PirateGame.PLAYER_BIT:
                 if(fixA.getFilterData().categoryBits == PirateGame.POWERUP_BIT)
@@ -56,6 +64,8 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((PowerUp) fixB.getUserData()).use();
                 break;
+
+
 
             // Pistol vs. Reef 
             // TODO: 31/3/16 destroy bullet

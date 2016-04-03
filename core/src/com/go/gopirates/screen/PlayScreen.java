@@ -27,10 +27,13 @@ import com.go.gopirates.sprites.items.explosiveItems.TNT;
 import com.go.gopirates.sprites.items.noneInteractiveItems.NonInteractiveSprites;
 import com.go.gopirates.sprites.items.noneInteractiveItems.ShieldSprite;
 import com.go.gopirates.sprites.items.noneInteractiveItems.ShoeSprite;
+import com.go.gopirates.sprites.items.powerUps.CoconutPowerUp;
 import com.go.gopirates.sprites.items.powerUps.PowerUp;
 import com.go.gopirates.sprites.items.powerUps.Shield;
 import com.go.gopirates.sprites.items.powerUps.Shoe;
 import com.go.gopirates.sprites.items.powerUps.TNTPowerUp;
+import com.go.gopirates.sprites.items.primitiveWeaponItem.Coconut;
+import com.go.gopirates.sprites.items.primitiveWeaponItem.PrimitiveWeaponItem;
 import com.go.gopirates.tools.B2WorldCreator;
 import com.go.gopirates.tools.WorldContactListener;
 
@@ -152,6 +155,9 @@ public class PlayScreen implements Screen {
             if (idef.type == TNTPowerUp.class) {
                 powerUps.add(new TNTPowerUp(this, idef.position.x, idef.position.y));
             }
+            if (idef.type == CoconutPowerUp.class) {
+                powerUps.add(new CoconutPowerUp(this, idef.position.x, idef.position.y));
+            }
         }
     }
 
@@ -192,18 +198,20 @@ public class PlayScreen implements Screen {
                 case SHIED:
                     player.powerUpHolding = Pirate.PowerUpHolding.NONE;
                     player.redefinePirateWithShield();
-                    player.otherSprites.add(new ShieldSprite(this, player.b2body.getPosition().x, player.b2body.getPosition().y));
+                    player.nonInteractiveSprites.add(new ShieldSprite(this, player.b2body.getPosition().x, player.b2body.getPosition().y));
                     break;
                 case SHOE:
                     player.powerUpHolding = Pirate.PowerUpHolding.NONE;
-                    player.otherSprites.add(new ShoeSprite());
+                    player.nonInteractiveSprites.add(new ShoeSprite());
                     break;
                 case TNT:
                     player.powerUpHolding = Pirate.PowerUpHolding.NONE;
                     player.explosiveItems.add(new TNT(this,player.b2body.getPosition().x, player.b2body.getPosition().y));
-                case NONE:
-
-
+                    break;
+                case COCONUT:
+                    player.powerUpHolding = Pirate.PowerUpHolding.NONE;
+                    player.primitiveWeaponItems.add(new Coconut(this));
+                    break;
             }
         }
 //        else if (controller.isPistolPressed())
@@ -232,8 +240,12 @@ public class PlayScreen implements Screen {
                 explosiveItems.update(dt);
             }
 
-            for (NonInteractiveSprites sprite : player.otherSprites) {
+            for (NonInteractiveSprites sprite : player.nonInteractiveSprites) {
                 sprite.update(dt);
+            }
+
+            for (PrimitiveWeaponItem primitiveWeaponItem: player.primitiveWeaponItems){
+                primitiveWeaponItem.update(dt);
             }
         }
 

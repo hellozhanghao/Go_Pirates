@@ -27,7 +27,7 @@ public class Bomb extends ExplosiveItem {
     boolean exploded;
     boolean redefined;
     Body b2body;
-    private int bombExplosionCountDown=4;
+    private int bombExplosionCountDown=1;
 
     public Bomb(PlayScreen screen, float x, float y) {
         setBounds(x, y, PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE/ PirateGame.PPM);
@@ -49,7 +49,7 @@ public class Bomb extends ExplosiveItem {
         shape.setRadius(BOMB_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = PirateGame.NOTHING_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+        fdef.filter.maskBits = PirateGame.BARREL_BIT |PirateGame.COCONUT_TREE_BIT|
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
         fdef.shape = shape;
@@ -71,7 +71,7 @@ public class Bomb extends ExplosiveItem {
         shape.setRadius(BOMB_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = PirateGame.BOMB_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+        fdef.filter.maskBits = PirateGame.BARREL_BIT|PirateGame.COCONUT_TREE_BIT |
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
         fdef.shape = shape;
@@ -94,7 +94,7 @@ public class Bomb extends ExplosiveItem {
         shape.setRadius(BOMB_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = PirateGame.NOTHING_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+        fdef.filter.maskBits = PirateGame.BARREL_BIT|PirateGame.COCONUT_TREE_BIT |
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
         fdef.shape = shape;
@@ -106,7 +106,7 @@ public class Bomb extends ExplosiveItem {
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("explosionCross1");
         fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+        fdef.filter.maskBits = PirateGame.BARREL_BIT|PirateGame.COCONUT_TREE_BIT |
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
 
@@ -117,7 +117,7 @@ public class Bomb extends ExplosiveItem {
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("explosionCross2");
         fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+        fdef.filter.maskBits = PirateGame.BARREL_BIT|PirateGame.COCONUT_TREE_BIT |
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
         EdgeShape exploEdge3 = new EdgeShape();
@@ -127,7 +127,7 @@ public class Bomb extends ExplosiveItem {
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("explosionCross3");
         fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+        fdef.filter.maskBits = PirateGame.BARREL_BIT|PirateGame.COCONUT_TREE_BIT |
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
 
@@ -138,7 +138,7 @@ public class Bomb extends ExplosiveItem {
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("explosionCross4");
         fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+        fdef.filter.maskBits = PirateGame.BARREL_BIT|PirateGame.COCONUT_TREE_BIT |
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
     }

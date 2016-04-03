@@ -23,7 +23,4 @@ public class Shield extends PowerUp {
         screen.getPirate().powerUpHolding= Pirate.PowerUpHolding.SHIED;
     }
 
-    public void update (float dt) {
-        super.update(dt);
-    }
 }
