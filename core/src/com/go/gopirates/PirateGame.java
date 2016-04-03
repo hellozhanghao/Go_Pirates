@@ -3,6 +3,8 @@ package com.go.gopirates;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.go.gopirates.screen.PlayScreen;
 
@@ -12,18 +14,16 @@ public class PirateGame extends Game {
     public static final int V_WIDTH = 3200;
     public static final int V_HEIGHT = 1800;
     public static final float PPM = 10;
-    public static final float EDGE_POSITION_X = 400f;
-    public static final float EDGE_POSITION_Y = 400f;
 
     //Tile Map setting
     public static final int TILE_SIZE=256;
     public static final int MAP_SIZE=19;
 
     //User Selct
-    public static final int PLAYER_ID=2;
+    public static final int PLAYER_ID=0;
 
     //Settings:
-    public static  int DEFAULT_VELOCITY =40;
+    public static  int DEFAULT_VELOCITY =100;
     public static final float BUTTON_INTERVAL=1f;
     public static final float POWERUP_TIME=10f;
 
@@ -55,6 +55,17 @@ public class PirateGame extends Game {
     public void create () {
         batch = new SpriteBatch();
         manager = new AssetManager();
+        manager.load("audio/sounds/bomb.ogg", Sound.class);
+        manager.load("audio/music/pirate.mp3", Music.class);
+        manager.load("audio/music/mario_music.ogg", Music.class);
+        manager.load("audio/sounds/coin.wav", Sound.class);
+        manager.load("audio/sounds/bump.wav", Sound.class);
+        manager.load("audio/sounds/breakblock.wav", Sound.class);
+        manager.load("audio/sounds/powerup_spawn.wav", Sound.class);
+        manager.load("audio/sounds/powerup.wav", Sound.class);
+        manager.load("audio/sounds/powerdown.wav", Sound.class);
+        manager.load("audio/sounds/stomp.wav", Sound.class);
+        manager.load("audio/sounds/mariodie.wav", Sound.class);
         manager.finishLoading();
 
         setScreen(new PlayScreen(this));

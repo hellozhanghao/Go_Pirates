@@ -1,6 +1,7 @@
 package com.go.gopirates.sprites.items.explosiveItems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g3d.model.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -81,6 +82,8 @@ public class Bomb extends ExplosiveItem {
     public void use() {
         Vector2 position = b2body.getPosition();
         world.destroyBody(b2body);
+
+        PirateGame.manager.get("audio/sounds/bomb.ogg", Sound.class).play();
 
         BodyDef bdef = new BodyDef();
         bdef.position.set(position);

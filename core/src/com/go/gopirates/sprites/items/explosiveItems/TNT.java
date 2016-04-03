@@ -1,6 +1,7 @@
 package com.go.gopirates.sprites.items.explosiveItems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g3d.model.Animation;
 import com.badlogic.gdx.math.Vector2;
@@ -47,7 +48,7 @@ public class TNT extends ExplosiveItem {
 
     @Override
     public void defineItem() {
-        Gdx.app.log("Explosive","TXT placed");
+        Gdx.app.log("Explosive", "TXT placed");
         BodyDef bdef = new BodyDef();
         bdef.position.set(getX(), getY());
         bdef.type = BodyDef.BodyType.StaticBody;
@@ -87,6 +88,7 @@ public class TNT extends ExplosiveItem {
 
     @Override
     public void use() {
+        PirateGame.manager.get("audio/sounds/bomb.ogg", Sound.class).play();
 
         Vector2 position = b2body.getPosition();
         world.destroyBody(b2body);

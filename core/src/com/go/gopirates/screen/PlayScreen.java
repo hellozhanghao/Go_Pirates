@@ -124,10 +124,10 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(new WorldContactListener(this));
 //
-//        music = PirateGame.manager.get("audio/music/mario_music.ogg", Music.class);
-//        music.setLooping(true);
-//        music.setVolume(0.3f);
-//        music.play();
+        music = PirateGame.manager.get("audio/music/pirate.mp3", Music.class);
+        music.setLooping(true);
+        music.setVolume(0.2f);
+        music.play();
 //
         powerUps = new Array<PowerUp>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
@@ -201,8 +201,8 @@ public class PlayScreen implements Screen {
                 case TNT:
                     player.powerUpHolding = Pirate.PowerUpHolding.NONE;
                     player.explosiveItems.add(new TNT(this,player.b2body.getPosition().x, player.b2body.getPosition().y));
-
                 case NONE:
+
 
             }
         }

@@ -1,5 +1,6 @@
 package com.go.gopirates.sprites.items.noneInteractiveItems;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -21,6 +22,7 @@ public class ShieldSprite extends NonInteractiveSprites {
     Body b2body;
 
     public ShieldSprite(PlayScreen screen, float x, float y) {
+        PirateGame.manager.get("audio/sounds/powerup.wav", Sound.class).play();
         setBounds(x, y, PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE/ PirateGame.PPM);
         this.screen = screen;
         this.world = screen.getWorld();
