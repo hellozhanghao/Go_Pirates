@@ -74,13 +74,9 @@ public class PlayScreen implements Screen {
     private Array<PowerUp> powerUps;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
-
-
-
     //Control number of bombs:
     private float bombConfirmTimer;
     private boolean bombConfirm;
-
 
     public PlayScreen(PirateGame game) {
         atlas = new TextureAtlas("img/pirates.pack");
@@ -129,8 +125,6 @@ public class PlayScreen implements Screen {
         bombConfirm = true;
     }
 
-
-
     public void handleSpawningItems() {
         if (!itemsToSpawn.isEmpty()) {
             ItemDef idef = itemsToSpawn.poll();
@@ -148,8 +142,6 @@ public class PlayScreen implements Screen {
             }
         }
     }
-
-
 
     public void handleInput(float dt) {
         bombConfirmTimer += dt;
@@ -200,7 +192,6 @@ public class PlayScreen implements Screen {
             }
         }
     }
-
 
     public void update(float dt) {
         //handle user input first
@@ -296,7 +287,6 @@ public class PlayScreen implements Screen {
 
     }
 
-
     @Override
     public void resize(int width, int height) {
         //updated our game viewport
@@ -304,11 +294,8 @@ public class PlayScreen implements Screen {
         controller.resize(width, height);
     }
 
-
-
     @Override
-    public void pause() {
-    }
+    public void pause() {}
 
     @Override
     public void resume() {

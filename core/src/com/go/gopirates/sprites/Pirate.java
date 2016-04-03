@@ -134,8 +134,6 @@ public class Pirate extends Sprite {
         }
     }
 
-
-
     private void definePirate() {
         BodyDef bodyDef = new BodyDef();
         switch (playerId){
@@ -308,6 +306,10 @@ public class Pirate extends Sprite {
 
     public void draw(Batch batch){
         super.draw(batch);
+    }
+
+    public void hitInExplosion(){
+        Gdx.app.log("Pirate","Hit in explosion");
     }
 
 }

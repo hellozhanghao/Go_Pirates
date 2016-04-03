@@ -14,7 +14,6 @@ import com.go.gopirates.screen.PlayScreen;
 public class Coconut extends PrimitiveWeaponItem {
 
     private final float COCONUT_RADIUS=80;
-
     private final float COCONUT_SPEED=100;
     public Coconut(PlayScreen screen) {
         super(screen);

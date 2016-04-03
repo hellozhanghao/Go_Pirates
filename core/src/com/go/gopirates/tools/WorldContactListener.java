@@ -86,6 +86,9 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Coconut) fixB.getUserData()).hitOnPlayer();
                 break;
+            case PirateGame.PLAYER_BIT | PirateGame.EXPLOSION_BIT:
+                screen.getPirate().hitInExplosion();
+                break;
 
 
 
