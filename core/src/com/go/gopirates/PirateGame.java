@@ -25,6 +25,7 @@ public class PirateGame extends Game {
     //Settings:
     public static final int VELOCITY=150;
     public static final float BUTTON_INTERVAL=1f;
+    public static final float POWERUP_TIME=5f;
 
 
     //Box2D Collision Bits
@@ -37,7 +38,7 @@ public class PirateGame extends Game {
     public static final short EXPLOSION_BIT = 16;
     public static final short TNT_BIT = 32;
     public static final short TREASURE_BIT = 64;
-    public static final short UNUSED = 128;
+    public static final short SHIELD_BIT = 128;
     public static final short BOMB_BIT = 256;
     public static final short COCONUT_BIT = 2048;
     public static final short SWORD_BIT = 4096;

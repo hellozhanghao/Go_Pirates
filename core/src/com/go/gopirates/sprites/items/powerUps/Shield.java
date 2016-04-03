@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screens.PlayScreen;
+import com.go.gopirates.sprites.Pirate;
 
 /**
  * Created by zhanghao on 3/4/16.
@@ -17,6 +18,7 @@ public class Shield extends PowerUp {
 
 //        setRegion(screen.getAtlas().findRegion("shield"), 0, 0, 4, 4);
 //        velocity = new Vector2(0.7f, 0);
+
     }
 
     @Override
@@ -41,7 +43,7 @@ public class Shield extends PowerUp {
         destroy();
         System.out.println("Take shield");
         used = true;
-
+        screen.getPirate().powerUpHolding= Pirate.PowerUpHolding.SHIED;
     }
 
     public void update (float dt) {

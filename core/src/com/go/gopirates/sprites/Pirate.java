@@ -1,9 +1,11 @@
 package com.go.gopirates.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screens.PlayScreen;
 import com.go.gopirates.sprites.items.explosiveItems.ExplosiveItem;
+import com.go.gopirates.sprites.items.noneInteractiveItems.ShieldSprite;
 
 import java.util.ArrayList;
 
@@ -24,10 +27,11 @@ public class Pirate extends Sprite {
     public enum Direction {UP, DOWN, LEFT, RIGHT}
     public enum State { WALKING, STANDING}
 
-    public enum PowerUpHolding {TNT, COCONUT, SHIED, SHOE}
+    public enum PowerUpHolding {TNT, COCONUT, SHIED, SHOE, NONE}
     public State currentState;
     public State previousState;
     public Direction direction;
+    public PowerUpHolding powerUpHolding;
 
     public World world;
     public Body b2body;
@@ -41,16 +45,16 @@ public class Pirate extends Sprite {
     private Animation pirateWalkingLeft;
     private Animation pirateWalkingRight;
 
-    private float stateTimer;
-    private boolean runGrowAnimation;
-    private boolean timeToDefineBigMario;
-    private boolean timeToRedefineMario;
-    private boolean marioIsDead;
     private PlayScreen screen;
     private final float FRAME_DURATION=0.1f;
 
     public ArrayList<ExplosiveItem> explosiveItems;
+    public ArrayList<ShieldSprite> otherSprites;
 
+    private enum PirateState{ PIRATE, PIRATE_WITH_SHIELD}
+    private PirateState pirateState;
+    private float stateTimer;
+    private float powerUpTimer;
     public Pirate(PlayScreen screen){
         //initialize default values
         this.screen = screen;
@@ -58,8 +62,13 @@ public class Pirate extends Sprite {
         currentState = State.STANDING;
         previousState = State.STANDING;
         direction=Direction.DOWN;
+        powerUpHolding=PowerUpHolding.NONE;
         stateTimer = 0;
         explosiveItems=new ArrayList<ExplosiveItem>();
+        otherSprites=new ArrayList<ShieldSprite>();
+        pirateState=PirateState.PIRATE;
+        powerUpTimer=0;
+
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         String pirate="pirate"+PirateGame.PLAYER_ID;
@@ -106,9 +115,17 @@ public class Pirate extends Sprite {
 
     }
 
+
+
     public void update(float dt){
+        powerUpTimer+=dt;
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
+
+        if (powerUpTimer>PirateGame.POWERUP_TIME & pirateState!=PirateState.PIRATE){
+            redefinePirate();
+        }
+        System.out.println(pirateState+" "+powerUpTimer);
     }
 
 
@@ -138,6 +155,59 @@ public class Pirate extends Sprite {
         shape.dispose();
         b2body.createFixture(fixtureDef).setUserData(this);
 
+    }
+
+    public void redefinePirate(){
+        pirateState=PirateState.PIRATE;
+        Vector2 position = b2body.getPosition();
+        world.destroyBody(b2body);
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(position);
+
+        bodyDef.type= BodyDef.BodyType.DynamicBody;
+        bodyDef.linearDamping = 5f;
+        b2body=world.createBody(bodyDef);
+
+        FixtureDef fixtureDef=new FixtureDef();
+        CircleShape shape=new CircleShape();
+        shape.setRadius(128/PirateGame.PPM);
+        fixtureDef.filter.categoryBits = PirateGame.PLAYER_BIT;
+        fixtureDef.filter.maskBits = PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
+                PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT | PirateGame.POWERUP_BIT|
+                PirateGame.EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT;
+
+        fixtureDef.shape=shape;
+        b2body.createFixture(fixtureDef);
+        shape.dispose();
+        b2body.createFixture(fixtureDef).setUserData(this);
+    }
+
+    public  void redefinePirateWithShield(){
+        pirateState=PirateState.PIRATE_WITH_SHIELD;
+        powerUpTimer=0;
+        Gdx.app.log("Pirate", "Redefine pirate with shield");
+        Vector2 position = b2body.getPosition();
+        world.destroyBody(b2body);
+
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(position);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        bdef.linearDamping = 5f;
+        b2body = world.createBody(bdef);
+
+
+        FixtureDef fixtureDef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(128 / PirateGame.PPM);
+        fixtureDef.filter.categoryBits = PirateGame.SHIELD_BIT;
+        fixtureDef.filter.maskBits = PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
+                PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT | PirateGame.POWERUP_BIT| PirateGame.COCONUT_TREE_BIT;
+
+        fixtureDef.shape=shape;
+        b2body.createFixture(fixtureDef);
+        shape.dispose();
+        b2body.createFixture(fixtureDef).setUserData(this);
     }
 
     private State getState(){
