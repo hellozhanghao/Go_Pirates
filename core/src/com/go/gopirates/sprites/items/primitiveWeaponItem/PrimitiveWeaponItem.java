@@ -44,7 +44,12 @@ public abstract class PrimitiveWeaponItem  extends Sprite{
             super.draw(batch);
     }
 
-    public abstract void hitOnPlayer();
+    public  void hitOnPlayer(){
+        destroy();
+        screen.getPirate().decreaseHealth();
+    }
+
+
 
 
     public void destroy(){

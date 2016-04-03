@@ -32,6 +32,7 @@ import com.go.gopirates.sprites.items.powerUps.Shoe;
 import com.go.gopirates.sprites.items.powerUps.TNTPowerUp;
 import com.go.gopirates.sprites.items.primitiveWeaponItem.Coconut;
 import com.go.gopirates.sprites.items.primitiveWeaponItem.PrimitiveWeaponItem;
+import com.go.gopirates.sprites.items.primitiveWeaponItem.Sword;
 import com.go.gopirates.tools.B2WorldCreator;
 import com.go.gopirates.tools.WorldContactListener;
 
@@ -78,6 +79,9 @@ public class PlayScreen implements Screen {
     private float bombConfirmTimer;
     private boolean bombConfirm;
 
+    private float swordConfirmTimer;
+    private boolean swordConfirm;
+
     public PlayScreen(PirateGame game) {
         atlas = new TextureAtlas("img/pirates.pack");
         this.game = game;
@@ -123,6 +127,9 @@ public class PlayScreen implements Screen {
 
         bombConfirmTimer = 0;
         bombConfirm = true;
+
+        swordConfirmTimer=0;
+        swordConfirm=true;
     }
 
     public void handleSpawningItems() {
@@ -149,6 +156,12 @@ public class PlayScreen implements Screen {
             bombConfirmTimer = 0;
             bombConfirm = true;
         }
+
+        swordConfirmTimer+=dt;
+        if (swordConfirmTimer > PirateGame.BUTTON_INTERVAL){
+            swordConfirmTimer = 0;
+            swordConfirm =true;
+        }
         Pirate player = players.get(PirateGame.PLAYER_ID);
 
         //For phone:
@@ -168,6 +181,11 @@ public class PlayScreen implements Screen {
         if (!controller.previousBombPress & controller.bombPress & bombConfirm) {
             player.explosiveItems.add(new Bomb(this, player.b2body.getPosition().x, player.b2body.getPosition().y));
             bombConfirm = false;
+        }
+        //Sword Press:
+        if (!controller.previousSwordPress & controller.swordPress & swordConfirm){
+            player.primitiveWeaponItems.add(new Sword(this));
+            swordConfirm=false;
         }
         //Powerup Press
         if (!controller.previousPowerUpPress & controller.powerUpPress) {

@@ -82,8 +82,8 @@ public class Coconut extends PrimitiveWeaponItem {
 
     @Override
     public void hitOnPlayer() {
+        super.hitOnPlayer();
         Gdx.app.log("Weapon","Hit by coconut");
-        destroy();
     }
 
 

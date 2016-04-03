@@ -9,6 +9,7 @@ import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.items.powerUps.PowerUp;
 import com.go.gopirates.sprites.items.primitiveWeaponItem.Coconut;
+import com.go.gopirates.sprites.items.primitiveWeaponItem.Sword;
 import com.go.gopirates.sprites.tileObjects.Barrel;
 import com.go.gopirates.sprites.tileObjects.CoconutTree;
 import com.go.gopirates.sprites.tileObjects.Treasure;
@@ -86,6 +87,13 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Coconut) fixB.getUserData()).hitOnPlayer();
                 break;
+            case PirateGame.SWORD_BIT | PirateGame.PLAYER_BIT:
+                if(fixA.getFilterData().categoryBits == PirateGame.SWORD_BIT)
+                    ((Sword) fixA.getUserData()).hitOnPlayer();
+                else
+                    ((Sword) fixB.getUserData()).hitOnPlayer();
+                break;
+
             case PirateGame.PLAYER_BIT | PirateGame.EXPLOSION_BIT:
                 screen.getPirate().hitInExplosion();
                 break;
