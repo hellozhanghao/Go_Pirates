@@ -25,7 +25,7 @@ public class PirateGame extends Game {
     //Settings:
     public static final int VELOCITY=150;
     public static final float BUTTON_INTERVAL=1f;
-    public static final float POWERUP_TIME=5f;
+    public static final float POWERUP_TIME=10f;
 
 
     //Box2D Collision Bits
