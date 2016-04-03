@@ -2,7 +2,7 @@ package com.go.gopirates.sprites.tileObjects;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.go.gopirates.PirateGame;
-import com.go.gopirates.screens.PlayScreen;
+import com.go.gopirates.screen.PlayScreen;
 
 /**
  * Created by zhanghao on 3/4/16.

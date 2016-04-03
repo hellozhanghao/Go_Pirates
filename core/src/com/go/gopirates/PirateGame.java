@@ -4,7 +4,7 @@ package com.go.gopirates;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.go.gopirates.screens.PlayScreen;
+import com.go.gopirates.screen.PlayScreen;
 
 
 public class PirateGame extends Game {

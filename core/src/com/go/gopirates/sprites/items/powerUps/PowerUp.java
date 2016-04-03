@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.go.gopirates.PirateGame;
-import com.go.gopirates.screens.PlayScreen;
+import com.go.gopirates.screen.PlayScreen;
 
 /**
  * Created by zhanghao on 3/4/16.

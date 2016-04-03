@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.go.gopirates.PirateGame;
-import com.go.gopirates.screens.PlayScreen;
+import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.items.explosiveItems.ExplosiveItem;
 import com.go.gopirates.sprites.items.noneInteractiveItems.ShieldSprite;
 

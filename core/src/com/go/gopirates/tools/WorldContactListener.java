@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.go.gopirates.PirateGame;
-import com.go.gopirates.screens.PlayScreen;
+import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.items.powerUps.PowerUp;
 import com.go.gopirates.sprites.tileObjects.Barrel;
 import com.go.gopirates.sprites.tileObjects.Treasure;

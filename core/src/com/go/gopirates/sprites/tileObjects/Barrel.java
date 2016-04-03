@@ -4,7 +4,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Vector2;
 import com.go.gopirates.PirateGame;
-import com.go.gopirates.screens.PlayScreen;
+import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.items.ItemDef;
 import com.go.gopirates.sprites.items.powerUps.Shield;
 
