@@ -1,4 +1,4 @@
-package com.go.gopirates.sprites.items;
+package com.go.gopirates.sprites.items.explosiveItems;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;

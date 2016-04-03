@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="19" height="19" tilewidth="256" tileheight="256" nextobjectid="245">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="19" height="19" tilewidth="256" tileheight="256" nextobjectid="247">
  <tileset firstgid="1" name="tileset" tilewidth="256" tileheight="256" tilecount="6" columns="2">
   <image source="tileset.png" trans="ffffff" width="512" height="768"/>
  </tileset>
@@ -84,7 +84,7 @@
   <object id="75" x="2560" y="3072" width="256" height="256"/>
   <object id="76" x="2560" y="4096" width="256" height="256"/>
  </objectgroup>
- <objectgroup name="Barrels" visible="0">
+ <objectgroup name="Barrels">
   <object id="77" x="768" y="256" width="256" height="256"/>
   <object id="78" x="1024" y="256" width="256" height="256"/>
   <object id="79" x="1280" y="256" width="256" height="256"/>
@@ -171,7 +171,11 @@
   <object id="174" x="2816" y="2560" width="256" height="256"/>
   <object id="175" x="256" y="2816" width="256" height="256"/>
   <object id="176" x="512" y="2816" width="256" height="256"/>
-  <object id="178" x="768" y="2816" width="256" height="256"/>
+  <object id="178" x="768" y="2816" width="256" height="256">
+   <properties>
+    <property name="shield" value=""/>
+   </properties>
+  </object>
   <object id="179" x="1024" y="2816" width="256" height="256"/>
   <object id="180" x="1536" y="2816" width="256" height="256"/>
   <object id="181" x="1792" y="2816" width="256" height="256"/>

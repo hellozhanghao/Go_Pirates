@@ -1,10 +1,10 @@
 package com.go.gopirates.sprites.tileObjects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screens.PlayScreen;
-import com.go.gopirates.sprites.Pirate;
 
 
 /**
@@ -25,6 +25,7 @@ public class Treasure extends InteractiveTileObject {
     @Override
     public void onHit() {
 //        Hud.findTreasure();
+        Gdx.app.log("Treasure","Find Treasure");
         getCell().setTile(null);
         setCategoryFilter(PirateGame.NOTHING_BIT);
     }

@@ -7,9 +7,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screens.PlayScreen;
-import com.go.gopirates.sprites.Pirate;
+import com.go.gopirates.sprites.items.powerUps.PowerUp;
 import com.go.gopirates.sprites.tileObjects.Barrel;
-import com.go.gopirates.sprites.tileObjects.InteractiveTileObject;
 import com.go.gopirates.sprites.tileObjects.Treasure;
 
 
@@ -50,6 +49,14 @@ public class WorldContactListener implements ContactListener {
                     ((Barrel) fixB.getUserData()).onHit();
                 break;
 
+             //Player vs. power up
+            case PirateGame.POWERUP_BIT | PirateGame.PLAYER_BIT:
+                if(fixA.getFilterData().categoryBits == PirateGame.POWERUP_BIT)
+                    ((PowerUp) fixA.getUserData()).use();
+                else
+                    ((PowerUp) fixB.getUserData()).use();
+                break;
+
             // Pistol vs. Reef 
             // TODO: 31/3/16 destroy bullet
 //            case PirateGame.COCONUT_BIT | PirateGame.BARREL_BIT:
@@ -88,13 +95,7 @@ public class WorldContactListener implements ContactListener {
 //                else
 //                    ((Sword) fixB.getUserData()).hitBySword();
 //                break;
-//            // Player vs. power up
-//            case PirateGame.POWERUP_BIT | PirateGame.PLAYER_BIT:
-//                if(fixA.getFilterData().categoryBits == PirateGame.POWERUP_BIT)
-//                    ((PowerUp) fixA.getUserData()).use((Pirate) fixB.getUserData());
-//                else
-//                    ((PowerUp) fixB.getUserData()).use((Pirate) fixA.getUserData());
-//                break;
+//
 
 
 //            case PirateGame.PLAYER_BIT | PirateGame.EXPLOSION_BIT:

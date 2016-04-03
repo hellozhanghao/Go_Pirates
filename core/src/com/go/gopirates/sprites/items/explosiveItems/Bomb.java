@@ -1,4 +1,4 @@
-package com.go.gopirates.sprites.items;
+package com.go.gopirates.sprites.items.explosiveItems;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.model.Animation;
@@ -97,7 +97,7 @@ public class Bomb extends ExplosiveItem {
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
         EdgeShape exploEdge1 = new EdgeShape();
-        exploEdge1.set(new Vector2(-30 / PirateGame.PPM, 0 / PirateGame.PPM), new Vector2(30 / PirateGame.PPM, 0 / PirateGame.PPM));
+        exploEdge1.set(new Vector2(-PirateGame.TILE_SIZE*2 / PirateGame.PPM, 0 / PirateGame.PPM), new Vector2(PirateGame.TILE_SIZE*2 / PirateGame.PPM, 0 / PirateGame.PPM));
 
         fdef.shape = exploEdge1;
         fdef.isSensor = true;
@@ -108,7 +108,7 @@ public class Bomb extends ExplosiveItem {
                 PirateGame.ROCK_BIT;
 
         EdgeShape exploEdge2 = new EdgeShape();
-        exploEdge2.set(new Vector2(0 / PirateGame.PPM, -30 / PirateGame.PPM), new Vector2(0 / PirateGame.PPM, 30 / PirateGame.PPM));
+        exploEdge2.set(new Vector2(0 / PirateGame.PPM, -PirateGame.TILE_SIZE*2 / PirateGame.PPM), new Vector2(0 / PirateGame.PPM, PirateGame.TILE_SIZE*2 / PirateGame.PPM));
 
         fdef.shape = exploEdge2;
         fdef.isSensor = true;
@@ -118,7 +118,7 @@ public class Bomb extends ExplosiveItem {
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
         EdgeShape exploEdge3 = new EdgeShape();
-        exploEdge3.set(new Vector2(-15 / PirateGame.PPM, 0 / PirateGame.PPM), new Vector2(15 / PirateGame.PPM, 0 / PirateGame.PPM));
+        exploEdge3.set(new Vector2(-PirateGame.TILE_SIZE / PirateGame.PPM, 0 / PirateGame.PPM), new Vector2(PirateGame.TILE_SIZE / PirateGame.PPM, 0 / PirateGame.PPM));
 
         fdef.shape = exploEdge3;
         fdef.isSensor = true;
@@ -129,7 +129,7 @@ public class Bomb extends ExplosiveItem {
                 PirateGame.ROCK_BIT;
 
         EdgeShape exploEdge4 = new EdgeShape();
-        exploEdge4.set(new Vector2(0 / PirateGame.PPM, -15 / PirateGame.PPM), new Vector2(0 / PirateGame.PPM, 15 / PirateGame.PPM));
+        exploEdge4.set(new Vector2(0 / PirateGame.PPM, -PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(0 / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM));
 
         fdef.shape = exploEdge4;
         fdef.isSensor = true;

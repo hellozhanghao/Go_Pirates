@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screens.PlayScreen;
 import com.go.gopirates.sprites.items.ItemDef;
+import com.go.gopirates.sprites.items.powerUps.Shield;
 
 
 /**
@@ -27,16 +28,16 @@ public class Barrel extends InteractiveTileObject {
     public void onHit() {
         getCell().setTile(null);
         setCategoryFilter(PirateGame.NOTHING_BIT);
-//        if (object.getProperties().containsKey("shield")) {
-//            screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y),
-//                    Shield.class));
+        if (object.getProperties().containsKey("shield")) {
+            screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y),
+                    Shield.class));
 //        } else if (object.getProperties().containsKey("shoes")) {
 //            screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y),
 //                    Shoes.class));
 //        } else if (object.getProperties().containsKey("TNT")) {
 //            screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y),
 //                    Tnt.class));
-//        }
+        }
     }
 //
 //    // TODO: 27/3/16 Handle reef destroyed

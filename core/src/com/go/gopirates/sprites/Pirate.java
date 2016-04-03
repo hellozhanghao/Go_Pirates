@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screens.PlayScreen;
-import com.go.gopirates.sprites.items.ExplosiveItem;
+import com.go.gopirates.sprites.items.explosiveItems.ExplosiveItem;
 
 import java.util.ArrayList;
 
@@ -22,7 +22,9 @@ import java.util.ArrayList;
 public class Pirate extends Sprite {
 
     public enum Direction {UP, DOWN, LEFT, RIGHT}
-    public enum State { WALKING, STANDING};
+    public enum State { WALKING, STANDING}
+
+    public enum PowerUpHolding {TNT, COCONUT, SHIED, SHOE}
     public State currentState;
     public State previousState;
     public Direction direction;
