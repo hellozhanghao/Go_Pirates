@@ -12,10 +12,13 @@ import com.go.gopirates.screen.PlayScreen;
  */
 public class Sword extends PrimitiveWeaponItem {
 
+    private float stateTimer;
+
     private final float SWORD_LENGTH =PirateGame.TILE_SIZE/4;
 
     public Sword(PlayScreen screen) {
         super(screen);
+        stateTimer=0;
         /*
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++) {
@@ -29,9 +32,6 @@ public class Sword extends PrimitiveWeaponItem {
     @Override
     public void defineItem() {
         BodyDef bodyDef = new BodyDef();
-
-
-
         float posX=screen.getPirate().b2body.getPosition().x;
         float posY=screen.getPirate().b2body.getPosition().y;
 
@@ -50,7 +50,6 @@ public class Sword extends PrimitiveWeaponItem {
                 break;
         }
         bodyDef.type= BodyDef.BodyType.DynamicBody;
-
         body=world.createBody(bodyDef);
 
         FixtureDef fixtureDef=new FixtureDef();
@@ -59,8 +58,6 @@ public class Sword extends PrimitiveWeaponItem {
         fixtureDef.filter.categoryBits = PirateGame.SWORD_BIT;
         fixtureDef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
                 PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT |  PirateGame.COCONUT_TREE_BIT;
-
-
         fixtureDef.shape=shape;
         body.createFixture(fixtureDef).setUserData(this);
 
@@ -70,6 +67,11 @@ public class Sword extends PrimitiveWeaponItem {
 
     public void update(float dt){
         super.update(dt);
+        stateTimer+=dt;
+
+        if (stateTimer>PirateGame.SWORD_VALID_TIME)
+            destroy();
+
         float posX=screen.getPirate().b2body.getPosition().x;
         float posY=screen.getPirate().b2body.getPosition().y;
 

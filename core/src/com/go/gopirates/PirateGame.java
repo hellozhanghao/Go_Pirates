@@ -28,6 +28,7 @@ public class PirateGame extends Game {
     public static final float POWERUP_TIME=10f;
     public static final int ININTIAL_HEALTH=5;
     public static final float PROTECTED_TIME_AFTER_DECREASE_HEALTH=1.5f;
+    public static final float SWORD_VALID_TIME=4f;
 
 
     //Box2D Collision Bits
