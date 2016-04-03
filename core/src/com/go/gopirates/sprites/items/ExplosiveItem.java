@@ -11,14 +11,14 @@ import com.go.gopirates.screens.PlayScreen;
 /**
  * Created by zhaojuan on 20/3/16.
  */
-public abstract class Item extends Sprite {
+public abstract class ExplosiveItem extends Sprite {
     protected PlayScreen screen;
     protected World world;
     protected boolean toDestroy;
     protected boolean destroyed;
     protected Body body;
 
-    public Item(PlayScreen screen, float x, float y) {
+    public ExplosiveItem(PlayScreen screen, float x, float y) {
         this.screen = screen;
         this.world = screen.getWorld();
         setPosition(x, y);
@@ -29,7 +29,7 @@ public abstract class Item extends Sprite {
 
     }
 
-    protected Item() {
+    protected ExplosiveItem() {
     }
 
     public abstract void defineItem();

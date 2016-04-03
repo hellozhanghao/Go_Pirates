@@ -1,5 +1,6 @@
 package com.go.gopirates.sprites.items;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.model.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -15,7 +16,7 @@ import com.go.gopirates.screens.PlayScreen;
 /**
  * Created by zhaojuan on 20/3/16.
  */
-public class Bomb extends Item {
+public class Bomb extends ExplosiveItem {
     PlayScreen screen;
     World world;
     Animation bombAnimation;
@@ -26,37 +27,26 @@ public class Bomb extends Item {
     boolean redefined;
     Body b2body;
     private int bombExplosionCountDown=4;
+    private final  int BOMB_RADIUS=80;
 
     public Bomb(PlayScreen screen, float x, float y) {
-//        setRegion(screen.getAtlas().findRegion("Bomb"), 163, 35, 80, 32);
-        setBounds(x, y, 32 / PirateGame.PPM, 32 / PirateGame.PPM);
+        setBounds(x, y, PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE/ PirateGame.PPM);
         this.screen = screen;
         this.world = screen.getWorld();
-//         Array<TextureRegion> frames=new Array<TextureRegion>();
-////
-//         frames = new Array<TextureRegion>();
-//        // TODO: 18/3/16 Bomb Animation
-//        for (int i = 0; i < 4; i++) {
-//            frames.add(new TextureRegion(screen.getAtlas().findRegion("Bomb"), i*8,0,8,8));
-//        }
-////        bombAnimation = new com.badlogic.gdx.graphics.g2d.Animation(0.2f, frames);
-////        setRegion(bombAnimation.getKeyFrame(0));
-////        setBounds(x, y, 6 / PirateGame.PPM, 6 / PirateGame.PPM);
-//        bombAnimation = new Animation(0.2f, frames);
 
-//
         defineItem();
     }
 
     @Override
     public void defineItem() {
+        Gdx.app.log("Explosive","Bomb placed");
         BodyDef bdef = new BodyDef();
         bdef.position.set(getX(), getY());
         bdef.type = BodyDef.BodyType.StaticBody;
         b2body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / PirateGame.PPM);
+        shape.setRadius(BOMB_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = PirateGame.NOTHING_BIT;
         fdef.filter.maskBits = PirateGame.BARREL_BIT |
@@ -77,7 +67,7 @@ public class Bomb extends Item {
         b2body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / PirateGame.PPM);
+        shape.setRadius(BOMB_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = PirateGame.BOMB_BIT;
         fdef.filter.maskBits = PirateGame.BARREL_BIT |
@@ -98,7 +88,7 @@ public class Bomb extends Item {
         b2body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / PirateGame.PPM);
+        shape.setRadius(BOMB_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = PirateGame.NOTHING_BIT;
         fdef.filter.maskBits = PirateGame.BARREL_BIT |
@@ -173,7 +163,4 @@ public class Bomb extends Item {
         setToDestroy = true;
     }
 
-    public boolean isDestroyed() {
-        return destroyed;
-    }
 }

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -13,6 +12,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screens.PlayScreen;
+import com.go.gopirates.sprites.items.ExplosiveItem;
+
+import java.util.ArrayList;
 
 /**
  * Created by zhanghao on 2/4/16.
@@ -45,6 +47,8 @@ public class Pirate extends Sprite {
     private PlayScreen screen;
     private final float FRAME_DURATION=0.1f;
 
+    public ArrayList<ExplosiveItem> explosiveItems;
+
     public Pirate(PlayScreen screen){
         //initialize default values
         this.screen = screen;
@@ -53,6 +57,7 @@ public class Pirate extends Sprite {
         previousState = State.STANDING;
         direction=Direction.DOWN;
         stateTimer = 0;
+        explosiveItems=new ArrayList<ExplosiveItem>();
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         String pirate="pirate"+PirateGame.PLAYER_ID;
@@ -120,7 +125,7 @@ public class Pirate extends Sprite {
 
         FixtureDef fixtureDef=new FixtureDef();
         CircleShape shape=new CircleShape();
-        shape.setRadius(80/PirateGame.PPM);
+        shape.setRadius(128/PirateGame.PPM);
         fixtureDef.filter.categoryBits = PirateGame.PLAYER_BIT;
         fixtureDef.filter.maskBits = PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
                                      PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT | PirateGame.POWERUP_BIT|

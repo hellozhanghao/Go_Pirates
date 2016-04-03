@@ -16,7 +16,7 @@ import com.go.gopirates.screens.PlayScreen;
 /**
  * Created by zhanghao on 31/3/16.
  */
-public class TNT extends Item {
+public class TNT extends ExplosiveItem {
     PlayScreen screen;
     World world;
     Animation tntAnimation;

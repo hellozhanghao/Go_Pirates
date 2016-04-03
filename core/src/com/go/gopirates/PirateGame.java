@@ -22,7 +22,9 @@ public class PirateGame extends Game {
     //User Selct
     public static final int PLAYER_ID=0;
 
+    //Settings:
     public static final int VELOCITY=150;
+    public static final float BUTTON_INTERVAL=1f;
 
 
     //Box2D Collision Bits
@@ -35,7 +37,7 @@ public class PirateGame extends Game {
     public static final short EXPLOSION_BIT = 16;
     public static final short TNT_BIT = 32;
     public static final short TREASURE_BIT = 64;
-    public static final short OTHER_PLAYER_BIT = 128;
+    public static final short UNUSED = 128;
     public static final short BOMB_BIT = 256;
     public static final short COCONUT_BIT = 2048;
     public static final short SWORD_BIT = 4096;

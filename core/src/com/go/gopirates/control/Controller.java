@@ -24,8 +24,9 @@ import com.go.gopirates.PirateGame;
 public class Controller implements ApplicationListener {
     Viewport viewport;
     Stage stage;
-    boolean upPressed, downPressed, leftPressed, rightPressed;
-    boolean pistolPressed, powerUpPressed, bombPressed, swordPressed,tntPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    public boolean pistolPress, powerUpPress, bombPress, swordPress;
+    public boolean previousPistolPress, previousPowerUpPress, previousBombPress, previousSwordPress;
     OrthographicCamera cam;
     private Skin touchpadSkin;
     public Touchpad touchpad;
@@ -37,52 +38,11 @@ public class Controller implements ApplicationListener {
     private Image bombImg;
     private Image swordImg;
 
-//    public Controller() {
-//
-//    }
 
-//    public void draw(){
-//        stage.draw();
-//    }
-
-    public boolean isUpPressed(){
-        return upPressed;
-    }
-
-    public boolean isDownPressed(){
-        return downPressed;
-    }
-
-    public boolean isLeftPressed(){
-        return leftPressed;
-    }
-
-    public boolean isRightPressed(){
-        return rightPressed;
-    }
-
-    public boolean isPistolPressed() {
-        return pistolPressed;
-    }
-
-    public boolean isPowerUpPressed() {
-        return powerUpPressed;
-    }
-
-    public boolean isBombPressed() {
-        return bombPressed;
-    }
-
-    public boolean isSwordPressed() {
-        return swordPressed;
-    }
-    public boolean isTntPressed() {
-        return tntPressed;
-    }
 
     @Override
     public void create() {
-        System.out.println("Controller");
+        Gdx.app.log("Controller","Launched");
         cam = new OrthographicCamera();
         viewport = new FitViewport(800, 450, cam);
         stage = new Stage(viewport, PirateGame.batch);
@@ -106,16 +66,20 @@ public class Controller implements ApplicationListener {
                         rightPressed = true;
                         break;
                     case Input.Keys.X:
-                        pistolPressed = true;
+                        previousPistolPress=pistolPress;
+                        pistolPress = true;
                         break;
                     case Input.Keys.SPACE:
-                        powerUpPressed = true;
+                        previousPowerUpPress=powerUpPress;
+                        powerUpPress = true;
                         break;
                     case Input.Keys.Z:
-                        bombPressed = true;
+                        previousBombPress=bombPress;
+                        bombPress = true;
                         break;
                     case Input.Keys.C:
-                        swordPressed = true;
+                        previousSwordPress=swordPress;
+                        swordPress = true;
                         break;
                 }
                 return true;
@@ -138,16 +102,20 @@ public class Controller implements ApplicationListener {
                         rightPressed = false;
                         break;
                     case Input.Keys.X:
-                        pistolPressed = false;
+                        previousPistolPress=pistolPress;
+                        pistolPress = false;
                         break;
                     case Input.Keys.SPACE:
-                        powerUpPressed = false;
+                        previousPowerUpPress=powerUpPress;
+                        powerUpPress = false;
                         break;
                     case Input.Keys.Z:
-                        bombPressed = false;
+                        previousBombPress=bombPress;
+                        bombPress = false;
                         break;
                     case Input.Keys.C:
-                        swordPressed = false;
+                        previousSwordPress=swordPress;
+                        swordPress = false;
                         break;
                 }
                 return true;
@@ -155,87 +123,6 @@ public class Controller implements ApplicationListener {
         });
 
 
-       /* Table left = new Table();
-        left.left().bottom();
-
-        upImg = new Image(new Texture("controller/flatDark25.png"));
-        upImg.setSize(50, 50);
-        upImg.addListener(new InputListener() {
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                upPressed = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                upPressed = false;
-            }
-        });
-
-        emptyImg = new Image(new Texture("controller/flatDark26.png"));
-        emptyImg.setSize(50, 50);
-        emptyImg.addListener(new InputListener() {
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                downPressed = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                downPressed = false;
-            }
-        });
-
-        bombImg = new Image(new Texture("controller/flatDark23.png"));
-        bombImg.setSize(50, 50);
-        bombImg.addListener(new InputListener() {
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                leftPressed = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                leftPressed = false;
-            }
-        });
-
-        swordImg = new Image(new Texture("controller/flatDark24.png"));
-        swordImg.setSize(50, 50);
-        swordImg.addListener(new InputListener() {
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                rightPressed = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                rightPressed = false;
-            }
-        });
-
-        left.add();
-        left.add(upImg).size(upImg.getWidth(), upImg.getHeight());
-        left.add();
-        left.row().pad(5, 5, 5, 5);
-        left.add(bombImg).size(bombImg.getWidth(), bombImg.getHeight());
-        left.add();
-        left.add(swordImg).size(swordImg.getWidth(), swordImg.getHeight());
-        left.row().padBottom(5);
-        left.add();
-        left.add(emptyImg).size(emptyImg.getWidth(), emptyImg.getHeight());
-        left.add();
-
-        stage.addActor(left);
-        */
 
         //right
         Table right = new Table();
@@ -248,13 +135,15 @@ public class Controller implements ApplicationListener {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                pistolPressed = true;
+                previousPistolPress=pistolPress;
+                pistolPress = true;
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                pistolPressed = false;
+                previousPistolPress=pistolPress;
+                pistolPress = false;
             }
         });
 
@@ -266,13 +155,15 @@ public class Controller implements ApplicationListener {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                powerUpPressed = true;
+                previousPowerUpPress=powerUpPress;
+                powerUpPress = true;
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                powerUpPressed = false;
+                previousPowerUpPress=powerUpPress;
+                powerUpPress = false;
             }
         });
 
@@ -283,15 +174,19 @@ public class Controller implements ApplicationListener {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                bombPressed = true;
+                previousBombPress=bombPress;
+                bombPress =true;
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                bombPressed = false;
+                previousBombPress=bombPress;
+                bombPress =false;
             }
+
         });
+
 
         //Sword
         swordImg = new Image(new Texture("controller/Sword.png"));
@@ -300,13 +195,15 @@ public class Controller implements ApplicationListener {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                swordPressed = true;
+                previousSwordPress=swordPress;
+                swordPress = true;
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                swordPressed = false;
+                previousSwordPress=swordPress;
+                swordPress = false;
             }
         });
 
@@ -348,7 +245,6 @@ public class Controller implements ApplicationListener {
         stage.addActor(touchpad);
         Gdx.input.setInputProcessor(stage);
 
-        System.out.println(touchpad.getKnobPercentX() + " " + touchpad.getKnobPercentY());
     }
 
     public void resize(int width, int height){
@@ -358,7 +254,12 @@ public class Controller implements ApplicationListener {
     @Override
     public void render() {
         stage.act(Gdx.graphics.getDeltaTime());
-//        System.out.println(touchpad.getKnobPercentX() + " " + touchpad.getKnobPercentY());
+
+
+
+        if (Gdx.input.justTouched()){
+
+        }
         stage.draw();
 
     }
