@@ -38,6 +38,7 @@ public class Pirate extends Sprite {
     public World world;
     public Body b2body;
 
+
     private TextureRegion pirateStandingDown;
     private TextureRegion pirateStandingUp;
     private TextureRegion pirateStandingLeft;
