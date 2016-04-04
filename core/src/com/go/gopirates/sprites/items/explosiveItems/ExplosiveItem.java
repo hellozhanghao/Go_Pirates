@@ -3,6 +3,7 @@ package com.go.gopirates.sprites.items.explosiveItems;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
+import com.go.gopirates.tools.TileMapTranslator;
 
 
 /**
@@ -34,8 +36,9 @@ public abstract class ExplosiveItem extends Sprite {
         this.world = screen.getWorld();
         setBounds(x, y, PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM);
         setPosition(x, y);
-        posX=x;
-        posY=y;
+        Vector2 pos= TileMapTranslator.translate(x,y);
+        posX=pos.x;
+        posY=pos.y;
         toDestroy = false;
         destroyed = false;
         defineExplosiveItem();
