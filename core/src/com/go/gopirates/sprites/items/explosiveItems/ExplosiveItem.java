@@ -70,9 +70,8 @@ public abstract class ExplosiveItem extends Sprite {
         shape.setRadius(BOMB_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = PirateGame.BOMB_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT | PirateGame.COCONUT_TREE_BIT |
-                PirateGame.PLAYER_BIT |
-                PirateGame.ROCK_BIT;
+        fdef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.SHIELD_BIT;
+
         fdef.shape = shape;
         body.createFixture(fdef).setUserData(this);
     }

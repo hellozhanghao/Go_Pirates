@@ -2,17 +2,31 @@ pirates.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+explosion
+  rotate: false
+  xy: 2, 260
+  size: 2048, 1536
+  orig: 2048, 1536
+  offset: 0, 0
+  index: -1
 pirate0
   rotate: false
-  xy: 304, 2
+  xy: 2, 2
   size: 3072, 256
   orig: 3072, 256
   offset: 0, 0
   index: -1
 shield
   rotate: false
-  xy: 2, 2
+  xy: 2052, 774
   size: 300, 300
   orig: 300, 300
+  offset: 0, 0
+  index: -1
+tileset
+  rotate: true
+  xy: 2052, 260
+  size: 512, 768
+  orig: 512, 768
   offset: 0, 0
   index: -1
