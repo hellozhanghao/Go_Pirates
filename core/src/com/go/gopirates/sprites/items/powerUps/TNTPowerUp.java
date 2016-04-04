@@ -17,6 +17,7 @@ public class TNTPowerUp extends PowerUp{
     public void use() {
         destroy();
         System.out.println("Take TNT");
-        screen.getPirate().powerUpHolding= Pirate.PowerUpHolding.TNT;
+        if (screen.getPirate().powerUpHolding == Pirate.PowerUpHolding.NONE)
+            screen.getPirate().powerUpHolding= Pirate.PowerUpHolding.TNT;
     }
 }

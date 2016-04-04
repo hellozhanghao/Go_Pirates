@@ -9,17 +9,13 @@ import com.go.gopirates.sprites.Pirate;
 public class Shield extends PowerUp {
     public Shield(PlayScreen screen, float x, float y) {
         super(screen, x, y);
-
-
-
-
     }
 
     @Override
     public void use() {
         destroy();
         System.out.println("Take shield");
-        screen.getPirate().powerUpHolding= Pirate.PowerUpHolding.SHIED;
+        if (screen.getPirate().powerUpHolding == Pirate.PowerUpHolding.NONE)
+            screen.getPirate().powerUpHolding = Pirate.PowerUpHolding.SHIELD;
     }
-
 }

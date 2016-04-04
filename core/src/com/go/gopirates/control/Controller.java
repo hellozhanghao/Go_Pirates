@@ -25,8 +25,8 @@ public class Controller implements ApplicationListener {
     Viewport viewport;
     Stage stage;
     public boolean upPressed, downPressed, leftPressed, rightPressed;
-    public boolean pistolPress, powerUpPress, bombPress, swordPress;
-    public boolean previousPistolPress, previousPowerUpPress, previousBombPress, previousSwordPress;
+    public boolean coconutPress, powerUpPress, bombPress, swordPress;
+    public boolean previousCoconutPress, previousPowerUpPress, previousBombPress, previousSwordPress;
     OrthographicCamera cam;
     private Skin touchpadSkin;
     public Touchpad touchpad;
@@ -66,8 +66,8 @@ public class Controller implements ApplicationListener {
                         rightPressed = true;
                         break;
                     case Input.Keys.X:
-                        previousPistolPress=pistolPress;
-                        pistolPress = true;
+                        previousCoconutPress=coconutPress;
+                        coconutPress = true;
                         break;
                     case Input.Keys.SPACE:
                         previousPowerUpPress=powerUpPress;
@@ -102,8 +102,8 @@ public class Controller implements ApplicationListener {
                         rightPressed = false;
                         break;
                     case Input.Keys.X:
-                        previousPistolPress=pistolPress;
-                        pistolPress = false;
+                        previousCoconutPress=coconutPress;
+                        coconutPress = false;
                         break;
                     case Input.Keys.SPACE:
                         previousPowerUpPress=powerUpPress;

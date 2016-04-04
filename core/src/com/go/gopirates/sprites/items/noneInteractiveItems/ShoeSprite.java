@@ -10,20 +10,21 @@ public class ShoeSprite extends NonInteractiveSprites {
 
     int times=10;
     float stateTimer;
-    boolean shoeValid;
+    boolean shoesOn;
     public ShoeSprite(){
-        Gdx.app.log("Power up","Shoe used");
-        stateTimer=0;
-        shoeValid=true;
-        PirateGame.DEFAULT_VELOCITY=PirateGame.DEFAULT_VELOCITY*times;
+        Gdx.app.log("Power up","Shoes used");
+        stateTimer = 0;
+        shoesOn = true;
+        PirateGame.DEFAULT_VELOCITY = PirateGame.DEFAULT_VELOCITY * times;
     }
+
     @Override
     public void update(float dt) {
         stateTimer+=dt;
-        if ((stateTimer>PirateGame.POWERUP_TIME)&shoeValid){
-            PirateGame.DEFAULT_VELOCITY=PirateGame.DEFAULT_VELOCITY/times;
-            shoeValid=false;
-            Gdx.app.log("Power up","Shoe removed");
+        if ((stateTimer>PirateGame.POWERUP_TIME) & shoesOn){
+            PirateGame.DEFAULT_VELOCITY = PirateGame.DEFAULT_VELOCITY/times;
+            shoesOn = false;
+            Gdx.app.log("Power up","Shoes removed");
         }
     }
 }

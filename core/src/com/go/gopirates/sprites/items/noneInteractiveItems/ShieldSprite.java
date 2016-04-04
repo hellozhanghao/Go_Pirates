@@ -28,27 +28,25 @@ public class ShieldSprite extends NonInteractiveSprites {
         setBounds(x, y, 300 / PirateGame.PPM, 300 / PirateGame.PPM);
         this.screen = screen;
         this.world = screen.getWorld();
-        textureRegion=new TextureRegion(screen.getAtlas().findRegion("shield"), 0, 0, 300, 300);
+        textureRegion = new TextureRegion(screen.getAtlas().findRegion("shield"), 0, 0, 300, 300);
 
         setRegion(textureRegion);
 
         defineShield();
-
     }
 
     public void defineShield() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(screen.getPirate().b2body.getPosition().x,screen.getPirate().b2body.getPosition().y);
         bodyDef.type= BodyDef.BodyType.DynamicBody;
-        b2body=world.createBody(bodyDef);
+        b2body = world.createBody(bodyDef);
 
-        FixtureDef fixtureDef=new FixtureDef();
-        CircleShape shape=new CircleShape();
+        FixtureDef fixtureDef = new FixtureDef();
+        CircleShape shape = new CircleShape();
         shape.setRadius(150/PirateGame.PPM);
         fixtureDef.filter.categoryBits = PirateGame.NOTHING_BIT;
 
-
-        fixtureDef.shape=shape;
+        fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef);
         shape.dispose();
         b2body.createFixture(fixtureDef).setUserData(this);
@@ -56,9 +54,9 @@ public class ShieldSprite extends NonInteractiveSprites {
 
     public void update(float dt) {
         stateTime += dt;
-        setPosition(b2body.getPosition().x-150/PirateGame.PPM,b2body.getPosition().y-150/PirateGame.PPM);
+        setPosition(b2body.getPosition().x - 150/PirateGame.PPM, b2body.getPosition().y - 150/PirateGame.PPM);
         b2body.setTransform(screen.getPirate().b2body.getPosition().x, screen.getPirate().b2body.getPosition().y, 0);
-        if ((stateTime>PirateGame.POWERUP_TIME) & !destroyed){
+        if ((stateTime > PirateGame.POWERUP_TIME) & !destroyed){
             setToDestroy();
             world.destroyBody(b2body);
             destroyed=true;
@@ -75,7 +73,4 @@ public class ShieldSprite extends NonInteractiveSprites {
             super.draw(batch);
         }
     }
-
-
-
 }

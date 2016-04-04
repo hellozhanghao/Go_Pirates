@@ -13,8 +13,8 @@ import com.go.gopirates.screen.PlayScreen;
  */
 public class Coconut extends PrimitiveWeaponItem {
 
-    private final float COCONUT_RADIUS=80;
-    private final float COCONUT_SPEED=100;
+    private final float COCONUT_RADIUS = 80;
+    private final float COCONUT_SPEED = 100;
     public Coconut(PlayScreen screen) {
         super(screen);
         /*
@@ -31,9 +31,8 @@ public class Coconut extends PrimitiveWeaponItem {
     public void defineItem() {
         BodyDef bodyDef = new BodyDef();
 
-
-        float posX=screen.getPirate().b2body.getPosition().x;
-        float posY=screen.getPirate().b2body.getPosition().y;
+        float posX = screen.getPirate().b2body.getPosition().x;
+        float posY = screen.getPirate().b2body.getPosition().y;
 
         switch (screen.getPirate().direction){
             case UP:
@@ -85,6 +84,4 @@ public class Coconut extends PrimitiveWeaponItem {
         super.hitOnPlayer();
         Gdx.app.log("Weapon","Hit by coconut");
     }
-
-
 }

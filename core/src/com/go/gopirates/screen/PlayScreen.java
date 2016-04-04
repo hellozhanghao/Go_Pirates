@@ -82,6 +82,9 @@ public class PlayScreen implements Screen {
     private float swordConfirmTimer;
     private boolean swordConfirm;
 
+    private float coconutConfirmTimer;
+    private boolean coconutConfirm;
+
     public PlayScreen(PirateGame game) {
         atlas = new TextureAtlas("img/pirates.pack");
         this.game = game;
@@ -130,6 +133,9 @@ public class PlayScreen implements Screen {
 
         swordConfirmTimer=0;
         swordConfirm=true;
+
+        coconutConfirmTimer=0;
+        coconutConfirm=true;
     }
 
     public void handleSpawningItems() {
@@ -162,6 +168,13 @@ public class PlayScreen implements Screen {
             swordConfirmTimer = 0;
             swordConfirm =true;
         }
+
+        coconutConfirmTimer+=dt;
+        if (coconutConfirmTimer > PirateGame.BUTTON_INTERVAL){
+            coconutConfirmTimer = 0;
+            coconutConfirm =true;
+        }
+
         Pirate player = players.get(PirateGame.PLAYER_ID);
 
         //For phone:
@@ -177,20 +190,27 @@ public class PlayScreen implements Screen {
         if (controller.rightPressed)
             player.b2body.setLinearVelocity(PirateGame.DEFAULT_VELOCITY, 0);
 
-        //Bomb Press:
+        //Bomb Pressed:
         if (!controller.previousBombPress & controller.bombPress & bombConfirm) {
             player.explosiveItems.add(new Bomb(this, player.b2body.getPosition().x, player.b2body.getPosition().y));
             bombConfirm = false;
         }
-        //Sword Press:
+        //Sword Pressed:
         if (!controller.previousSwordPress & controller.swordPress & swordConfirm){
             player.primitiveWeaponItems.add(new Sword(this));
             swordConfirm=false;
         }
-        //Powerup Press
+        //Coconut Pressed:
+        if (!controller.previousCoconutPress & controller.coconutPress & coconutConfirm & player.coconuts.size() != 0){
+            player.primitiveWeaponItems.add(new Coconut(this));
+            coconutConfirm=false;
+            player.coconuts.remove(player.coconuts.size()-1);
+        }
+
+        //Power up Pressed
         if (!controller.previousPowerUpPress & controller.powerUpPress) {
             switch (player.powerUpHolding) {
-                case SHIED:
+                case SHIELD:
                     player.powerUpHolding = Pirate.PowerUpHolding.NONE;
                     player.redefinePirateWithShield();
                     player.nonInteractiveSprites.add(new ShieldSprite(this, player.b2body.getPosition().x, player.b2body.getPosition().y));
@@ -203,9 +223,7 @@ public class PlayScreen implements Screen {
                     player.powerUpHolding = Pirate.PowerUpHolding.NONE;
                     player.explosiveItems.add(new TNT(this,player.b2body.getPosition().x, player.b2body.getPosition().y));
                     break;
-                case COCONUT:
-                    player.powerUpHolding = Pirate.PowerUpHolding.NONE;
-                    player.primitiveWeaponItems.add(new Coconut(this));
+                default:
                     break;
             }
         }

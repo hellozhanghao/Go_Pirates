@@ -16,6 +16,7 @@ import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.items.explosiveItems.ExplosiveItem;
 import com.go.gopirates.sprites.items.noneInteractiveItems.NonInteractiveSprites;
+import com.go.gopirates.sprites.items.primitiveWeaponItem.Coconut;
 import com.go.gopirates.sprites.items.primitiveWeaponItem.PrimitiveWeaponItem;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class Pirate extends Sprite {
     public enum Direction {UP, DOWN, LEFT, RIGHT}
     public enum State { WALKING, STANDING}
 
-    public enum PowerUpHolding {TNT, COCONUT, SHIED, SHOE, NONE}
+    public enum PowerUpHolding {TNT, COCONUT, SHIELD, SHOE, NONE}
     public State currentState;
     public State previousState;
     public Direction direction;
@@ -41,7 +42,6 @@ public class Pirate extends Sprite {
 
     private int health;
     private float healthTimer;
-
 
     private TextureRegion pirateStandingDown;
     private TextureRegion pirateStandingUp;
@@ -59,6 +59,7 @@ public class Pirate extends Sprite {
     public ArrayList<NonInteractiveSprites> nonInteractiveSprites;
     public ArrayList<PrimitiveWeaponItem> primitiveWeaponItems;
 
+    public ArrayList<Integer> coconuts;
     private enum PirateState{ PIRATE, PIRATE_WITH_SHIELD}
     private PirateState pirateState;
     private float stateTimer;
@@ -69,20 +70,21 @@ public class Pirate extends Sprite {
         this.world = screen.getWorld();
         currentState = State.STANDING;
         previousState = State.STANDING;
-        direction=Direction.DOWN;
-        powerUpHolding=PowerUpHolding.NONE;
+        direction = Direction.DOWN;
+        powerUpHolding = PowerUpHolding.NONE;
         stateTimer = 0;
-        explosiveItems=new ArrayList<ExplosiveItem>();
-        nonInteractiveSprites =new ArrayList<NonInteractiveSprites>();
+        explosiveItems = new ArrayList<ExplosiveItem>();
+        nonInteractiveSprites = new ArrayList<NonInteractiveSprites>();
         primitiveWeaponItems = new ArrayList<PrimitiveWeaponItem>();
-        pirateState=PirateState.PIRATE;
-        powerUpTimer=0;
-        this.playerId=playerId;
-        health=PirateGame.ININTIAL_HEALTH;
-        healthTimer=0;
+        pirateState = PirateState.PIRATE;
+        powerUpTimer = 0;
+        this.playerId = playerId;
+        health = PirateGame.ININTIAL_HEALTH;
+        healthTimer = 0;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         String pirate="pirate0";
+        coconuts = new ArrayList<Integer>();
 
 
         frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),0*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
@@ -237,21 +239,26 @@ public class Pirate extends Sprite {
     }
 
     private State getState(){
-        if (b2body.getLinearVelocity().x > 0.08) {
-            direction = Direction.RIGHT;
-            return State.WALKING;
-        } else if (b2body.getLinearVelocity().x < -0.08) {
-            direction = Direction.LEFT;
-            return State.WALKING;
-        } else if (b2body.getLinearVelocity().y > 0.08) {
-            direction = Direction.UP;
-            return State.WALKING;
-        } else if (b2body.getLinearVelocity().y < -0.08) {
-            direction = Direction.DOWN;
-            return State.WALKING;
+        if(Math.abs(b2body.getLinearVelocity().x) > Math.abs(b2body.getLinearVelocity().y)){
+            if (b2body.getLinearVelocity().x > 0.08) {
+                direction = Direction.RIGHT;
+                return State.WALKING;
+            } else if (b2body.getLinearVelocity().x < -0.08) {
+                direction = Direction.LEFT;
+                return State.WALKING;
+            }
         }
-        else
-            return State.STANDING;
+        else{
+            if (b2body.getLinearVelocity().y > 0.08) {
+                direction = Direction.UP;
+                return State.WALKING;
+            }
+            else if (b2body.getLinearVelocity().y < -0.08) {
+                direction = Direction.DOWN;
+                return State.WALKING;
+            }
+        }
+        return State.STANDING;
     }
 
     public TextureRegion getFrame(float dt){
@@ -318,13 +325,13 @@ public class Pirate extends Sprite {
     }
 
     public void decreaseHealth(){
-        if (healthTimer>PirateGame.PROTECTED_TIME_AFTER_DECREASE_HEALTH){
-            if (health>0){
+        if (healthTimer > PirateGame.PROTECTED_TIME_AFTER_DECREASE_HEALTH){
+            if (health > 0){
                 health--;
                 Gdx.app.log("Pirate", "Health decrease 1, Current Health "+health);
-                healthTimer=0;
+                healthTimer = 0;
             }else {
-                healthTimer=0;
+                healthTimer = 0;
                 Gdx.app.log("Pirate", "Pirated is dead.");
             }
         }
