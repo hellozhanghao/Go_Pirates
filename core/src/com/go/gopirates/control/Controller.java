@@ -129,28 +129,12 @@ public class Controller implements ApplicationListener {
         right.bottom().left();
         right.setX(620);
         right.setY(30);
-        Image bomb = new Image(new Texture("controller/Pistol.png"));
-        bomb.setSize(50, 50);
-        bomb.addListener(new InputListener() {
 
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                previousPistolPress=pistolPress;
-                pistolPress = true;
-                return true;
-            }
 
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                previousPistolPress=pistolPress;
-                pistolPress = false;
-            }
-        });
 
-        //Power up
-        //// TODO: 17/3/16 make a condition for power ups
+
         emptyImg = new Image(new Texture("controller/empty.png"));
-        emptyImg.setSize(50, 50);
+        emptyImg.setSize(100, 100);
         emptyImg.addListener(new InputListener() {
 
             @Override
@@ -169,7 +153,7 @@ public class Controller implements ApplicationListener {
 
         //Bomb
         bombImg = new Image(new Texture("controller/Bomb.png"));
-        bombImg.setSize(50, 50);
+        bombImg.setSize(100, 100);
         bombImg.addListener(new InputListener() {
 
             @Override
@@ -190,7 +174,7 @@ public class Controller implements ApplicationListener {
 
         //Sword
         swordImg = new Image(new Texture("controller/Sword.png"));
-        swordImg.setSize(50, 50);
+        swordImg.setSize(100, 100);
         swordImg.addListener(new InputListener() {
 
             @Override
@@ -207,17 +191,10 @@ public class Controller implements ApplicationListener {
             }
         });
 
-        right.add();
-        right.add(bomb).size(bomb.getWidth(), bomb.getHeight());
-        right.add();
-        right.row().pad(5, 5, 5, 5);
+
         right.add(bombImg).size(bombImg.getWidth(), bombImg.getHeight());
-        right.add();
         right.add(swordImg).size(swordImg.getWidth(), swordImg.getHeight());
-        right.row().padBottom(5);
-        right.add();
         right.add(emptyImg).size(emptyImg.getWidth(), emptyImg.getHeight());
-        right.add();
 
         stage.addActor(right);
 
