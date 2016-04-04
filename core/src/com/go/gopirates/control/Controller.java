@@ -38,13 +38,13 @@ public class Controller implements ApplicationListener {
     private Image bombImg;
     private Image swordImg;
 
-
+    private int size=90;
 
     @Override
     public void create() {
         Gdx.app.log("Controller","Launched");
         cam = new OrthographicCamera();
-        viewport = new FitViewport(800, 450, cam);
+        viewport = new FitViewport(16*size, 9*size, cam);
         stage = new Stage(viewport, PirateGame.batch);
 //        Gdx.input.setInputProcessor(stage);
 

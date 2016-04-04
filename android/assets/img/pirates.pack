@@ -4,15 +4,15 @@ filter: Linear,Linear
 repeat: none
 pirate0
   rotate: false
-  xy: 2, 2
+  xy: 304, 2
   size: 3072, 256
   orig: 3072, 256
   offset: 0, 0
   index: -1
-test2
+shield
   rotate: false
-  xy: 2, 260
-  size: 1024, 1024
-  orig: 1024, 1024
+  xy: 2, 2
+  size: 300, 300
+  orig: 300, 300
   offset: 0, 0
   index: -1

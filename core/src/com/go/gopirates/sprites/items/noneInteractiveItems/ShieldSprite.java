@@ -2,6 +2,7 @@ package com.go.gopirates.sprites.items.noneInteractiveItems;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -20,22 +21,17 @@ public class ShieldSprite extends NonInteractiveSprites {
     boolean destroyed;
     boolean setToDestroy;
     Body b2body;
+    TextureRegion textureRegion;
 
     public ShieldSprite(PlayScreen screen, float x, float y) {
         PirateGame.manager.get("audio/sounds/powerup.wav", Sound.class).play();
-        setBounds(x, y, PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE/ PirateGame.PPM);
+        setBounds(x, y, 300 / PirateGame.PPM, 300 / PirateGame.PPM);
         this.screen = screen;
         this.world = screen.getWorld();
+        textureRegion=new TextureRegion(screen.getAtlas().findRegion("shield"), 0, 0, 300, 300);
 
-        // TODO: 18/3/16 Shield Animation
-        /*
-        frames = new Array<TextureRegion>();
-        for (int i = 0; i < 4; i++) {
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("Bomb"), i * 8, 0, 8, 8));
-        }
-        fireAnimation = new Animation(0.2f, frames);
-        setRegion(fireAnimation.getKeyFrame(0));
-        */
+        setRegion(textureRegion);
+
         defineShield();
 
     }
@@ -44,7 +40,6 @@ public class ShieldSprite extends NonInteractiveSprites {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(screen.getPirate().b2body.getPosition().x,screen.getPirate().b2body.getPosition().y);
         bodyDef.type= BodyDef.BodyType.DynamicBody;
-        bodyDef.linearDamping = 5f;
         b2body=world.createBody(bodyDef);
 
         FixtureDef fixtureDef=new FixtureDef();
@@ -54,11 +49,14 @@ public class ShieldSprite extends NonInteractiveSprites {
 
 
         fixtureDef.shape=shape;
+        b2body.createFixture(fixtureDef);
+        shape.dispose();
         b2body.createFixture(fixtureDef).setUserData(this);
     }
 
     public void update(float dt) {
         stateTime += dt;
+        setPosition(b2body.getPosition().x-150/PirateGame.PPM,b2body.getPosition().y-150/PirateGame.PPM);
         b2body.setTransform(screen.getPirate().b2body.getPosition().x, screen.getPirate().b2body.getPosition().y, 0);
         if ((stateTime>PirateGame.POWERUP_TIME) & !destroyed){
             setToDestroy();
@@ -71,9 +69,6 @@ public class ShieldSprite extends NonInteractiveSprites {
         setToDestroy = true;
     }
 
-    public boolean isDestroyed() {
-        return destroyed;
-    }
 
     public void draw(Batch batch){
         if (!destroyed){

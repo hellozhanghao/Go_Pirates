@@ -234,6 +234,7 @@ public class PlayScreen implements Screen {
             for (PrimitiveWeaponItem primitiveWeaponItem: player.primitiveWeaponItems){
                 primitiveWeaponItem.update(dt);
             }
+
         }
 //        hud.update(dt);
 
@@ -275,7 +276,6 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
         //render our game map
         renderer.render();
 
@@ -284,9 +284,21 @@ public class PlayScreen implements Screen {
 
         PirateGame.batch.begin();
         PirateGame.batch.setProjectionMatrix(gamecam.combined);
+
+        for (Pirate player : players) {
+            player.draw(PirateGame.batch);
+
+            for (NonInteractiveSprites sprite : player.nonInteractiveSprites) {
+                sprite.draw(PirateGame.batch);
+            }
+        }
         for (int i = 0; i < 4; i++) {
             players.get(i).draw(PirateGame.batch);
         }
+
+
+
+
 
         PirateGame.batch.end();
 

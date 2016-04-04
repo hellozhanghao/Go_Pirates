@@ -58,7 +58,7 @@ public abstract class PowerUp extends Sprite {
         if(toDestroy && !destroyed){
             world.destroyBody(body);
             destroyed = true;
-            getCell().setTile(null);
+//            getCell().setTile(null);
         }
     }
     public void draw(Batch batch){
