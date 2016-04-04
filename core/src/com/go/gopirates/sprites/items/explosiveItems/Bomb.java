@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
+import com.go.gopirates.sprites.items.noneInteractiveItems.ExplosionSprite;
 
 
 /**
@@ -29,6 +30,9 @@ public class Bomb extends ExplosiveItem {
     @Override
     public void use() {
         world.destroyBody(body);
+        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+                posX-(PirateGame.TILE_SIZE/2)/PirateGame.PPM,
+                posY-(PirateGame.TILE_SIZE/2)/PirateGame.PPM));
 
         PirateGame.manager.get("audio/sounds/bomb.ogg", Sound.class).play();
 
