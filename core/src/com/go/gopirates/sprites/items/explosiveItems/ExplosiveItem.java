@@ -34,11 +34,12 @@ public abstract class ExplosiveItem extends Sprite {
     public ExplosiveItem(PlayScreen screen, float x, float y) {
         this.screen = screen;
         this.world = screen.getWorld();
-        setBounds(x, y, PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM);
-        setPosition(x, y);
         Vector2 pos= TileMapTranslator.translate(x,y);
         posX=pos.x;
         posY=pos.y;
+        setBounds(posX, posY, 500 / PirateGame.PPM, 500 / PirateGame.PPM);
+        setPosition(posX-500/PirateGame.PPM/2,
+                    posY-500/PirateGame.PPM/2);
         toDestroy = false;
         destroyed = false;
         defineExplosiveItem();

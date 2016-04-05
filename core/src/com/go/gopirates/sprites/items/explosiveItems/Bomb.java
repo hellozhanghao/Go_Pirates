@@ -19,12 +19,14 @@ public class Bomb extends ExplosiveItem {
 
     public Bomb(PlayScreen screen, float x, float y) {
         super(screen, x, y);
+        setRegion(screen.getAtlas().findRegion("object_bomb"),0,0,500,500);
     }
 
     @Override
     public void defineExplosiveItem() {
         super.defineExplosiveItem();
         Gdx.app.log("Explosive", "Bomb placed");
+
     }
 
     @Override

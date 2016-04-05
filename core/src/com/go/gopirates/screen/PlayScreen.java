@@ -310,6 +310,10 @@ public class PlayScreen implements Screen {
             for (NonInteractiveSprites sprite : player.nonInteractiveSprites) {
                 sprite.draw(PirateGame.batch);
             }
+
+            for (ExplosiveItem item: player.explosiveItems) {
+                item.draw(PirateGame.batch);
+            }
         }
         for (int i = 0; i < 4; i++) {
             players.get(i).draw(PirateGame.batch);

@@ -10,8 +10,8 @@ public class TileMapTranslator {
 
     public static Vector2 translate(float posX, float posY){
 
-        int tranX=(int)(posX*PirateGame.PPM)/PirateGame.TILE_SIZE *PirateGame.TILE_SIZE/(int) PirateGame.PPM;
-        int tranY=(int)(posY*PirateGame.PPM)/PirateGame.TILE_SIZE *PirateGame.TILE_SIZE/(int) PirateGame.PPM;
+        float tranX=(float)(((int)(posX*PirateGame.PPM)/PirateGame.TILE_SIZE)+0.5) *PirateGame.TILE_SIZE/(int) PirateGame.PPM;
+        float tranY=(float)(((int)(posY*PirateGame.PPM)/PirateGame.TILE_SIZE)+0.5) *PirateGame.TILE_SIZE/(int) PirateGame.PPM;
         return new Vector2(tranX,tranY);
     }
 }
