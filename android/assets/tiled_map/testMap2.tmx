@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="25" height="19" tilewidth="256" tileheight="256" nextobjectid="368">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="25" height="19" tilewidth="256" tileheight="256" nextobjectid="376">
  <tileset firstgid="1" name="tileset" tilewidth="256" tileheight="256" tilecount="16" columns="4">
   <image source="tileset.png" trans="ffffff" width="1024" height="1024"/>
  </tileset>
@@ -94,6 +94,10 @@
   <object id="225" x="4096" y="4352" width="256" height="256"/>
   <object id="226" x="4608" y="4352" width="256" height="256"/>
   <object id="227" x="5120" y="4352" width="256" height="256"/>
+  <object id="369" x="768" y="0" height="4864"/>
+  <object id="373" x="768" y="4864" width="4864"/>
+  <object id="374" x="768" y="0" width="4864"/>
+  <object id="375" x="5632" y="0" height="4864"/>
  </objectgroup>
  <objectgroup name="Barrel">
   <object id="5" x="1280" y="0" width="256" height="256"/>
@@ -206,7 +210,11 @@
   <object id="131" x="2560" y="3584" width="256" height="256"/>
   <object id="361" x="768" y="2048" width="256" height="256"/>
   <object id="362" x="768" y="2304" width="256" height="256"/>
-  <object id="364" x="768" y="2816" width="256" height="256"/>
+  <object id="364" x="768" y="2816" width="256" height="256">
+   <properties>
+    <property name="shield" value=""/>
+   </properties>
+  </object>
   <object id="365" x="768" y="1024" width="256" height="256"/>
   <object id="366" x="768" y="768" width="256" height="256"/>
   <object id="367" x="768" y="512" width="256" height="256"/>
@@ -226,11 +234,5 @@
  <objectgroup name="Treasure">
   <object id="142" x="1280" y="4096" width="256" height="256"/>
   <object id="143" x="3072" y="2304" width="256" height="256"/>
- </objectgroup>
- <objectgroup name="Border">
-  <object id="353" x="512" y="0" width="256" height="4864"/>
-  <object id="357" x="5632" y="0" width="256" height="4864"/>
-  <object id="358" x="768" y="4864" width="4864" height="192"/>
-  <object id="359" x="768" y="0" width="4864"/>
  </objectgroup>
 </map>

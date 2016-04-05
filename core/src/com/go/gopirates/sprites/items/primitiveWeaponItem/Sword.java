@@ -16,18 +16,15 @@ public class Sword extends PrimitiveWeaponItem {
 
     private final float SWORD_LENGTH =PirateGame.TILE_SIZE/4;
 
+    private boolean setSwordTofalse;
     public Sword(PlayScreen screen) {
         super(screen);
         stateTimer=0;
-        /*
-        frames = new Array<TextureRegion>();
-        for (int i = 0; i < 4; i++) {
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("Bomb"), i * 8, 0, 8, 8));
-        }
-        fireAnimation = new Animation(0.2f, frames);
-        setRegion(fireAnimation.getKeyFrame(0));
-        */
+        screen.getPirate().swordInUse=true;
+        setSwordTofalse=false;
     }
+
+
 
     @Override
     public void defineItem() {
@@ -60,7 +57,6 @@ public class Sword extends PrimitiveWeaponItem {
                 PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT |  PirateGame.COCONUT_TREE_BIT;
         fixtureDef.shape=shape;
         body.createFixture(fixtureDef).setUserData(this);
-
     }
 
 
@@ -69,8 +65,13 @@ public class Sword extends PrimitiveWeaponItem {
         super.update(dt);
         stateTimer+=dt;
 
-        if (stateTimer>PirateGame.SWORD_VALID_TIME)
+        if (stateTimer>PirateGame.SWORD_VALID_TIME){
             destroy();
+            if (!setSwordTofalse){
+                screen.getPirate().swordInUse=false;
+                setSwordTofalse=true;
+            }
+        }
 
         float posX=screen.getPirate().b2body.getPosition().x;
         float posY=screen.getPirate().b2body.getPosition().y;

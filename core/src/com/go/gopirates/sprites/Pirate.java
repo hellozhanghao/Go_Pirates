@@ -41,6 +41,7 @@ public class Pirate extends Sprite {
 
     private int health;
     private float healthTimer;
+    public boolean swordInUse;
 
     private TextureRegion pirateStandingDown;
     private TextureRegion pirateStandingUp;
@@ -50,9 +51,11 @@ public class Pirate extends Sprite {
     private Animation pirateWalkingUp;
     private Animation pirateWalkingLeft;
     private Animation pirateWalkingRight;
-
+    private Animation pirateStandingDownWithSword,pirateStandingUpWithSword,pirateStandingLeftWithSword, pirateStadingRightWithSword;
+    private Animation pirateWalkingDownWithSword, pirateWalkingUpWithSword, pirateWalkingLeftWithSword, pirateWalkingRightWithSword;
     private PlayScreen screen;
     private final float FRAME_DURATION=0.1f;
+    private final float FRAME_DURATION_WITH_SWORD=0.1f;
 
     public ArrayList<ExplosiveItem> explosiveItems;
     public ArrayList<NonInteractiveSprites> nonInteractiveSprites;
@@ -82,13 +85,16 @@ public class Pirate extends Sprite {
         this.character=character;
         health = PirateGame.ININTIAL_HEALTH;
         healthTimer = 0;
+        swordInUse=false;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         coconuts = new ArrayList<Integer>();
         coconuts.add(1);
         coconuts.add(1);coconuts.add(1);coconuts.add(1);
 
-
+        /**
+         * ********************************** Pirate***********************************************
+         */
         frames.add(new TextureRegion(screen.getAtlas().findRegion(character),0*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
         frames.add(new TextureRegion(screen.getAtlas().findRegion(character),1*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
         frames.add(new TextureRegion(screen.getAtlas().findRegion(character),0*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
@@ -123,9 +129,54 @@ public class Pirate extends Sprite {
         frames.clear();
         pirateStandingUp=new TextureRegion(screen.getAtlas().findRegion(character),9*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE);
 
+        /**
+         * ********************************** Pirate with sword ************************************
+         */
+
+        String characterWithSword="Sophia_sword";
+        for (int i = 0; i < 4; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+        pirateWalkingDownWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
+        frames.clear();
+
+        for (int i = 3; i < 5; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+        pirateStandingDownWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
+        frames.clear();
+
+        for (int i = 5; i < 9; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+        pirateWalkingLeftWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
+        frames.clear();
+
+        for (int i = 8; i < 10; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+        pirateStandingLeftWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
+        frames.clear();
+
+        for (int i = 10; i < 14; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+        pirateWalkingRightWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
+        frames.clear();
+
+        for (int i = 13; i < 15; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+        pirateStadingRightWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
+        frames.clear();
+
+        for (int i = 15; i < 19; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+        pirateWalkingUpWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
+        frames.clear();
+
+        for (int i = 18; i < 20; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+        pirateStandingUpWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
+        frames.clear();
+
         definePirate();
 
-        setBounds(0,0,PirateGame.TILE_SIZE/PirateGame.PPM,PirateGame.TILE_SIZE/PirateGame.PPM);
+        setBounds(0, 0, PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM);
         setRegion(pirateStandingDown);
 
     }
@@ -140,6 +191,11 @@ public class Pirate extends Sprite {
 
         if (powerUpTimer>PirateGame.POWERUP_TIME & pirateState!=PirateState.PIRATE){
             redefinePirate();
+        }
+        if (swordInUse){
+            setSize(400/PirateGame.PPM,400/PirateGame.PPM);
+        }else {
+            setSize(PirateGame.TILE_SIZE/PirateGame.PPM,PirateGame.TILE_SIZE/PirateGame.PPM);
         }
     }
 
@@ -263,46 +319,90 @@ public class Pirate extends Sprite {
         currentState= getState();
         TextureRegion region;
         //depending on the state, get corresponding animation keyFrame.
-        switch(currentState){
-            case WALKING:
-                switch (direction){
-                    case DOWN:
-                        region = pirateWalkingDown.getKeyFrame(stateTimer,true);
-                        break;
-                    case LEFT:
-                        region = pirateWalkingLeft.getKeyFrame(stateTimer,true);
-                        break;
-                    case RIGHT:
-                        region = pirateWalkingRight.getKeyFrame(stateTimer,true);
-                        break;
-                    case UP:
-                        region = pirateWalkingUp.getKeyFrame(stateTimer,true);
-                        break;
-                    default:
-                        region = pirateWalkingDown.getKeyFrame(stateTimer,true);
-                        break;
-                }
-                break;
-            case STANDING:
-            default:
-                switch (direction){
-                    case UP:
-                        region = pirateStandingUp;
-                        break;
-                    case DOWN:
-                        region = pirateStandingDown;
-                        break;
-                    case LEFT:
-                        region = pirateStandingLeft;
-                        break;
-                    case RIGHT:
-                        region = pirateStandingRight;
-                        break;
-                    default:
-                        region = pirateStandingDown;
-                        break;
-                }
-                break;
+        if (swordInUse){
+            switch(currentState){
+                case WALKING:
+                    switch (direction){
+                        case DOWN:
+                            region = pirateWalkingDownWithSword.getKeyFrame(stateTimer,true);
+                            break;
+                        case LEFT:
+                            region = pirateWalkingLeftWithSword.getKeyFrame(stateTimer,true);
+                            break;
+                        case RIGHT:
+                            region = pirateWalkingRightWithSword.getKeyFrame(stateTimer,true);
+                            break;
+                        case UP:
+                            region = pirateWalkingUpWithSword.getKeyFrame(stateTimer,true);
+                            break;
+                        default:
+                            region = pirateWalkingDownWithSword.getKeyFrame(stateTimer,true);
+                            break;
+                    }
+                    break;
+                case STANDING:
+                default:
+                    switch (direction){
+                        case UP:
+                            region = pirateStandingUpWithSword.getKeyFrame(stateTimer,true);
+                            break;
+                        case DOWN:
+                            region = pirateStandingDownWithSword.getKeyFrame(stateTimer,true);
+                            break;
+                        case LEFT:
+                            region = pirateStandingLeftWithSword.getKeyFrame(stateTimer,true);
+                            break;
+                        case RIGHT:
+                            region = pirateStadingRightWithSword.getKeyFrame(stateTimer,true);
+                            break;
+                        default:
+                            region = pirateStandingDownWithSword.getKeyFrame(stateTimer,true);
+                            break;
+                    }
+                    break;
+            }
+        }else {
+            switch(currentState){
+                case WALKING:
+                    switch (direction){
+                        case DOWN:
+                            region = pirateWalkingDown.getKeyFrame(stateTimer,true);
+                            break;
+                        case LEFT:
+                            region = pirateWalkingLeft.getKeyFrame(stateTimer,true);
+                            break;
+                        case RIGHT:
+                            region = pirateWalkingRight.getKeyFrame(stateTimer,true);
+                            break;
+                        case UP:
+                            region = pirateWalkingUp.getKeyFrame(stateTimer,true);
+                            break;
+                        default:
+                            region = pirateWalkingDown.getKeyFrame(stateTimer,true);
+                            break;
+                    }
+                    break;
+                case STANDING:
+                default:
+                    switch (direction){
+                        case UP:
+                            region = pirateStandingUp;
+                            break;
+                        case DOWN:
+                            region = pirateStandingDown;
+                            break;
+                        case LEFT:
+                            region = pirateStandingLeft;
+                            break;
+                        case RIGHT:
+                            region = pirateStandingRight;
+                            break;
+                        default:
+                            region = pirateStandingDown;
+                            break;
+                    }
+                    break;
+            }
         }
         //if the current state is the same as the previous state increase the state timer.
         //otherwise the state has changed and we need to reset timer.

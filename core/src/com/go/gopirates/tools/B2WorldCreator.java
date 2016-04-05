@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.tileObjects.Barrel;
-import com.go.gopirates.sprites.tileObjects.Border;
 import com.go.gopirates.sprites.tileObjects.CoconutTree;
 import com.go.gopirates.sprites.tileObjects.Rock;
 import com.go.gopirates.sprites.tileObjects.Treasure;
@@ -45,10 +44,6 @@ public class B2WorldCreator {
         for(MapObject object : map.getLayers().get(5).getObjects().getByType(MapObject.class)){
             new Treasure(screen, object);
         }
-        for(MapObject object : map.getLayers().get(6).getObjects().getByType(MapObject.class)){
-            new Border(screen, object);
-        }
-
 
 
 
