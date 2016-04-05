@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="19" height="19" tilewidth="256" tileheight="256" nextobjectid="1">
- <tileset firstgid="1" name="tileset" tilewidth="256" tileheight="256" tilecount="6" columns="2">
-  <image source="tileset.png" trans="ffffff" width="512" height="768"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="19" height="19" tilewidth="256" tileheight="256" nextobjectid="3">
+ <tileset firstgid="1" name="tileset" tilewidth="256" tileheight="256" tilecount="16" columns="4">
+  <image source="tileset.png" trans="ffffff" width="1024" height="1024"/>
  </tileset>
  <layer name="Background" width="19" height="19">
   <data encoding="base64" compression="zlib">
-   eJxjZWBgYB3Fo3gUj+JRPCgxAPeFBw4=
+   eJzjZGBg4BzFo3gUj+JRPCgxAOxFDLI=
   </data>
  </layer>
  <layer name="Graphics" width="19" height="19">
   <data encoding="base64" compression="zlib">
-   eJytlAEKwDAIA1O7/795FCZIMOqggkjr0CPabQD7orut4Ghi/A5Ua3+5E43uOc8x1lqJRw5L7tljraqfOnOccGV8Uy4T9x0fc7mp/ko3nqNhxqXm7LmoC/d8CqZsJ/7Mi3kMuV4L9byY3SPr1fFM9MqY3OK5epedXszZ8Xd7r7jU3nc6eV7tHagW95vq5Hbzf3r8BYsWAk8=
+   eJytk0sKwDAIREfT3P/K3UQqg79CBLExQR+j3QD2JV/4TJyjif4dTp3lvuVEpTzfc/S1JHDPoUGe3deq+mVnjhOuiG/KpUm+42Mus6x/phvPUTHjyuZsd14X7vkUTNFO/JkX8yhivQT1vJjdIuvV8Uz0ipjM/Ln6Lzu9mLPj7/Y+48r2vtPJ7rO9A9XiflOdzNZlfwFcJQJ1
   </data>
  </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="1" x="0" y="0">
+   <polyline points="0,0 4864,0 4864,4864 0,4864 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Object Layer 2"/>
+ <objectgroup name="Object Layer 3"/>
+ <objectgroup name="Object Layer 4"/>
 </map>
