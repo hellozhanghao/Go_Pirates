@@ -63,7 +63,8 @@ public class Pirate extends Sprite {
     private PirateState pirateState;
     private float stateTimer;
     private float powerUpTimer;
-    public Pirate(PlayScreen screen, int playerId){
+    private String character;
+    public Pirate(PlayScreen screen, int playerId, String character){
         //initialize default values
         this.screen = screen;
         this.world = screen.getWorld();
@@ -78,47 +79,47 @@ public class Pirate extends Sprite {
         pirateState = PirateState.PIRATE;
         powerUpTimer = 0;
         this.playerId = playerId;
+        this.character=character;
         health = PirateGame.ININTIAL_HEALTH;
         healthTimer = 0;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        String pirate="pirate0";
         coconuts = new ArrayList<Integer>();
 
 
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),0*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),1*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),0*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),2*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),0*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),1*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),0*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),2*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
         pirateWalkingDown=new Animation(FRAME_DURATION,frames);
         frames.clear();
-        pirateStandingDown=new TextureRegion(screen.getAtlas().findRegion(pirate),0*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE);
+        pirateStandingDown=new TextureRegion(screen.getAtlas().findRegion(character),0*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE);
 
 
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),3*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),4*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),3*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),5*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),3*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),4*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),3*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),5*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
         pirateWalkingLeft=new Animation(FRAME_DURATION,frames);
         frames.clear();
-        pirateStandingLeft=new TextureRegion(screen.getAtlas().findRegion(pirate),3*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE);
+        pirateStandingLeft=new TextureRegion(screen.getAtlas().findRegion(character),3*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE);
 
 
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),6*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),7*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),6*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),8*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),6*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),7*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),6*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),8*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
         pirateWalkingRight=new Animation(FRAME_DURATION,frames);
         frames.clear();
-        pirateStandingRight=new TextureRegion(screen.getAtlas().findRegion(pirate),6*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE);
+        pirateStandingRight=new TextureRegion(screen.getAtlas().findRegion(character),6*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE);
 
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),9*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),10*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),9*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion(pirate),11*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),9*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),10*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),9*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion(character),11*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
         pirateWalkingUp=new Animation(FRAME_DURATION,frames);
         frames.clear();
-        pirateStandingUp=new TextureRegion(screen.getAtlas().findRegion(pirate),9*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE);
+        pirateStandingUp=new TextureRegion(screen.getAtlas().findRegion(character),9*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE);
 
         definePirate();
 

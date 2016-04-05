@@ -109,9 +109,10 @@ public class PlayScreen implements Screen {
         creator = new B2WorldCreator(this);
         //create pirates in our game world
         players = new ArrayList<Pirate>();
-        for (int i = 0; i < 4; i++) {
-            players.add(new Pirate(this, i));
-        }
+        players.add(new Pirate(this, 0,"Sophia"));
+        players.add(new Pirate(this, 1, "Taka"));
+        players.add(new Pirate(this, 2, "Thomas"));
+        players.add(new Pirate(this, 3, "Zack"));
 
         //create our game HUD for scores/timers/level info
 //        hud = new Hud(PirateGame.batch,players.get(thisPlayerIndex));
