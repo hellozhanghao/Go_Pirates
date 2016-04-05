@@ -17,7 +17,8 @@ public class PirateGame extends Game {
 
     //Tile Map setting
     public static final int TILE_SIZE=256;
-    public static final int MAP_SIZE=19;
+    public static final int MAP_SIZE_Y =19;
+    public static final int MAP_SIZE_X =25;
 
     //User Selct
     public static final int PLAYER_ID=0;

@@ -44,6 +44,10 @@ public class B2WorldCreator {
         for(MapObject object : map.getLayers().get(5).getObjects().getByType(MapObject.class)){
             new Treasure(screen, object);
         }
+//        for(MapObject object : map.getLayers().get(6).getObjects().getByType(MapObject.class)){
+//            new Border(screen, object);
+//        }
+
 
 
 

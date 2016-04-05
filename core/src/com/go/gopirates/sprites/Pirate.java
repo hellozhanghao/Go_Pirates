@@ -16,7 +16,6 @@ import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.items.explosiveItems.ExplosiveItem;
 import com.go.gopirates.sprites.items.noneInteractiveItems.NonInteractiveSprites;
-import com.go.gopirates.sprites.items.primitiveWeaponItem.Coconut;
 import com.go.gopirates.sprites.items.primitiveWeaponItem.PrimitiveWeaponItem;
 
 import java.util.ArrayList;
@@ -145,25 +144,21 @@ public class Pirate extends Sprite {
         BodyDef bodyDef = new BodyDef();
         switch (playerId){
             case 0:
-                bodyDef.position.set(PirateGame.TILE_SIZE/PirateGame.PPM+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
-                                     PirateGame.TILE_SIZE/PirateGame.PPM+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
+                bodyDef.position.set(PirateGame.TILE_SIZE/PirateGame.PPM*3+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
+                                     PirateGame.TILE_SIZE/PirateGame.PPM*0+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
                 break;
             case 1:
-                bodyDef.position.set((PirateGame.TILE_SIZE/PirateGame.PPM)*(PirateGame.MAP_SIZE-2)+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
-                                      PirateGame.TILE_SIZE/PirateGame.PPM+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
+                bodyDef.position.set((PirateGame.TILE_SIZE/PirateGame.PPM)*(PirateGame.MAP_SIZE_X -4)+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
+                                      PirateGame.TILE_SIZE/PirateGame.PPM*0+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
                 break;
             case 2:
-                bodyDef.position.set(PirateGame.TILE_SIZE/PirateGame.PPM+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
-                                    (PirateGame.TILE_SIZE/PirateGame.PPM)*(PirateGame.MAP_SIZE-2)+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
+                bodyDef.position.set(PirateGame.TILE_SIZE/PirateGame.PPM*3+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
+                                    (PirateGame.TILE_SIZE/PirateGame.PPM)*(PirateGame.MAP_SIZE_Y -1)+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
                 break;
             case 3:
-                bodyDef.position.set((PirateGame.TILE_SIZE/PirateGame.PPM)*(PirateGame.MAP_SIZE-2)+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
-                                     (PirateGame.TILE_SIZE/PirateGame.PPM)*(PirateGame.MAP_SIZE-2)+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
+                bodyDef.position.set((PirateGame.TILE_SIZE/PirateGame.PPM)*(PirateGame.MAP_SIZE_X -4)+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
+                                     (PirateGame.TILE_SIZE/PirateGame.PPM)*(PirateGame.MAP_SIZE_Y -1)+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
                 break;
-            default:
-                bodyDef.position.set(PirateGame.TILE_SIZE/PirateGame.PPM+(PirateGame.TILE_SIZE/PirateGame.PPM)/2,
-                        PirateGame.TILE_SIZE/PirateGame.PPM+(PirateGame.TILE_SIZE/PirateGame.PPM)/2);
-
         }
 
         bodyDef.type= BodyDef.BodyType.DynamicBody;

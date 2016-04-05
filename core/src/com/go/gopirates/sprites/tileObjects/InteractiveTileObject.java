@@ -74,14 +74,4 @@ public abstract class InteractiveTileObject {
 
 
 
-    // TODO: 27/3/16 Handle hit by TNT
-//    public void hitByTNT(Pirate pirate) {
-//        pirate.decreaseHealth(50);
-//    }
-
-
-
-
-
-
 }

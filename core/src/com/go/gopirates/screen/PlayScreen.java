@@ -264,15 +264,15 @@ public class PlayScreen implements Screen {
 
         if (player.b2body.getPosition().x < (PirateGame.V_WIDTH / PirateGame.PPM) / 2)
             gamecam.position.x = gamePort.getWorldWidth() / 2;
-        else if (player.b2body.getPosition().x > (PirateGame.TILE_SIZE * PirateGame.MAP_SIZE / PirateGame.PPM) - (PirateGame.V_WIDTH / PirateGame.PPM) / 2)
-            gamecam.position.x = (PirateGame.TILE_SIZE * PirateGame.MAP_SIZE / PirateGame.PPM) - (PirateGame.V_WIDTH / PirateGame.PPM) / 2;
+        else if (player.b2body.getPosition().x > (PirateGame.TILE_SIZE * PirateGame.MAP_SIZE_X / PirateGame.PPM) - (PirateGame.V_WIDTH / PirateGame.PPM) / 2)
+            gamecam.position.x = (PirateGame.TILE_SIZE * PirateGame.MAP_SIZE_X / PirateGame.PPM) - (PirateGame.V_WIDTH / PirateGame.PPM) / 2;
         else
             gamecam.position.x = player.b2body.getPosition().x;
         //y position
         if (player.b2body.getPosition().y < (PirateGame.V_HEIGHT / PirateGame.PPM) / 2)
             gamecam.position.y = gamePort.getWorldHeight() / 2;
-        else if (player.b2body.getPosition().y > (PirateGame.TILE_SIZE * PirateGame.MAP_SIZE / PirateGame.PPM) - (PirateGame.V_HEIGHT / PirateGame.PPM) / 2)
-            gamecam.position.y = (PirateGame.TILE_SIZE * PirateGame.MAP_SIZE / PirateGame.PPM) - (PirateGame.V_HEIGHT / PirateGame.PPM) / 2;
+        else if (player.b2body.getPosition().y > (PirateGame.TILE_SIZE * PirateGame.MAP_SIZE_Y / PirateGame.PPM) - (PirateGame.V_HEIGHT / PirateGame.PPM) / 2)
+            gamecam.position.y = (PirateGame.TILE_SIZE * PirateGame.MAP_SIZE_Y / PirateGame.PPM) - (PirateGame.V_HEIGHT / PirateGame.PPM) / 2;
         else
             gamecam.position.y = player.b2body.getPosition().y;
         gamecam.update();
