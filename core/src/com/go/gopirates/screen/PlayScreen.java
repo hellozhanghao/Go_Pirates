@@ -96,7 +96,7 @@ public class PlayScreen implements Screen {
 
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
-        map = maploader.load("tiled_map/testMap.tmx");
+        map = maploader.load("tiled_map/testMap2.tmx");
 
         renderer = new OrthogonalTiledMapRenderer(map, 1 / PirateGame.PPM);
         //initialize gamecame
