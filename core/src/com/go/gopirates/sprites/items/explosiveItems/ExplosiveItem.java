@@ -26,10 +26,11 @@ public abstract class ExplosiveItem extends Sprite {
     protected Body body;
     protected float posX,posY,stateTime;
 
-    final int BOMB_RADIUS=80;
+    final int BOMB_FIXTURE_RADIUS = 80;
     protected final float TIME_TO_EXPLODE = 4;
     protected final float TIME_TO_PRESENCE = 1.5f;
     protected final float EXPLOSION_TIME=0.1f;
+    protected final float BOMB_SIZE=350f;
 
     public ExplosiveItem(PlayScreen screen, float x, float y) {
         this.screen = screen;
@@ -37,9 +38,9 @@ public abstract class ExplosiveItem extends Sprite {
         Vector2 pos= TileMapTranslator.translate(x,y);
         posX=pos.x;
         posY=pos.y;
-        setBounds(posX, posY, 500 / PirateGame.PPM, 500 / PirateGame.PPM);
-        setPosition(posX-500/PirateGame.PPM/2,
-                    posY-500/PirateGame.PPM/2);
+        setBounds(posX, posY, BOMB_SIZE / PirateGame.PPM, BOMB_SIZE / PirateGame.PPM);
+        setPosition(posX-BOMB_SIZE/PirateGame.PPM/2,
+                    posY-BOMB_SIZE/PirateGame.PPM/2);
         toDestroy = false;
         destroyed = false;
         defineExplosiveItem();
@@ -52,7 +53,7 @@ public abstract class ExplosiveItem extends Sprite {
         body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(BOMB_RADIUS / PirateGame.PPM);
+        shape.setRadius(BOMB_FIXTURE_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = PirateGame.NOTHING_BIT;
         fdef.filter.maskBits = PirateGame.BARREL_BIT | PirateGame.COCONUT_TREE_BIT |
@@ -71,7 +72,7 @@ public abstract class ExplosiveItem extends Sprite {
         body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(BOMB_RADIUS / PirateGame.PPM);
+        shape.setRadius(BOMB_FIXTURE_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = PirateGame.BOMB_BIT;
         fdef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.SHIELD_BIT;
