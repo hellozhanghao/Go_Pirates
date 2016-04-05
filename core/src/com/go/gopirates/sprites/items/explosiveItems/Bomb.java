@@ -58,7 +58,7 @@ public class Bomb extends ExplosiveItem {
         body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(BOMB_RADIUS / PirateGame.PPM);
+        shape.setRadius(BOMB_FIXTURE_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = PirateGame.NOTHING_BIT;
         fdef.filter.maskBits = PirateGame.BARREL_BIT | PirateGame.COCONUT_TREE_BIT |
