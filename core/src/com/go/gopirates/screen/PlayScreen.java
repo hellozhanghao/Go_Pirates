@@ -202,8 +202,10 @@ public class PlayScreen implements Screen {
             swordConfirm=false;
         }
         //Coconut Pressed:
+
         if (!controller.previousCoconutPress & controller.coconutPress & coconutConfirm & player.coconuts.size() != 0){
             player.primitiveWeaponItems.add(new Coconut(this));
+            System.out.println("Coconut: " + player.coconuts.size());
             coconutConfirm=false;
             player.coconuts.remove(player.coconuts.size()-1);
         }

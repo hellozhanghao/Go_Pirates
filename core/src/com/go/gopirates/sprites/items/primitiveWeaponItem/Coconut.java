@@ -36,7 +36,7 @@ public class Coconut extends PrimitiveWeaponItem {
 
         switch (screen.getPirate().direction){
             case UP:
-                bodyDef.position.set(posX, posY + ((PirateGame.TILE_SIZE/2+COCONUT_RADIUS))/PirateGame.PPM);
+                bodyDef.position.set(posX, posY + ((PirateGame.TILE_SIZE*3/5+COCONUT_RADIUS))/PirateGame.PPM);
                 break;
             case DOWN:
                 bodyDef.position.set(posX, posY - ((PirateGame.TILE_SIZE/2+COCONUT_RADIUS))/PirateGame.PPM);

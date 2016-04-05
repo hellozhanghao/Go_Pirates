@@ -13,7 +13,7 @@ import java.util.Random;
  * Created by zhanghao on 3/4/16.
  */
 public class CoconutTree extends InteractiveTileObject {
-
+    private int hit = 0;
 
     public CoconutTree(PlayScreen screen, MapObject object) {
         super(screen, object);
@@ -23,10 +23,15 @@ public class CoconutTree extends InteractiveTileObject {
 
     @Override
     public void onHit() {
-//        getCell().setTile(null);
-//        setCategoryFilter(PirateGame.NOTHING_BIT);
+        if (hit >= MAX_HIT){
+            getCell().setTile(null);
+            setCategoryFilter(PirateGame.NOTHING_BIT);
+            return;
+
+        }
+        hit ++;
         Random rand = new Random();
-        int randomNum = rand.nextInt((5 - 0) + 1);
+        int randomNum = rand.nextInt(6);
         switch (randomNum){
             case 0:
                 screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x + 10, body.getPosition().y - 10),
@@ -59,7 +64,7 @@ public class CoconutTree extends InteractiveTileObject {
                         CoconutPowerUp.class));
                 screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x - 20, body.getPosition().y + 10),
                         CoconutPowerUp.class));
-                screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x + 10, body.getPosition().y),
+                screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x + 10, body.getPosition().y + 20),
                         CoconutPowerUp.class));
                 break;
             default:

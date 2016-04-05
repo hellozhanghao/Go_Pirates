@@ -19,7 +19,7 @@ public class Bomb extends ExplosiveItem {
 
     public Bomb(PlayScreen screen, float x, float y) {
         super(screen, x, y);
-        setRegion(screen.getAtlas().findRegion("object_bomb"),0,0,500,500);
+        setRegion(screen.getAtlas().findRegion("object_bomb"), 0, 0, 500, 500);
     }
 
     @Override
@@ -33,8 +33,22 @@ public class Bomb extends ExplosiveItem {
     public void use() {
         world.destroyBody(body);
         screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-                posX-(PirateGame.TILE_SIZE/2)/PirateGame.PPM,
-                posY-(PirateGame.TILE_SIZE/2)/PirateGame.PPM));
+                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
+                posY - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
+
+        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+                posX - (PirateGame.TILE_SIZE/2) / PirateGame.PPM,
+                posY + (PirateGame.TILE_SIZE/2) / PirateGame.PPM));
+        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+                posX + (PirateGame.TILE_SIZE/2) / PirateGame.PPM,
+                posY - (PirateGame.TILE_SIZE/2) / PirateGame.PPM));
+        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+                posX - (PirateGame.TILE_SIZE/2) / PirateGame.PPM,
+                posY - (PirateGame.TILE_SIZE*3/2) / PirateGame.PPM));
+        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+                posX - (PirateGame.TILE_SIZE*3/2) / PirateGame.PPM,
+                posY - (PirateGame.TILE_SIZE/2) / PirateGame.PPM));
+
 
         PirateGame.manager.get("audio/sounds/bomb.ogg", Sound.class).play();
 
@@ -52,6 +66,7 @@ public class Bomb extends ExplosiveItem {
                 PirateGame.ROCK_BIT;
         fdef.shape = shape;
         body.createFixture(fdef).setUserData(this);
+
         EdgeShape exploEdge1 = new EdgeShape();
         exploEdge1.set(new Vector2(-PirateGame.TILE_SIZE * 2 / PirateGame.PPM, 0 / PirateGame.PPM), new Vector2(PirateGame.TILE_SIZE * 2 / PirateGame.PPM, 0 / PirateGame.PPM));
 

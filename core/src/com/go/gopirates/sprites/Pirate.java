@@ -85,6 +85,8 @@ public class Pirate extends Sprite {
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         coconuts = new ArrayList<Integer>();
+        coconuts.add(1);
+        coconuts.add(1);coconuts.add(1);coconuts.add(1);
 
 
         frames.add(new TextureRegion(screen.getAtlas().findRegion(character),0*PirateGame.TILE_SIZE,0,PirateGame.TILE_SIZE,PirateGame.TILE_SIZE));
