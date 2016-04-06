@@ -133,7 +133,7 @@ public class Pirate extends Sprite {
          * ********************************** Pirate with sword ************************************
          */
 
-        String characterWithSword="Sophia_sword";
+        String characterWithSword=character+"_sword";
         for (int i = 0; i < 4; i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
         pirateWalkingDownWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);

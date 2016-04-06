@@ -380,6 +380,10 @@ public class PlayScreen implements Screen {
     public Pirate getPirate() {
         return players.get(PirateGame.PLAYER_ID);
     }
+
+    public Pirate getPirate(int id){
+        return players.get(id);
+    }
     public TiledMap getMap() {
         return map;
     }
