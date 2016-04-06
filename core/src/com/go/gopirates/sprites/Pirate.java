@@ -89,8 +89,8 @@ public class Pirate extends Sprite {
         Array<TextureRegion> frames = new Array<TextureRegion>();
         numberOfCoconut=0;
         
-        String pirateRegion="img/characters/"+"Sophia.png";
-        Texture pirateTexture=new Texture(pirateRegion);
+
+        Texture pirateTexture=new Texture("img/characters/"+"Sophia.png");
 
         /**
          * ********************************** Pirate***********************************************
@@ -134,44 +134,44 @@ public class Pirate extends Sprite {
          * ********************************** Pirate with sword ************************************
          */
 
-        String characterWithSword=character+"_sword";
+        Texture pirateWithSwordTexture=new Texture("img/characters/"+"Sophia"+"_sword"+".png");
         for (int i = 0; i < 4; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+            frames.add(new TextureRegion(pirateWithSwordTexture,i*400,0,400,400));
         pirateWalkingDownWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
         frames.clear();
 
         for (int i = 3; i < 5; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+            frames.add(new TextureRegion(pirateWithSwordTexture,i*400,0,400,400));
         pirateStandingDownWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
         frames.clear();
 
-        for (int i = 5; i < 9; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+        for (int i = 0; i < 4; i++)
+            frames.add(new TextureRegion(pirateWithSwordTexture,i*400,400,400,400));
         pirateWalkingLeftWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
         frames.clear();
 
-        for (int i = 8; i < 10; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+        for (int i = 3; i < 5; i++)
+            frames.add(new TextureRegion(pirateWithSwordTexture,i*400,400,400,400));
         pirateStandingLeftWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
         frames.clear();
 
-        for (int i = 10; i < 14; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+        for (int i = 0; i < 4; i++)
+            frames.add(new TextureRegion(pirateWithSwordTexture,i*400,800,400,400));
         pirateWalkingRightWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
         frames.clear();
 
-        for (int i = 13; i < 15; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+        for (int i = 3; i < 5; i++)
+            frames.add(new TextureRegion(pirateWithSwordTexture,i*400,800,400,400));
         pirateStadingRightWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
         frames.clear();
 
-        for (int i = 15; i < 19; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+        for (int i = 0; i < 4; i++)
+            frames.add(new TextureRegion(pirateWithSwordTexture,i*400,1200,400,400));
         pirateWalkingUpWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
         frames.clear();
 
-        for (int i = 18; i < 20; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion(characterWithSword),i*400,0,400,400));
+        for (int i = 3; i < 5; i++)
+            frames.add(new TextureRegion(pirateWithSwordTexture,i*400,1200,400,400));
         pirateStandingUpWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
         frames.clear();
 
