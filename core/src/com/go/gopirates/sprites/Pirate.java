@@ -406,7 +406,6 @@ public class Pirate extends Sprite {
         previousState = currentState;
         //return our final adjusted frame
         return region;
-
     }
 
     public void draw(Batch batch){
