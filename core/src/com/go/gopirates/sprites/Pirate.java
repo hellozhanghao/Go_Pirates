@@ -1,6 +1,7 @@
 package com.go.gopirates.sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -64,8 +65,8 @@ public class Pirate extends Sprite {
     private PirateState pirateState;
     private float stateTimer;
     private float powerUpTimer;
-    private String character;
-    public Pirate(PlayScreen screen, int playerId, String character){
+    public  String character;
+    public Pirate(PlayScreen screen, int playerId, String name){
         //initialize default values
         this.screen = screen;
         this.world = screen.getWorld();
