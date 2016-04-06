@@ -13,12 +13,14 @@ import java.util.Random;
  * Created by zhanghao on 3/4/16.
  */
 public class CoconutTree extends InteractiveTileObject {
-    private int hit = 0;
+    private final int MAX_HIT = 3;
+    private int hit;
 
     public CoconutTree(PlayScreen screen, MapObject object) {
         super(screen, object);
         fixture.setUserData(this);
         setCategoryFilter(PirateGame.COCONUT_TREE_BIT);
+        hit=0;
     }
 
     @Override

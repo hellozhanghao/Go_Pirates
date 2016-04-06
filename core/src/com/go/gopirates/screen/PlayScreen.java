@@ -36,7 +36,6 @@ import com.go.gopirates.sprites.items.primitiveWeaponItem.Sword;
 import com.go.gopirates.tools.B2WorldCreator;
 import com.go.gopirates.tools.WorldContactListener;
 
-import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -67,7 +66,7 @@ public class PlayScreen implements Screen {
     private B2WorldCreator creator;
 
     //sprites
-    private ArrayList<Pirate> players;
+    private Array<Pirate> players;
 
     private Music music;
 
@@ -108,7 +107,7 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
         creator = new B2WorldCreator(this);
         //create pirates in our game world
-        players = new ArrayList<Pirate>();
+        players = new Array<Pirate>();
         players.add(new Pirate(this, 0,"Sophia"));
         players.add(new Pirate(this, 1, "Taka"));
         players.add(new Pirate(this, 2, "Thomas"));
@@ -117,24 +116,23 @@ public class PlayScreen implements Screen {
         //create our game HUD for scores/timers/level info
 //        hud = new Hud(PirateGame.batch,players.get(thisPlayerIndex));
 
-        controller = new Controller();
-        controller.create();
 
         world.setContactListener(new WorldContactListener(this));
         music = PirateGame.manager.get("audio/music/pirate.mp3", Music.class);
         music.setLooping(true);
-        music.setVolume(0.2f);
+        music.setVolume(0.5f);
         music.play();
 
         powerUps = new Array<PowerUp>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
 
+        //controller
+        controller = new Controller();
+        controller.create();
         bombConfirmTimer = 0;
         bombConfirm = true;
-
         swordConfirmTimer=0;
         swordConfirm=true;
-
         coconutConfirmTimer=0;
         coconutConfirm=true;
     }
@@ -203,11 +201,12 @@ public class PlayScreen implements Screen {
         }
         //Coconut Pressed:
 
-        if (!controller.previousCoconutPress & controller.coconutPress & coconutConfirm & player.coconuts.size() != 0){
-            player.primitiveWeaponItems.add(new Coconut(this));
-            System.out.println("Coconut: " + player.coconuts.size());
+        if (!controller.previousCoconutPress & controller.coconutPress & coconutConfirm){
+            if (player.numberOfCoconut>0){
+                player.primitiveWeaponItems.add(new Coconut(this));
+                player.numberOfCoconut--;
+            }
             coconutConfirm=false;
-            player.coconuts.remove(player.coconuts.size()-1);
         }
 
         //Power up Pressed

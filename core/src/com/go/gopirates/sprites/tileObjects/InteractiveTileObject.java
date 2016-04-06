@@ -33,7 +33,7 @@ public abstract class InteractiveTileObject {
     protected MapObject object;
 
     protected Fixture fixture;
-    protected int MAX_HIT = 3;
+
 
     public InteractiveTileObject(PlayScreen screen, MapObject object){
         this.object = object;

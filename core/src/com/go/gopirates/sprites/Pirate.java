@@ -18,8 +18,6 @@ import com.go.gopirates.sprites.items.explosiveItems.ExplosiveItem;
 import com.go.gopirates.sprites.items.noneInteractiveItems.NonInteractiveSprites;
 import com.go.gopirates.sprites.items.primitiveWeaponItem.PrimitiveWeaponItem;
 
-import java.util.ArrayList;
-
 /**
  * Created by zhanghao on 2/4/16.
  */
@@ -57,11 +55,11 @@ public class Pirate extends Sprite {
     private final float FRAME_DURATION=0.1f;
     private final float FRAME_DURATION_WITH_SWORD=0.1f;
 
-    public ArrayList<ExplosiveItem> explosiveItems;
-    public ArrayList<NonInteractiveSprites> nonInteractiveSprites;
-    public ArrayList<PrimitiveWeaponItem> primitiveWeaponItems;
+    public Array<ExplosiveItem> explosiveItems;
+    public Array<NonInteractiveSprites> nonInteractiveSprites;
+    public Array<PrimitiveWeaponItem> primitiveWeaponItems;
 
-    public ArrayList<Integer> coconuts;
+    public int numberOfCoconut;
     private enum PirateState{ PIRATE, PIRATE_WITH_SHIELD}
     private PirateState pirateState;
     private float stateTimer;
@@ -76,9 +74,9 @@ public class Pirate extends Sprite {
         direction = Direction.DOWN;
         powerUpHolding = PowerUpHolding.NONE;
         stateTimer = 0;
-        explosiveItems = new ArrayList<ExplosiveItem>();
-        nonInteractiveSprites = new ArrayList<NonInteractiveSprites>();
-        primitiveWeaponItems = new ArrayList<PrimitiveWeaponItem>();
+        explosiveItems = new Array<ExplosiveItem>();
+        nonInteractiveSprites = new Array<NonInteractiveSprites>();
+        primitiveWeaponItems = new Array<PrimitiveWeaponItem>();
         pirateState = PirateState.PIRATE;
         powerUpTimer = 0;
         this.playerId = playerId;
@@ -88,9 +86,7 @@ public class Pirate extends Sprite {
         swordInUse=false;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        coconuts = new ArrayList<Integer>();
-        coconuts.add(1);
-        coconuts.add(1);coconuts.add(1);coconuts.add(1);
+        numberOfCoconut=0;
 
         /**
          * ********************************** Pirate***********************************************
