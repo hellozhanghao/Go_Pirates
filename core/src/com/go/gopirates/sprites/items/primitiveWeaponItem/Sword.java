@@ -1,6 +1,7 @@
 package com.go.gopirates.sprites.items.primitiveWeaponItem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -28,6 +29,7 @@ public class Sword extends PrimitiveWeaponItem {
 
     @Override
     public void defineItem() {
+        PirateGame.manager.get("audio/sounds/sword.mp3", Sound.class).play();
         BodyDef bodyDef = new BodyDef();
         float posX=screen.getPirate().b2body.getPosition().x;
         float posY=screen.getPirate().b2body.getPosition().y;
