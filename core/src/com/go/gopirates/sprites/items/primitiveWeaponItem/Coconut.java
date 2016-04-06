@@ -85,6 +85,5 @@ public class Coconut extends PrimitiveWeaponItem {
     public void update(float dt){
         super.update(dt);
         setPosition(body.getPosition().x-COCONUT_RADIUS/PirateGame.PPM, body.getPosition().y-COCONUT_RADIUS/PirateGame.PPM);
-        System.out.println(body.getPosition().x/PirateGame.PPM);
     }
 }

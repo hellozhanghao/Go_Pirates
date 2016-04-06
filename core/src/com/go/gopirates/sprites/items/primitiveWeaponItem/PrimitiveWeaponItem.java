@@ -40,7 +40,7 @@ public abstract class PrimitiveWeaponItem  extends Sprite{
         }
     }
     public void draw(Batch batch){
-        if(!destroyed)
+        if(!destroyed & !toDestroy)
             super.draw(batch);
     }
 
