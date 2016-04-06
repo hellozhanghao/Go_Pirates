@@ -28,7 +28,7 @@ public class Pirate extends Sprite {
     public enum Direction {UP, DOWN, LEFT, RIGHT}
     public enum State { WALKING, STANDING}
 
-    public enum PowerUpHolding {TNT, COCONUT, SHIELD, SHOE, NONE}
+    public enum PowerUpHolding {TNT, SHIELD, SHOE, NONE}
     public State currentState;
     public State previousState;
     public Direction direction;
@@ -64,8 +64,8 @@ public class Pirate extends Sprite {
     private PirateState pirateState;
     private float stateTimer;
     private float powerUpTimer;
-    private String character;
-    public Pirate(PlayScreen screen, int playerId, String character){
+    final public String character;
+    public Pirate(PlayScreen screen, int playerId, final String name){
         //initialize default values
         this.screen = screen;
         this.world = screen.getWorld();
@@ -80,13 +80,13 @@ public class Pirate extends Sprite {
         pirateState = PirateState.PIRATE;
         powerUpTimer = 0;
         this.playerId = playerId;
-        this.character=character;
+        this.character=name;
         health = PirateGame.ININTIAL_HEALTH;
         healthTimer = 0;
         swordInUse=false;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        numberOfCoconut=0;
+        numberOfCoconut = PirateGame.INITIAL_COCONUT;
 
         /**
          * ********************************** Pirate***********************************************

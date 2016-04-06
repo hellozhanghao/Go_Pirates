@@ -131,7 +131,11 @@
   <object id="41" x="1792" y="2048" width="256" height="256"/>
   <object id="42" x="2048" y="2048" width="256" height="256"/>
   <object id="43" x="2304" y="2048" width="256" height="256"/>
-  <object id="45" x="1280" y="2560" width="256" height="256"/>
+  <object id="45" x="1280" y="2560" width="256" height="256">
+   <properties>
+    <property name="shield" value=""/>
+   </properties>
+  </object>
   <object id="46" x="1792" y="2560" width="256" height="256"/>
   <object id="47" x="2304" y="2560" width="256" height="256"/>
   <object id="48" x="3328" y="0" width="256" height="256"/>
@@ -201,7 +205,11 @@
   <object id="121" x="2816" y="4096" width="256" height="256"/>
   <object id="122" x="2816" y="4608" width="256" height="256"/>
   <object id="123" x="2816" y="3072" width="256" height="256"/>
-  <object id="125" x="1536" y="3072" width="256" height="256"/>
+  <object id="125" x="1536" y="3072" width="256" height="256">
+   <properties>
+    <property name="TNT" value=""/>
+   </properties>
+  </object>
   <object id="126" x="1792" y="3072" width="256" height="256"/>
   <object id="127" x="2304" y="3072" width="256" height="256"/>
   <object id="128" x="2048" y="3584" width="256" height="256"/>

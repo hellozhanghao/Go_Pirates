@@ -24,56 +24,55 @@ public class TNT extends ExplosiveItem {
     @Override
     public void defineExplosiveItem() {
         super.defineExplosiveItem();
-        Gdx.app.log("Explosive", "TXT placed");
+        Gdx.app.log("Explosive", "TNT placed");
     }
-
 
     @Override
     public void use() {
-        PirateGame.manager.get("audio/sounds/bomb.ogg", Sound.class).play();
 
-        Vector2 position = body.getPosition();
         world.destroyBody(body);
 
-        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
-                posY - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
-        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
-                posY + (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
-        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-                posX + (PirateGame.TILE_SIZE/2) / PirateGame.PPM,
-                posY + (PirateGame.TILE_SIZE/2) / PirateGame.PPM));
-        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-                posX + (PirateGame.TILE_SIZE/2) / PirateGame.PPM,
-                posY - (PirateGame.TILE_SIZE/2) / PirateGame.PPM));
-        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
-                posY - (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM));
-        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-                posX - (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM,
-                posY - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
-        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
-                posY + (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM));
-        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-                posX + (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM,
-                posY - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
+//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+//                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
+//                posY - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
+//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+//                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
+//                posY + (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
+//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+//                posX + (PirateGame.TILE_SIZE/2) / PirateGame.PPM,
+//                posY + (PirateGame.TILE_SIZE/2) / PirateGame.PPM));
+//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+//                posX + (PirateGame.TILE_SIZE/2) / PirateGame.PPM,
+//                posY - (PirateGame.TILE_SIZE/2) / PirateGame.PPM));
+//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+//                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
+//                posY - (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM));
+//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+//                posX - (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM,
+//                posY - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
+//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+//                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
+//                posY + (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM));
+//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+//                posX + (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM,
+//                posY - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
 
+        PirateGame.manager.get("audio/sounds/bomb.ogg", Sound.class).play();
         BodyDef bdef = new BodyDef();
-        bdef.position.set(position);
+        bdef.position.set(posX,posY);
         bdef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / PirateGame.PPM);
+        shape.setRadius(BOMB_FIXTURE_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = PirateGame.NOTHING_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+        fdef.filter.maskBits = PirateGame.BARREL_BIT | PirateGame.COCONUT_TREE_BIT |
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
         fdef.shape = shape;
         body.createFixture(fdef).setUserData(this);
+
         EdgeShape exploEdge1 = new EdgeShape();
         exploEdge1.set(new Vector2(-PirateGame.TILE_SIZE/ PirateGame.PPM, 0 / PirateGame.PPM), new Vector2(PirateGame.TILE_SIZE / PirateGame.PPM, 0 / PirateGame.PPM));
 
@@ -137,8 +136,6 @@ public class TNT extends ExplosiveItem {
         fdef.filter.maskBits = PirateGame.BARREL_BIT |
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
-
-
     }
 
 
