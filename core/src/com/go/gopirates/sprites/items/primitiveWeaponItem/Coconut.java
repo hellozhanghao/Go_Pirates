@@ -1,6 +1,7 @@
 package com.go.gopirates.sprites.items.primitiveWeaponItem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -17,14 +18,9 @@ public class Coconut extends PrimitiveWeaponItem {
     private final float COCONUT_SPEED = 100;
     public Coconut(PlayScreen screen) {
         super(screen);
-        /*
-        frames = new Array<TextureRegion>();
-        for (int i = 0; i < 4; i++) {
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("Bomb"), i * 8, 0, 8, 8));
-        }
-        fireAnimation = new Animation(0.2f, frames);
-        setRegion(fireAnimation.getKeyFrame(0));
-        */
+        Texture coconutTexture=new Texture("img/objects/coconut.png");
+        setRegion(coconutTexture);
+        setSize(COCONUT_RADIUS*2/PirateGame.PPM,COCONUT_RADIUS*2/PirateGame.PPM);
     }
 
     @Override
@@ -82,6 +78,13 @@ public class Coconut extends PrimitiveWeaponItem {
     @Override
     public void hitOnPlayer() {
         super.hitOnPlayer();
+        destroy();
         Gdx.app.log("Weapon","Hit by coconut");
+    }
+
+    public void update(float dt){
+        super.update(dt);
+        setPosition(body.getPosition().x-COCONUT_RADIUS/PirateGame.PPM, body.getPosition().y-COCONUT_RADIUS/PirateGame.PPM);
+        System.out.println(body.getPosition().x/PirateGame.PPM);
     }
 }

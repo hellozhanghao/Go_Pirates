@@ -55,8 +55,7 @@ public class Sword extends PrimitiveWeaponItem {
         CircleShape shape=new CircleShape();
         shape.setRadius(SWORD_LENGTH / PirateGame.PPM);
         fixtureDef.filter.categoryBits = PirateGame.SWORD_BIT;
-        fixtureDef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
-                PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT |  PirateGame.COCONUT_TREE_BIT;
+        fixtureDef.filter.maskBits = PirateGame.PLAYER_BIT;
         fixtureDef.shape=shape;
         body.createFixture(fixtureDef).setUserData(this);
     }
