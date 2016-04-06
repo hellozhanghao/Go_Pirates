@@ -22,7 +22,7 @@ public class PirateGame extends Game {
     public static final int MAP_SIZE_X =25;
 
     //User Selct
-    public static final int PLAYER_ID=0;
+    public static final int PLAYER_ID=3;
 
     //Settings:
     public static  int DEFAULT_VELOCITY =100;
@@ -30,7 +30,7 @@ public class PirateGame extends Game {
     public static final float POWERUP_TIME=10f;
     public static final int ININTIAL_HEALTH=5;
     public static final float PROTECTED_TIME_AFTER_DECREASE_HEALTH=1.5f;
-    public static final float SWORD_VALID_TIME=4f;
+    public static final float SWORD_VALID_TIME=2f;
     public static final int INITIAL_COCONUT = 1;
     public static final Pirate.PowerUpHolding INITIAL_POWERUP = Pirate.PowerUpHolding.NONE;
 
