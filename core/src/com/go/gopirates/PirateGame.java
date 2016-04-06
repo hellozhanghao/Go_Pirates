@@ -22,7 +22,7 @@ public class PirateGame extends Game {
     public static final int MAP_SIZE_X =25;
 
     //User Selct
-    public static final int PLAYER_ID=3;
+    public static final int PLAYER_ID=0;
 
 
     //Settings:
@@ -34,6 +34,7 @@ public class PirateGame extends Game {
     public static final float SWORD_VALID_TIME=2f;
     public static final int INITIAL_COCONUT = 1;
     public static final Pirate.PowerUpHolding INITIAL_POWERUP = Pirate.PowerUpHolding.NONE;
+    public static  final float EXPLOSION_FRAME_DURATION=0.08f;
 
 
     //Box2D Collision Bits

@@ -5,7 +5,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -39,6 +42,8 @@ import com.go.gopirates.tools.WorldContactListener;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
+
+
 /**
  * Created by Amy on 25/2/16.
  */
@@ -47,6 +52,7 @@ public class PlayScreen implements Screen {
     //Reference to our Game, used to set Screens
     private PirateGame game;
     private TextureAtlas atlas;
+    public Animation explosionAnimation;
 
     //basic playscreen variables
     private OrthographicCamera gamecam;
@@ -86,6 +92,14 @@ public class PlayScreen implements Screen {
 
     public PlayScreen(PirateGame game) {
         atlas = new TextureAtlas("img/pirates.pack");
+        Texture explosionTexture=new Texture("img/explosion.png");
+
+        Array<TextureRegion> explosionFrames = new Array<TextureRegion>();
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 6; j++)
+                explosionFrames.add(new TextureRegion( explosionTexture,
+                        i*PirateGame.TILE_SIZE, j*PirateGame.TILE_SIZE, PirateGame.TILE_SIZE, PirateGame.TILE_SIZE));
+        explosionAnimation = new com.badlogic.gdx.graphics.g2d.Animation(PirateGame.EXPLOSION_FRAME_DURATION,explosionFrames);
         this.game = game;
         //create cam used to follow mario through cam world
         gamecam = new OrthographicCamera();
@@ -177,9 +191,17 @@ public class PlayScreen implements Screen {
 
         Pirate player = players.get(PirateGame.PLAYER_ID);
 
-        //For phone:
+//        For phone:
         player.b2body.setLinearVelocity(controller.touchpad.getKnobPercentX() * PirateGame.DEFAULT_VELOCITY,
                 controller.touchpad.getKnobPercentY() * PirateGame.DEFAULT_VELOCITY);
+
+//        if (Math.abs(controller.touchpad.getKnobPercentX())>Math.abs(controller.touchpad.getKnobPercentY())){
+//            player.b2body.setLinearVelocity(controller.touchpad.getKnobPercentX()*PirateGame.DEFAULT_VELOCITY,0);
+//        }else {
+//            player.b2body.setLinearVelocity(0,controller.touchpad.getKnobPercentY()*PirateGame.DEFAULT_VELOCITY);
+//        }
+
+
         //for keyboard:
         if (controller.upPressed)
             player.b2body.setLinearVelocity(0, PirateGame.DEFAULT_VELOCITY);
