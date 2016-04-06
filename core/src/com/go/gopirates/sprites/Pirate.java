@@ -229,9 +229,8 @@ public class Pirate extends Sprite {
                                      PirateGame.EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT;
 
         fixtureDef.shape=shape;
-        b2body.createFixture(fixtureDef);
-        shape.dispose();
         b2body.createFixture(fixtureDef).setUserData(this);
+        shape.dispose();
 
     }
 
@@ -256,9 +255,8 @@ public class Pirate extends Sprite {
                 PirateGame.EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT;
 
         fixtureDef.shape=shape;
-        b2body.createFixture(fixtureDef);
-        shape.dispose();
         b2body.createFixture(fixtureDef).setUserData(this);
+        shape.dispose();
     }
 
     public  void redefinePirateWithShield(){
@@ -283,9 +281,10 @@ public class Pirate extends Sprite {
                 PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT | PirateGame.POWERUP_BIT| PirateGame.COCONUT_TREE_BIT;
 
         fixtureDef.shape=shape;
-        b2body.createFixture(fixtureDef);
         shape.dispose();
         b2body.createFixture(fixtureDef).setUserData(this);
+
+
     }
 
     private State getState(){
