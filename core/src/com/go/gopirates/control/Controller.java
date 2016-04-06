@@ -66,19 +66,19 @@ public class Controller implements ApplicationListener {
                         rightPressed = true;
                         break;
                     case Input.Keys.X:
-                        previousCoconutPress=coconutPress;
+                        previousCoconutPress = coconutPress;
                         coconutPress = true;
                         break;
                     case Input.Keys.SPACE:
-                        previousPowerUpPress=powerUpPress;
+                        previousPowerUpPress = powerUpPress;
                         powerUpPress = true;
                         break;
                     case Input.Keys.Z:
-                        previousBombPress=bombPress;
+                        previousBombPress = bombPress;
                         bombPress = true;
                         break;
                     case Input.Keys.C:
-                        previousSwordPress=swordPress;
+                        previousSwordPress = swordPress;
                         swordPress = true;
                         break;
                 }
@@ -102,19 +102,19 @@ public class Controller implements ApplicationListener {
                         rightPressed = false;
                         break;
                     case Input.Keys.X:
-                        previousCoconutPress=coconutPress;
+                        previousCoconutPress = coconutPress;
                         coconutPress = false;
                         break;
                     case Input.Keys.SPACE:
-                        previousPowerUpPress=powerUpPress;
+                        previousPowerUpPress = powerUpPress;
                         powerUpPress = false;
                         break;
                     case Input.Keys.Z:
-                        previousBombPress=bombPress;
+                        previousBombPress = bombPress;
                         bombPress = false;
                         break;
                     case Input.Keys.C:
-                        previousSwordPress=swordPress;
+                        previousSwordPress = swordPress;
                         swordPress = false;
                         break;
                 }
@@ -122,92 +122,127 @@ public class Controller implements ApplicationListener {
             }
         });
 
-
-
         //right
-        Table right = new Table();
-        right.bottom().left();
-        right.setX(620);
-        right.setY(30);
+        Table bomb = new Table();
+        bomb.bottom().left();
+        bomb.setX(1170);
+        bomb.setY(10);
 
-
-
-
-        emptyImg = new Image(new Texture("controller/empty.png"));
-        emptyImg.setSize(100, 100);
-        emptyImg.addListener(new InputListener() {
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                previousPowerUpPress=powerUpPress;
-                powerUpPress = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                previousPowerUpPress=powerUpPress;
-                powerUpPress = false;
-            }
-        });
 
         //Bomb
         bombImg = new Image(new Texture("controller/Bomb.png"));
-        bombImg.setSize(100, 100);
+        bombImg.setSize(250, 250);
         bombImg.addListener(new InputListener() {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                previousBombPress=bombPress;
-                bombPress =true;
+                previousBombPress = bombPress;
+                bombPress = true;
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                previousBombPress=bombPress;
-                bombPress =false;
+                previousBombPress = bombPress;
+                bombPress = false;
             }
 
         });
 
+        bomb.add(bombImg).size(bombImg.getWidth(), bombImg.getHeight());
+        stage.addActor(bomb);
+
 
         //Sword
+        Table sword = new Table();
+        sword.bottom().left();
+        sword.setX(1000);
+        sword.setY(15);
+
         swordImg = new Image(new Texture("controller/Sword.png"));
-        swordImg.setSize(100, 100);
+        swordImg.setSize(150, 150);
+        swordImg.setX(300);
+        swordImg.setY(100);
         swordImg.addListener(new InputListener() {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                previousSwordPress=swordPress;
+                previousSwordPress = swordPress;
                 swordPress = true;
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                previousSwordPress=swordPress;
+                previousSwordPress = swordPress;
                 swordPress = false;
             }
         });
+        sword.add(swordImg).size(swordImg.getWidth(), swordImg.getHeight());
+        stage.addActor(sword);
 
+        //Coconut
+        final Table coconut = new Table();
+        coconut.setX(1150);
+        coconut.setY(280);
 
-        right.add(bombImg).size(bombImg.getWidth(), bombImg.getHeight());
-        right.add(swordImg).size(swordImg.getWidth(), swordImg.getHeight());
-        right.add(emptyImg).size(emptyImg.getWidth(), emptyImg.getHeight());
+        emptyImg = new Image(new Texture("controller/1_coconut.png"));
+        emptyImg.setSize(150, 150);
+        emptyImg.addListener(new InputListener() {
 
-        stage.addActor(right);
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                previousCoconutPress = coconutPress;
+                coconutPress = true;
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                previousCoconutPress = coconutPress;
+                coconutPress = false;
+            }
+        });
+
+        coconut.add(emptyImg).size(emptyImg.getWidth(), emptyImg.getHeight());
+        stage.addActor(coconut);
+
+        //Powerup
+        Table powerup = new Table();
+        powerup.setX(1350);
+        powerup.setY(340);
+
+        emptyImg = new Image(new Texture("controller/empty.png"));
+        emptyImg.setSize(150, 150);
+        emptyImg.addListener(new InputListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                previousPowerUpPress = powerUpPress;
+                powerUpPress = true;
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                previousPowerUpPress = powerUpPress;
+                powerUpPress = false;
+            }
+        });
+
+        powerup.add(emptyImg).size(emptyImg.getWidth(), emptyImg.getHeight());
+        stage.addActor(powerup);
 
         //Create a touchpad skin
         touchpadSkin = new Skin();
         //Set background image
-        touchpadSkin.add("touchBackground", new Texture("controller/touchBackground.png"));
+        touchpadSkin.add("touchBackground", new Texture("controller/touchBackground1.png"));
         //Set knob image
         touchpadSkin.add("touchKnob", new Texture("controller/touchKnob.png"));
         //Create TouchPad Style
         touchpadStyle = new Touchpad.TouchpadStyle();
         //Create Drawable's from TouchPad skin
-        touchBackground = touchpadSkin.getDrawable("touchBackground");
+//        touchBackground = touchpadSkin.getDrawable("touchBackground");
         touchKnob = touchpadSkin.getDrawable("touchKnob");
         //Apply the Drawables to the TouchPad Style
         touchpadStyle.background = touchBackground;
@@ -215,7 +250,7 @@ public class Controller implements ApplicationListener {
         //Create new TouchPad with the created style
         touchpad = new Touchpad(10, touchpadStyle);
         //setBounds(x,y,width,height)
-        touchpad.setBounds(15, 15, 200, 200);
+        touchpad.setBounds(30, 30, 300, 300);
 
         //Create a Stage and add TouchPad
 //        stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, PirateGame.batch);
@@ -231,8 +266,6 @@ public class Controller implements ApplicationListener {
     @Override
     public void render() {
         stage.act(Gdx.graphics.getDeltaTime());
-
-
 
         if (Gdx.input.justTouched()){
 

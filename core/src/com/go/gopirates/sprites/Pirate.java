@@ -89,8 +89,6 @@ public class Pirate extends Sprite {
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         coconuts = new ArrayList<Integer>();
-        coconuts.add(1);
-        coconuts.add(1);coconuts.add(1);coconuts.add(1);
 
         /**
          * ********************************** Pirate***********************************************
