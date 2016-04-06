@@ -16,7 +16,9 @@ public class Shoe extends PowerUp {
     public void use() {
         destroy();
         System.out.println("Take SHOE");
-        if (screen.getPirate().powerUpHolding == Pirate.PowerUpHolding.NONE)
-            screen.getPirate().powerUpHolding= Pirate.PowerUpHolding.SHOE;
+        if (screen.getPirate().powerUpHolding == Pirate.PowerUpHolding.NONE) {
+            screen.getPirate().powerUpHolding = Pirate.PowerUpHolding.SHOE;
+            screen.updatePowerUp();
+        }
     }
 }

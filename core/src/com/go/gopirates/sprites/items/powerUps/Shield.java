@@ -15,7 +15,9 @@ public class Shield extends PowerUp {
     public void use() {
         destroy();
         System.out.println("Take shield");
-        if (screen.getPirate().powerUpHolding == Pirate.PowerUpHolding.NONE)
+        if (screen.getPirate().powerUpHolding == Pirate.PowerUpHolding.NONE) {
             screen.getPirate().powerUpHolding = Pirate.PowerUpHolding.SHIELD;
+            screen.updatePowerUp();
+        }
     }
 }

@@ -1,7 +1,6 @@
 package com.go.gopirates.sprites;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -29,7 +28,7 @@ public class Pirate extends Sprite {
     public enum Direction {UP, DOWN, LEFT, RIGHT}
     public enum State { WALKING, STANDING}
 
-    public enum PowerUpHolding {TNT, COCONUT, SHIELD, SHOE, NONE}
+    public enum PowerUpHolding {TNT, SHIELD, SHOE, NONE}
     public State currentState;
     public State previousState;
     public Direction direction;
@@ -81,13 +80,14 @@ public class Pirate extends Sprite {
         pirateState = PirateState.PIRATE;
         powerUpTimer = 0;
         this.playerId = playerId;
-        this.character=character;
+        this.character=name;
         health = PirateGame.ININTIAL_HEALTH;
         healthTimer = 0;
         swordInUse=false;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         numberOfCoconut=0;
+        
         String pirateRegion="img/characters/"+"Sophia.png";
         Texture pirateTexture=new Texture(pirateRegion);
 

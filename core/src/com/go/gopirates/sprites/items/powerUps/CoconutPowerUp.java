@@ -15,7 +15,10 @@ public class CoconutPowerUp extends PowerUp {
     @Override
     public void use() {
         destroy();
-        if (screen.getPirate().numberOfCoconut<3)
+        if (screen.getPirate().numberOfCoconut<3){
             screen.getPirate().numberOfCoconut++;
+            screen.updateCoconut();
+        }
+
     }
 }

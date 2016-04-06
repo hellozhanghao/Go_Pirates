@@ -128,6 +128,7 @@ public class PlayScreen implements Screen {
 
         //controller
         controller = new Controller();
+        controller.addCharacter(getPirate().character);
         controller.create();
         bombConfirmTimer = 0;
         bombConfirm = true;
@@ -205,6 +206,7 @@ public class PlayScreen implements Screen {
             if (player.numberOfCoconut>0){
                 player.primitiveWeaponItems.add(new Coconut(this));
                 player.numberOfCoconut--;
+                updateCoconut();
             }
             coconutConfirm=false;
         }
@@ -280,6 +282,7 @@ public class PlayScreen implements Screen {
         gamecam.update();
         //tell our renderer to draw only what our camera can see in our game world.
         renderer.setView(gamecam);
+        updatePowerUp();
     }
 
     @Override
@@ -320,10 +323,6 @@ public class PlayScreen implements Screen {
             players.get(i).draw(PirateGame.batch);
         }
 
-
-
-
-
         PirateGame.batch.end();
 
         //Set our batch to now draw what the Hud camera sees.
@@ -333,12 +332,10 @@ public class PlayScreen implements Screen {
 //        Gdx.gl.glViewport(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         controller.render();
 
-
 //        if(gameOver()){
 //            game.setScreen(new GameOverScreen(game));
 //            dispose();
 //        }
-
     }
 
     @Override
@@ -378,6 +375,14 @@ public class PlayScreen implements Screen {
     //Getters
     public Pirate getPirate() {
         return players.get(PirateGame.PLAYER_ID);
+    }
+
+    public void updateCoconut(){
+        controller.changeCoconut(getPirate().numberOfCoconut);
+    }
+
+    public void updatePowerUp(){
+        controller.changePowerUp(getPirate().powerUpHolding);
     }
 
     public Pirate getPirate(int id){

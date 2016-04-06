@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.go.gopirates.screen.PlayScreen;
+import com.go.gopirates.sprites.Pirate;
 
 
 public class PirateGame extends Game {
@@ -30,6 +31,8 @@ public class PirateGame extends Game {
     public static final int ININTIAL_HEALTH=5;
     public static final float PROTECTED_TIME_AFTER_DECREASE_HEALTH=1.5f;
     public static final float SWORD_VALID_TIME=4f;
+    public static final int INITIAL_COCONUT = 1;
+    public static final Pirate.PowerUpHolding INITIAL_POWERUP = Pirate.PowerUpHolding.NONE;
 
 
     //Box2D Collision Bits

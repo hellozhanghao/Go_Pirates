@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.go.gopirates.PirateGame;
+import com.go.gopirates.sprites.Pirate;
+import com.go.gopirates.sprites.items.powerUps.PowerUp;
 
 
 /**
@@ -37,6 +39,13 @@ public class Controller implements ApplicationListener {
     private Image emptyImg;
     private Image bombImg;
     private Image swordImg;
+    private Image cocoImg;
+    private Table coconut , powerup;
+    private int numberofCoconut = PirateGame.INITIAL_COCONUT;
+    private int previousCoconut = numberofCoconut;
+    private Pirate.PowerUpHolding POWER_UP = PirateGame.INITIAL_POWERUP;
+    private Pirate.PowerUpHolding PrevPowerUp = POWER_UP;
+    private String character = "";
 
     private int size=90;
 
@@ -182,67 +191,19 @@ public class Controller implements ApplicationListener {
         stage.addActor(sword);
 
         //Coconut
-        final Table coconut = new Table();
-        coconut.setX(1150);
-        coconut.setY(280);
-
-        emptyImg = new Image(new Texture("controller/1_coconut.png"));
-        emptyImg.setSize(150, 150);
-        emptyImg.addListener(new InputListener() {
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                previousCoconutPress = coconutPress;
-                coconutPress = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                previousCoconutPress = coconutPress;
-                coconutPress = false;
-            }
-        });
-
-        coconut.add(emptyImg).size(emptyImg.getWidth(), emptyImg.getHeight());
-        stage.addActor(coconut);
+        coconut = new Table();
+        updateCoconut();
 
         //Powerup
-        Table powerup = new Table();
-        powerup.setX(1350);
-        powerup.setY(340);
-
-        emptyImg = new Image(new Texture("controller/empty.png"));
-        emptyImg.setSize(150, 150);
-        emptyImg.addListener(new InputListener() {
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                previousPowerUpPress = powerUpPress;
-                powerUpPress = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                previousPowerUpPress = powerUpPress;
-                powerUpPress = false;
-            }
-        });
-
-        powerup.add(emptyImg).size(emptyImg.getWidth(), emptyImg.getHeight());
-        stage.addActor(powerup);
+        powerup = new Table();
+        updatePowerUp();
 
         //Create a touchpad skin
         touchpadSkin = new Skin();
-        //Set background image
-        touchpadSkin.add("touchBackground", new Texture("controller/touchBackground1.png"));
         //Set knob image
         touchpadSkin.add("touchKnob", new Texture("controller/touchKnob.png"));
         //Create TouchPad Style
         touchpadStyle = new Touchpad.TouchpadStyle();
-        //Create Drawable's from TouchPad skin
-//        touchBackground = touchpadSkin.getDrawable("touchBackground");
         touchKnob = touchpadSkin.getDrawable("touchKnob");
         //Apply the Drawables to the TouchPad Style
         touchpadStyle.background = touchBackground;
@@ -266,14 +227,76 @@ public class Controller implements ApplicationListener {
     @Override
     public void render() {
         stage.act(Gdx.graphics.getDeltaTime());
-
-        if (Gdx.input.justTouched()){
-
+        if (Gdx.input.justTouched()) {}
+        if(previousCoconut!= numberofCoconut){
+            updateCoconut();
+            previousCoconut = numberofCoconut;
+        }
+        if (PrevPowerUp != POWER_UP){
+            updatePowerUp();
+            PrevPowerUp = POWER_UP;
         }
         stage.draw();
-
     }
 
+    public void updateCoconut(){
+        coconut.remove();
+        coconut = new Table();
+        coconut.setX(1150);
+        coconut.setY(280);
+
+        cocoImg = new Image(new Texture("controller/" + numberofCoconut + "_coconut.png"));
+        cocoImg.setSize(150, 150);
+        cocoImg.addListener(new InputListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                previousCoconutPress = coconutPress;
+                coconutPress = true;
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                previousCoconutPress = coconutPress;
+                coconutPress = false;
+            }
+        });
+
+        coconut.add(cocoImg).size(cocoImg.getWidth(), cocoImg.getHeight());
+        stage.addActor(coconut);
+    }
+
+    public void updatePowerUp(){
+        powerup.remove();
+        powerup = new Table();
+        powerup.setX(1350);
+        powerup.setY(340);
+        if(POWER_UP == Pirate.PowerUpHolding.SHIELD)
+            emptyImg = new Image(new Texture("controller/shield_"+character+".png"));
+        else
+            emptyImg = new Image(new Texture("controller/"+POWER_UP+".png"));
+        emptyImg.setSize(150, 150);
+        emptyImg.addListener(new InputListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                previousPowerUpPress = powerUpPress;
+                powerUpPress = true;
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                previousPowerUpPress = powerUpPress;
+                powerUpPress = false;
+            }
+        });
+
+        powerup.add(emptyImg).size(emptyImg.getWidth(), emptyImg.getHeight());
+        stage.addActor(powerup);
+
+    }
     @Override
     public void pause() {
 
@@ -287,5 +310,17 @@ public class Controller implements ApplicationListener {
     @Override
     public void dispose() {
 
+    }
+
+    public void addCharacter(String name){
+        this.character = name;
+    }
+
+    public void changeCoconut(int i){
+        numberofCoconut = i;
+    }
+
+    public void changePowerUp(Pirate.PowerUpHolding pu){
+        POWER_UP = pu;
     }
 }
