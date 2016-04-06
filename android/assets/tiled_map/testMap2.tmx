@@ -76,7 +76,11 @@
   <object id="205" x="4096" y="3328" width="256" height="256"/>
   <object id="206" x="4608" y="3328" width="256" height="256"/>
   <object id="207" x="5120" y="3328" width="256" height="256"/>
-  <object id="208" x="1024" y="3840" width="256" height="256"/>
+  <object id="208" x="1024" y="3840" width="256" height="256">
+   <properties>
+    <property name="TNT" value=""/>
+   </properties>
+  </object>
   <object id="209" x="1536" y="3840" width="256" height="256"/>
   <object id="211" x="2048" y="3840" width="256" height="256"/>
   <object id="212" x="2560" y="3840" width="256" height="256"/>
@@ -201,7 +205,11 @@
   <object id="121" x="2816" y="4096" width="256" height="256"/>
   <object id="122" x="2816" y="4608" width="256" height="256"/>
   <object id="123" x="2816" y="3072" width="256" height="256"/>
-  <object id="125" x="1536" y="3072" width="256" height="256"/>
+  <object id="125" x="1536" y="3072" width="256" height="256">
+   <properties>
+    <property name="TNT" value=""/>
+   </properties>
+  </object>
   <object id="126" x="1792" y="3072" width="256" height="256"/>
   <object id="127" x="2304" y="3072" width="256" height="256"/>
   <object id="128" x="2048" y="3584" width="256" height="256"/>
