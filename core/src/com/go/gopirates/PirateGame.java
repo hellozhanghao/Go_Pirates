@@ -24,6 +24,7 @@ public class PirateGame extends Game {
     //User Selct
     public static final int PLAYER_ID=3;
 
+
     //Settings:
     public static  int DEFAULT_VELOCITY =100;
     public static final float BUTTON_INTERVAL=1f;
