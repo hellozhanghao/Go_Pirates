@@ -47,9 +47,9 @@ public class ShieldSprite extends NonInteractiveSprites {
         fixtureDef.filter.categoryBits = PirateGame.NOTHING_BIT;
 
         fixtureDef.shape = shape;
-        b2body.createFixture(fixtureDef);
-        shape.dispose();
         b2body.createFixture(fixtureDef).setUserData(this);
+        shape.dispose();
+
     }
 
     public void update(float dt) {

@@ -53,9 +53,9 @@ public class ExplosionSprite  extends NonInteractiveSprites{
         shape.setRadius(0.1f);
         fixtureDef.filter.categoryBits = PirateGame.NOTHING_BIT;
         fixtureDef.shape = shape;
-        b2body.createFixture(fixtureDef);
-        shape.dispose();
         b2body.createFixture(fixtureDef).setUserData(this);
+        shape.dispose();
+
     }
 
 
