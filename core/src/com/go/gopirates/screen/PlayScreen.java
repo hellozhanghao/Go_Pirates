@@ -359,6 +359,9 @@ public class PlayScreen implements Screen {
             for (PrimitiveWeaponItem item : player.primitiveWeaponItems) {
                 item.draw(PirateGame.batch);
             }
+            for (PowerUp powerup : powerUps) {
+                powerup.draw(PirateGame.batch);
+            }
 
             player.draw(PirateGame.batch);
         }

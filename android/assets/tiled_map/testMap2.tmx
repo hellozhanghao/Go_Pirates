@@ -214,7 +214,11 @@
     <property name="TNT" value=""/>
    </properties>
   </object>
-  <object id="126" x="1792" y="3072" width="256" height="256"/>
+  <object id="126" x="1792" y="3072" width="256" height="256">
+   <properties>
+    <property name="shoes" value=""/>
+   </properties>
+  </object>
   <object id="127" x="2304" y="3072" width="256" height="256"/>
   <object id="128" x="2048" y="3584" width="256" height="256"/>
   <object id="129" x="2048" y="4096" width="256" height="256"/>

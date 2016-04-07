@@ -1,5 +1,6 @@
 package com.go.gopirates.sprites.items.noneInteractiveItems;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
@@ -8,4 +9,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public abstract class NonInteractiveSprites extends Sprite {
 
     public abstract void update(float dt);
+
+    public void draw(Batch batch){
+        if (!(this instanceof ShoeSprite)){
+            super.draw(batch);
+        }
+    }
 }

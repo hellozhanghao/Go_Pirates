@@ -34,6 +34,7 @@ public class Barrel extends InteractiveTileObject {
             screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y),
                     Shield.class));
         } else if (object.getProperties().containsKey("shoes")) {
+            System.out.println("SHoe");
             screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y),
                     Shoe.class));
         } else if (object.getProperties().containsKey("TNT")) {
