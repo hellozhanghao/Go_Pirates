@@ -53,6 +53,7 @@ public class PlayScreen implements Screen {
     private PirateGame game;
     private TextureAtlas atlas;
     public Animation explosionAnimation;
+    public Animation coconutAnimation;
 
     //basic playscreen variables
     private OrthographicCamera gamecam;
@@ -91,15 +92,7 @@ public class PlayScreen implements Screen {
     private boolean coconutConfirm;
 
     public PlayScreen(PirateGame game) {
-        atlas = new TextureAtlas("img/pirates.pack");
-        Texture explosionTexture=new Texture("img/explosion.png");
-
-        Array<TextureRegion> explosionFrames = new Array<TextureRegion>();
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 6; j++)
-                explosionFrames.add(new TextureRegion( explosionTexture,
-                        i*PirateGame.TILE_SIZE, j*PirateGame.TILE_SIZE, PirateGame.TILE_SIZE, PirateGame.TILE_SIZE));
-        explosionAnimation = new com.badlogic.gdx.graphics.g2d.Animation(PirateGame.EXPLOSION_FRAME_DURATION,explosionFrames);
+        loadAssets();
         this.game = game;
         //create cam used to follow mario through cam world
         gamecam = new OrthographicCamera();
@@ -150,6 +143,26 @@ public class PlayScreen implements Screen {
         swordConfirm=true;
         coconutConfirmTimer=0;
         coconutConfirm=true;
+    }
+
+
+    public void loadAssets(){
+        atlas = new TextureAtlas("img/pirates.pack");
+        Texture explosionTexture=new Texture("img/explosion.png");
+
+        Array<TextureRegion> explosionFrames = new Array<TextureRegion>();
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 6; j++)
+                explosionFrames.add(new TextureRegion( explosionTexture,
+                        i*PirateGame.TILE_SIZE, j*PirateGame.TILE_SIZE, PirateGame.TILE_SIZE, PirateGame.TILE_SIZE));
+        explosionAnimation = new Animation(PirateGame.EXPLOSION_FRAME_DURATION,explosionFrames);
+
+
+        Array<TextureRegion> coconutFrames = new Array<TextureRegion>();
+        Texture coconutTexture=new Texture("img/objects/coconut_animation.png");
+        for (int i = 0; i < 4; i++)
+            coconutFrames.add(new TextureRegion(coconutTexture, PirateGame.TILE_SIZE*i, 0, PirateGame.TILE_SIZE, PirateGame.TILE_SIZE));
+        coconutAnimation = new Animation(0.1f, coconutFrames);
     }
 
     public void handleSpawningItems() {
@@ -274,7 +287,6 @@ public class PlayScreen implements Screen {
             for (NonInteractiveSprites sprite : player.nonInteractiveSprites) {
                 sprite.update(dt);
             }
-
             for (PrimitiveWeaponItem primitiveWeaponItem: player.primitiveWeaponItems){
                 primitiveWeaponItem.update(dt);
             }
@@ -341,8 +353,7 @@ public class PlayScreen implements Screen {
                 item.draw(PirateGame.batch);
             }
 
-            for (PrimitiveWeaponItem item :
-                    player.primitiveWeaponItems) {
+            for (PrimitiveWeaponItem item : player.primitiveWeaponItems) {
                 item.draw(PirateGame.batch);
             }
 

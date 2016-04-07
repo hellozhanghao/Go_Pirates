@@ -87,7 +87,7 @@ public class Pirate extends Sprite {
         swordInUse=false;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        numberOfCoconut=0;
+        numberOfCoconut=PirateGame.INITIAL_COCONUT;
         
 
         Texture pirateTexture=new Texture("img/characters/"+"Sophia.png");

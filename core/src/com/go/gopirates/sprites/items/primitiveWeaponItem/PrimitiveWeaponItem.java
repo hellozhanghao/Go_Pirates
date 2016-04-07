@@ -24,8 +24,6 @@ public abstract class PrimitiveWeaponItem  extends Sprite{
         this.screen = screen;
         this.world = screen.getWorld();
         this.map = screen.getMap();
-//        setPosition(x, y);
-//        setBounds(getX(),getY(), PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM);
         defineItem();
         toDestroy = false;
         destroyed = false;
@@ -39,10 +37,6 @@ public abstract class PrimitiveWeaponItem  extends Sprite{
             destroyed = true;
         }
     }
-    public void draw(Batch batch){
-        if(!destroyed & !toDestroy)
-            super.draw(batch);
-    }
 
     public  void hitOnPlayer(){
         screen.getPirate().decreaseHealth();
@@ -50,6 +44,11 @@ public abstract class PrimitiveWeaponItem  extends Sprite{
 
     public void destroy(){
         toDestroy = true;
+    }
+
+    public void draw(Batch batch){
+        if(!destroyed )
+            super.draw(batch);
     }
 
 
