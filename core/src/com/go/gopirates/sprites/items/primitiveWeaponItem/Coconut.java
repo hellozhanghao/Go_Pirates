@@ -22,7 +22,7 @@ public class Coconut extends PrimitiveWeaponItem {
         stateTime=0;
         setRegion(screen.coconutAnimation.getKeyFrame(0, true));
         setSize(COCONUT_RADIUS*2 / PirateGame.PPM , COCONUT_RADIUS*2 / PirateGame.PPM);
-
+        defineItem();
     }
 
     @Override

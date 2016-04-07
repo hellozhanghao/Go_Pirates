@@ -25,11 +25,11 @@ import com.go.gopirates.sprites.items.primitiveWeaponItem.PrimitiveWeaponItem;
 public class Pirate extends Sprite {
 
     public int playerId;
-
     public enum Direction {UP, DOWN, LEFT, RIGHT}
     public enum State { WALKING, STANDING}
-
     public enum PowerUpHolding {TNT, SHIELD, SHOE, NONE}
+    private enum PirateState{ PIRATE, PIRATE_WITH_SHIELD}
+    private PirateState pirateState;
     public State currentState;
     public State previousState;
     public Direction direction;
@@ -42,14 +42,8 @@ public class Pirate extends Sprite {
     private float healthTimer;
     public boolean swordInUse;
 
-    private TextureRegion pirateStandingDown;
-    private TextureRegion pirateStandingUp;
-    private TextureRegion pirateStandingLeft;
-    private TextureRegion pirateStandingRight;
-    private Animation pirateWalkingDown;
-    private Animation pirateWalkingUp;
-    private Animation pirateWalkingLeft;
-    private Animation pirateWalkingRight;
+    private TextureRegion pirateStandingDown,pirateStandingUp,pirateStandingLeft,pirateStandingRight;
+    private Animation pirateWalkingDown,pirateWalkingUp,pirateWalkingLeft,pirateWalkingRight;
     private Animation pirateStandingDownWithSword,pirateStandingUpWithSword,pirateStandingLeftWithSword, pirateStadingRightWithSword;
     private Animation pirateWalkingDownWithSword, pirateWalkingUpWithSword, pirateWalkingLeftWithSword, pirateWalkingRightWithSword;
     private PlayScreen screen;
@@ -61,12 +55,9 @@ public class Pirate extends Sprite {
     public Array<PrimitiveWeaponItem> primitiveWeaponItems;
 
     public int numberOfCoconut;
-    private enum PirateState{ PIRATE, PIRATE_WITH_SHIELD}
-    private PirateState pirateState;
-    private float stateTimer;
-    private float powerUpTimer;
+    private float stateTimer,powerUpTimer;
     public  String character;
-    public Pirate(PlayScreen screen, int playerId, String name){
+    public Pirate(PlayScreen screen, int playerId, String character){
         //initialize default values
         this.screen = screen;
         this.world = screen.getWorld();
@@ -81,16 +72,18 @@ public class Pirate extends Sprite {
         pirateState = PirateState.PIRATE;
         powerUpTimer = 0;
         this.playerId = playerId;
-        this.character=name;
+        this.character=character;
         health = PirateGame.ININTIAL_HEALTH;
         healthTimer = 0;
         swordInUse=false;
 
+        loadAnimation();
+    }
+
+    private void loadAnimation(){
         Array<TextureRegion> frames = new Array<TextureRegion>();
         numberOfCoconut=PirateGame.INITIAL_COCONUT;
-        
-
-        Texture pirateTexture=new Texture("img/characters/"+character+".png");
+        Texture pirateTexture=new Texture("img/characters/"+ this.character +".png");
 
         /**
          * ********************************** Pirate***********************************************
@@ -134,7 +127,7 @@ public class Pirate extends Sprite {
          * ********************************** Pirate with sword ************************************
          */
 
-        Texture pirateWithSwordTexture=new Texture("img/characters/"+character+"_sword"+".png");
+        Texture pirateWithSwordTexture=new Texture("img/characters/"+ this.character +"_sword"+".png");
         for (int i = 0; i < 4; i++)
             frames.add(new TextureRegion(pirateWithSwordTexture,i*400,0,400,400));
         pirateWalkingDownWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);
@@ -179,9 +172,7 @@ public class Pirate extends Sprite {
 
         setBounds(0, 0, PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM);
         setRegion(pirateStandingDown);
-
     }
-
 
 
     public void update(float dt){

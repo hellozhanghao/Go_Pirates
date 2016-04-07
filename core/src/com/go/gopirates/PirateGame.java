@@ -35,6 +35,7 @@ public class PirateGame extends Game {
     public static final int INITIAL_COCONUT = 1;
     public static final Pirate.PowerUpHolding INITIAL_POWERUP = Pirate.PowerUpHolding.NONE;
     public static  final float EXPLOSION_FRAME_DURATION=0.08f;
+    public static final float MIN_TIME_BETWEEN_SWORD=10f;
 
 
     //Box2D Collision Bits

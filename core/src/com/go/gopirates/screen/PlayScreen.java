@@ -195,7 +195,7 @@ public class PlayScreen implements Screen {
             bombConfirm = true;
         }
         swordConfirmTimer+=dt;
-        if (swordConfirmTimer > PirateGame.BUTTON_INTERVAL){
+        if (swordConfirmTimer > PirateGame.MIN_TIME_BETWEEN_SWORD){
             swordConfirmTimer = 0;
             swordConfirm =true;
         }

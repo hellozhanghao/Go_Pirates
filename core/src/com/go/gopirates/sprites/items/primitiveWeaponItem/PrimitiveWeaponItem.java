@@ -24,7 +24,6 @@ public abstract class PrimitiveWeaponItem  extends Sprite{
         this.screen = screen;
         this.world = screen.getWorld();
         this.map = screen.getMap();
-        defineItem();
         toDestroy = false;
         destroyed = false;
     }
