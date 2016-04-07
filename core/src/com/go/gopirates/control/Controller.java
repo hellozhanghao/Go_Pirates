@@ -61,7 +61,6 @@ public class Controller implements ApplicationListener {
         createKeyboardController();
         createTouchPadController();
         createHealthPanel();
-//        setUpUserProfilePanel("Sophia");
     }
 
     public void createKeyboardController(){
@@ -273,7 +272,6 @@ public class Controller implements ApplicationListener {
             updateHealthPanel(health);
             previousHealth=health;
         }
-
         stage.draw();
     }
 

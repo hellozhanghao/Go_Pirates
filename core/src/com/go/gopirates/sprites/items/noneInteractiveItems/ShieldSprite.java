@@ -1,12 +1,10 @@
 package com.go.gopirates.sprites.items.noneInteractiveItems;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
@@ -23,42 +21,20 @@ public class ShieldSprite extends NonInteractiveSprites {
     Body b2body;
     TextureRegion textureRegion;
 
-    public ShieldSprite(PlayScreen screen, float x, float y) {
+    public ShieldSprite(PlayScreen screen) {
         PirateGame.manager.get("audio/sounds/powerup.wav", Sound.class).play();
-        setBounds(x, y, 300 / PirateGame.PPM, 300 / PirateGame.PPM);
+        setSize(300/PirateGame.PPM,300/PirateGame.PPM);
         this.screen = screen;
         this.world = screen.getWorld();
-        textureRegion = new TextureRegion(screen.getAtlas().findRegion("shield"), 0, 0, 300, 300);
-
-        setRegion(textureRegion);
-
-        defineShield();
+        setRegion(new TextureRegion(new Texture("img/objects/shield.png"),0,0,300,300));
     }
 
-    public void defineShield() {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(screen.getPirate().b2body.getPosition().x,screen.getPirate().b2body.getPosition().y);
-        bodyDef.type= BodyDef.BodyType.DynamicBody;
-        b2body = world.createBody(bodyDef);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(150/PirateGame.PPM);
-        fixtureDef.filter.categoryBits = PirateGame.NOTHING_BIT;
-
-        fixtureDef.shape = shape;
-        b2body.createFixture(fixtureDef).setUserData(this);
-        shape.dispose();
-
-    }
 
     public void update(float dt) {
         stateTime += dt;
-        setPosition(b2body.getPosition().x - 150/PirateGame.PPM, b2body.getPosition().y - 150/PirateGame.PPM);
-        b2body.setTransform(screen.getPirate().b2body.getPosition().x, screen.getPirate().b2body.getPosition().y, 0);
+        setPosition(screen.getPirate().b2body.getPosition().x - 150 / PirateGame.PPM, screen.getPirate().b2body.getPosition().y - 150 / PirateGame.PPM);
         if ((stateTime > PirateGame.POWERUP_TIME) & !destroyed){
             setToDestroy();
-            world.destroyBody(b2body);
             destroyed=true;
         }
     }

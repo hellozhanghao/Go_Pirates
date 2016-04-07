@@ -22,7 +22,7 @@ public class PirateGame extends Game {
     public static final int MAP_SIZE_X =25;
 
     //User Selct
-    public static final int PLAYER_ID=1;
+    public static final int PLAYER_ID=0;
 
 
     //Settings:

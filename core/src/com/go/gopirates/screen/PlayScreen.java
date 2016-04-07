@@ -167,17 +167,8 @@ public class PlayScreen implements Screen {
             coconutFrames.add(new TextureRegion(coconutTexture, PirateGame.TILE_SIZE*i, 0, PirateGame.TILE_SIZE, PirateGame.TILE_SIZE));
         coconutAnimation = new Animation(0.1f, coconutFrames);
 
-        healthTexture=new Array<TextureRegion>();
-        Texture healthTexureAll1=new Texture("img/hud/health_1.png");
-        for (int i = 0; i < 8; i++) {
-            healthTexture.add(new TextureRegion(healthTexureAll1,i*256,0,256,768));
-        }
-        Texture healthTexutreAll2=new Texture("img/hud/health_2.png");
-        for (int i = 8; i < 11; i++) {
-            healthTexture.add(new TextureRegion(healthTexutreAll2,(i-8)*256,0,256,768));
-        }
-    }
 
+    }
 
     public void handleSpawningItems() {
         if (!itemsToSpawn.isEmpty()) {
@@ -203,13 +194,11 @@ public class PlayScreen implements Screen {
             bombConfirmTimer = 0;
             bombConfirm = true;
         }
-
         swordConfirmTimer+=dt;
         if (swordConfirmTimer > PirateGame.BUTTON_INTERVAL){
             swordConfirmTimer = 0;
             swordConfirm =true;
         }
-
         coconutConfirmTimer+=dt;
         if (coconutConfirmTimer > PirateGame.BUTTON_INTERVAL){
             coconutConfirmTimer = 0;
@@ -266,7 +255,7 @@ public class PlayScreen implements Screen {
                 case SHIELD:
                     player.powerUpHolding = Pirate.PowerUpHolding.NONE;
                     player.redefinePirateWithShield();
-                    player.nonInteractiveSprites.add(new ShieldSprite(this, player.b2body.getPosition().x, player.b2body.getPosition().y));
+                    player.nonInteractiveSprites.add(new ShieldSprite(this));
                     break;
                 case SHOE:
                     player.powerUpHolding = Pirate.PowerUpHolding.NONE;

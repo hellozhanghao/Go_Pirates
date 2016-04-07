@@ -234,7 +234,7 @@ public class Pirate extends Sprite {
                                      PirateGame.EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT;
 
         fixtureDef.shape=shape;
-        b2body.createFixture(fixtureDef).setUserData(this);
+        b2body.createFixture(fixtureDef);
         shape.dispose();
 
     }
@@ -246,7 +246,6 @@ public class Pirate extends Sprite {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(position);
-
         bodyDef.type= BodyDef.BodyType.DynamicBody;
         bodyDef.linearDamping = 5f;
         b2body=world.createBody(bodyDef);
@@ -260,7 +259,7 @@ public class Pirate extends Sprite {
                 PirateGame.EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT;
 
         fixtureDef.shape=shape;
-        b2body.createFixture(fixtureDef).setUserData(this);
+        b2body.createFixture(fixtureDef);
         shape.dispose();
     }
 
@@ -277,7 +276,6 @@ public class Pirate extends Sprite {
         bdef.linearDamping = 5f;
         b2body = world.createBody(bdef);
 
-
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(128 / PirateGame.PPM);
@@ -286,8 +284,8 @@ public class Pirate extends Sprite {
                 PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT | PirateGame.POWERUP_BIT| PirateGame.COCONUT_TREE_BIT;
 
         fixtureDef.shape=shape;
+        b2body.createFixture(fixtureDef);
         shape.dispose();
-        b2body.createFixture(fixtureDef).setUserData(this);
 
 
     }
