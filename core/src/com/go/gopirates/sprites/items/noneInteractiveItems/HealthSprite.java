@@ -1,7 +1,6 @@
 package com.go.gopirates.sprites.items.noneInteractiveItems;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
@@ -15,7 +14,6 @@ public class HealthSprite extends NonInteractiveSprites{
 
     PlayScreen screen;
     World world;
-    Body b2body;
 
     public HealthSprite(PlayScreen screen) {
         this.screen = screen;

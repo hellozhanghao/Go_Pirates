@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.sprites.Pirate;
-import com.go.gopirates.sprites.items.powerUps.PowerUp;
 
 
 /**
@@ -55,10 +54,14 @@ public class Controller implements ApplicationListener {
         cam = new OrthographicCamera();
         viewport = new FitViewport(16*size, 9*size, cam);
         stage = new Stage(viewport, PirateGame.batch);
-//        Gdx.input.setInputProcessor(stage);
 
+        createKeyboardController();
+        createTouchPadController();
+
+    }
+
+    public void createKeyboardController(){
         stage.addListener(new InputListener() {
-
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
                 switch (keycode) {
@@ -130,7 +133,9 @@ public class Controller implements ApplicationListener {
                 return true;
             }
         });
+    }
 
+    public void createTouchPadController(){
         //right
         Table bomb = new Table();
         bomb.bottom().left();
@@ -142,20 +147,17 @@ public class Controller implements ApplicationListener {
         bombImg = new Image(new Texture("controller/Bomb.png"));
         bombImg.setSize(250, 250);
         bombImg.addListener(new InputListener() {
-
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 previousBombPress = bombPress;
                 bombPress = true;
                 return true;
             }
-
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 previousBombPress = bombPress;
                 bombPress = false;
             }
-
         });
 
         bomb.add(bombImg).size(bombImg.getWidth(), bombImg.getHeight());
@@ -167,6 +169,7 @@ public class Controller implements ApplicationListener {
         sword.bottom().left();
         sword.setX(1000);
         sword.setY(15);
+
 
         swordImg = new Image(new Texture("controller/Sword.png"));
         swordImg.setSize(150, 150);
@@ -217,7 +220,6 @@ public class Controller implements ApplicationListener {
 //        stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, PirateGame.batch);
         stage.addActor(touchpad);
         Gdx.input.setInputProcessor(stage);
-
     }
 
     public void resize(int width, int height){
@@ -309,11 +311,11 @@ public class Controller implements ApplicationListener {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 
-    public void addCharacter(String name){
-        this.character = name;
+    public void addCharacter(String character){
+        this.character = character;
     }
 
     public void changeCoconut(int i){
