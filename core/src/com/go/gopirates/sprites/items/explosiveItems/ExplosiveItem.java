@@ -1,6 +1,5 @@
 package com.go.gopirates.sprites.items.explosiveItems;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -64,7 +63,6 @@ public abstract class ExplosiveItem extends Sprite {
     }
 
     protected void definePresence() {
-        Gdx.app.log("Explosive","Set to presence");
         world.destroyBody(body);
         BodyDef bdef = new BodyDef();
         bdef.position.set(posX,posY);
@@ -74,7 +72,7 @@ public abstract class ExplosiveItem extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(BOMB_FIXTURE_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
-        fdef.filter.categoryBits = PirateGame.BOMB_BIT;
+        fdef.filter.categoryBits = PirateGame.NOTHING_BIT;
         fdef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.SHIELD_BIT;
 
         fdef.shape = shape;

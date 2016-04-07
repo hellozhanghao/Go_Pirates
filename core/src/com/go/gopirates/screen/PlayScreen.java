@@ -347,29 +347,20 @@ public class PlayScreen implements Screen {
 
         for (Pirate player : players) {
             player.draw(PirateGame.batch);
-
-            for (NonInteractiveSprites sprite : player.nonInteractiveSprites) {
+            for (NonInteractiveSprites sprite : player.nonInteractiveSprites)
                 sprite.draw(PirateGame.batch);
-            }
-
-            for (ExplosiveItem item: player.explosiveItems) {
+            for (ExplosiveItem item: player.explosiveItems)
                 item.draw(PirateGame.batch);
-            }
-
-            for (PrimitiveWeaponItem item : player.primitiveWeaponItems) {
+            for (PrimitiveWeaponItem item : player.primitiveWeaponItems)
                 item.draw(PirateGame.batch);
-            }
-            for (PowerUp powerup : powerUps) {
-                powerup.draw(PirateGame.batch);
-            }
-
             player.draw(PirateGame.batch);
         }
+        for (PowerUp powerup : powerUps)
+            powerup.draw(PirateGame.batch);
+
 
         PirateGame.batch.end();
 
-        //Set our batch to now draw what the Hud camera sees.
-//        PirateGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 
 
 //        Gdx.gl.glViewport(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());

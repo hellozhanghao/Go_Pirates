@@ -70,19 +70,21 @@ public class Sword extends PrimitiveWeaponItem {
         float posX=screen.getPirate().b2body.getPosition().x;
         float posY=screen.getPirate().b2body.getPosition().y;
 
-        switch (screen.getPirate().direction){
-            case UP:
-                body.setTransform(posX, posY + ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH)) / PirateGame.PPM, 0);
-                break;
-            case DOWN:
-                body.setTransform(posX, posY - ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH)) / PirateGame.PPM, 0);
-                break;
-            case LEFT:
-                body.setTransform(posX - ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH)) / PirateGame.PPM, posY, 0);
-                break;
-            case RIGHT:
-                body.setTransform(posX + ((PirateGame.TILE_SIZE/2+ SWORD_LENGTH))/PirateGame.PPM,posY,0);
-                break;
+        if(!destroyed){
+            switch (screen.getPirate().direction){
+                case UP:
+                    body.setTransform(posX, posY + ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH)) / PirateGame.PPM, 0);
+                    break;
+                case DOWN:
+                    body.setTransform(posX, posY - ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH)) / PirateGame.PPM, 0);
+                    break;
+                case LEFT:
+                    body.setTransform(posX - ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH)) / PirateGame.PPM, posY, 0);
+                    break;
+                case RIGHT:
+                    body.setTransform(posX + ((PirateGame.TILE_SIZE/2+ SWORD_LENGTH))/PirateGame.PPM,posY,0);
+                    break;
+            }
         }
         if (stateTimer>PirateGame.SWORD_VALID_TIME){
             destroy();

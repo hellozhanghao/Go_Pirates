@@ -46,7 +46,7 @@ public abstract class PowerUp extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(80 / PirateGame.PPM);
         fdef.filter.categoryBits = PirateGame.POWERUP_BIT;
-        fdef.filter.maskBits = PirateGame.PLAYER_BIT;
+        fdef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.SHIELD_BIT;
 
         fdef.shape = shape;
         body.createFixture(fdef).setUserData(this);
@@ -58,7 +58,6 @@ public abstract class PowerUp extends Sprite {
         if(toDestroy && !destroyed){
             world.destroyBody(body);
             destroyed = true;
-//            getCell().setTile(null);
         }
     }
     public void draw(Batch batch){

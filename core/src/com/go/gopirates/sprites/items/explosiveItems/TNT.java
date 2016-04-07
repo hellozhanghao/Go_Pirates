@@ -20,7 +20,7 @@ public class TNT extends ExplosiveItem {
 
     public TNT(PlayScreen screen, float x, float y) {
         super(screen,x,y);
-        setRegion(screen.getAtlas().findRegion("object_bomb"), 0, 0, 500, 500);
+        setRegion(screen.getAtlas().findRegion("object_TNT"), 0, 0, 500, 500);
     }
 
     @Override
