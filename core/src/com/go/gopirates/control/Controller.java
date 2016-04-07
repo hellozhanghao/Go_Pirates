@@ -39,14 +39,17 @@ public class Controller implements ApplicationListener {
     private Image bombImg;
     private Image swordImg;
     private Image cocoImg;
-    private Table coconut , powerup;
+    private Image healthImg,profileImg;
+    private Table coconut , powerup, healthPanel;
     private int numberofCoconut = PirateGame.INITIAL_COCONUT;
     private int previousCoconut = numberofCoconut;
     private Pirate.PowerUpHolding POWER_UP = PirateGame.INITIAL_POWERUP;
     private Pirate.PowerUpHolding PrevPowerUp = POWER_UP;
+    private int health=10,previousHealth=10;
     private String character = "";
 
     private int size=90;
+    private float hud_ratio=0.7f;
 
     @Override
     public void create() {
@@ -57,7 +60,8 @@ public class Controller implements ApplicationListener {
 
         createKeyboardController();
         createTouchPadController();
-
+        createHealthPanel();
+//        setUpUserProfilePanel("Sophia");
     }
 
     public void createKeyboardController(){
@@ -153,6 +157,7 @@ public class Controller implements ApplicationListener {
                 bombPress = true;
                 return true;
             }
+
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 previousBombPress = bombPress;
@@ -222,6 +227,32 @@ public class Controller implements ApplicationListener {
         Gdx.input.setInputProcessor(stage);
     }
 
+    public void createHealthPanel(){
+        healthPanel = new Table();
+        healthPanel.bottom().left();
+        healthPanel.setX(90);
+        healthPanel.setY(250);
+
+        //Bomb
+        healthImg = new Image(new Texture("img/hud/10.png"));
+        healthImg.setSize(256 * hud_ratio, 768 * hud_ratio);
+        healthPanel.add(healthImg).size(healthImg.getWidth(), healthImg.getHeight());
+        stage.addActor(healthPanel);
+    }
+
+    public void setUpUserProfilePanel(String character){
+        Table userProfilePanel = new Table();
+        userProfilePanel.bottom().left();
+        userProfilePanel.setX(110);
+        userProfilePanel.setY(620);
+
+        float ratio=0.7f;
+        profileImg = new Image(new Texture("img/hud/"+character+".png"));
+        userProfilePanel.setSize(211*ratio, 216*ratio);
+        userProfilePanel.add(profileImg).size(211*ratio,216*ratio);
+        stage.addActor(userProfilePanel);
+    }
+
     public void resize(int width, int height){
         viewport.update(width, height);
     }
@@ -238,6 +269,11 @@ public class Controller implements ApplicationListener {
             updatePowerUp();
             PrevPowerUp = POWER_UP;
         }
+        if (previousHealth != health){
+            updateHealthPanel(health);
+            previousHealth=health;
+        }
+
         stage.draw();
     }
 
@@ -299,6 +335,20 @@ public class Controller implements ApplicationListener {
         stage.addActor(powerup);
 
     }
+
+    public void updateHealthPanel(int health){
+        healthPanel.remove();
+        healthPanel=new Table();
+        healthPanel.bottom().left();
+        healthPanel.setX(90);
+        healthPanel.setY(250);
+
+        //Bomb
+        healthImg = new Image(new Texture("img/hud/"+health+".png"));
+        healthImg.setSize(256 * hud_ratio, 768 * hud_ratio);
+        healthPanel.add(healthImg).size(healthImg.getWidth(), healthImg.getHeight());
+        stage.addActor(healthPanel);
+    }
     @Override
     public void pause() {
 
@@ -325,4 +375,6 @@ public class Controller implements ApplicationListener {
     public void changePowerUp(Pirate.PowerUpHolding pu){
         POWER_UP = pu;
     }
+
+    public void changeHealth(int health){ this.health=health;}
 }

@@ -25,11 +25,9 @@ import com.go.gopirates.sprites.items.ItemDef;
 import com.go.gopirates.sprites.items.explosiveItems.Bomb;
 import com.go.gopirates.sprites.items.explosiveItems.ExplosiveItem;
 import com.go.gopirates.sprites.items.explosiveItems.TNT;
-import com.go.gopirates.sprites.items.noneInteractiveItems.HealthSprite;
 import com.go.gopirates.sprites.items.noneInteractiveItems.NonInteractiveSprites;
 import com.go.gopirates.sprites.items.noneInteractiveItems.ShieldSprite;
 import com.go.gopirates.sprites.items.noneInteractiveItems.ShoeSprite;
-import com.go.gopirates.sprites.items.noneInteractiveItems.UserProfilePictureSprite;
 import com.go.gopirates.sprites.items.powerUps.CoconutPowerUp;
 import com.go.gopirates.sprites.items.powerUps.PowerUp;
 import com.go.gopirates.sprites.items.powerUps.Shield;
@@ -146,8 +144,8 @@ public class PlayScreen implements Screen {
         swordConfirm=true;
         coconutConfirmTimer=0;
         coconutConfirm=true;
-        getPirate().nonInteractiveSprites.add(new HealthSprite(this));
-        getPirate().nonInteractiveSprites.add(new UserProfilePictureSprite(this,getPirate().character));
+        controller.setUpUserProfilePanel(getPirate().character);
+
     }
 
 
@@ -437,6 +435,8 @@ public class PlayScreen implements Screen {
     public void updatePowerUp(){
         controller.changePowerUp(getPirate().powerUpHolding);
     }
+
+    public void updateHealth(){ controller.changeHealth(getPirate().health);}
 
     public Pirate getPirate(int id){
         return players.get(id);
