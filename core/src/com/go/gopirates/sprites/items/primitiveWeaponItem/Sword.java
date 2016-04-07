@@ -2,7 +2,6 @@ package com.go.gopirates.sprites.items.primitiveWeaponItem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -56,7 +55,8 @@ public class Sword extends PrimitiveWeaponItem {
         CircleShape shape=new CircleShape();
         shape.setRadius(SWORD_LENGTH / PirateGame.PPM);
         fixtureDef.filter.categoryBits = PirateGame.SWORD_BIT;
-        fixtureDef.filter.maskBits = PirateGame.PLAYER_BIT;
+        fixtureDef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
+                PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT |  PirateGame.COCONUT_TREE_BIT;
         fixtureDef.shape=shape;
         body.createFixture(fixtureDef).setUserData(this);
     }
@@ -98,9 +98,5 @@ public class Sword extends PrimitiveWeaponItem {
     public void hitOnPlayer() {
         super.hitOnPlayer();
         Gdx.app.log("Weapon","Hit by Sword");
-    }
-
-    public void draw(Batch batch){
-
     }
 }

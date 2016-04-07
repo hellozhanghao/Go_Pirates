@@ -87,10 +87,10 @@ public class Pirate extends Sprite {
         swordInUse=false;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        numberOfCoconut=PirateGame.INITIAL_COCONUT;
+        numberOfCoconut=0;
         
 
-        Texture pirateTexture=new Texture("img/characters/"+character+".png");
+        Texture pirateTexture=new Texture("img/characters/"+"Sophia.png");
 
         /**
          * ********************************** Pirate***********************************************
@@ -134,7 +134,7 @@ public class Pirate extends Sprite {
          * ********************************** Pirate with sword ************************************
          */
 
-        Texture pirateWithSwordTexture=new Texture("img/characters/"+character+"_sword"+".png");
+        Texture pirateWithSwordTexture=new Texture("img/characters/"+"Sophia"+"_sword"+".png");
         for (int i = 0; i < 4; i++)
             frames.add(new TextureRegion(pirateWithSwordTexture,i*400,0,400,400));
         pirateWalkingDownWithSword=new Animation(FRAME_DURATION_WITH_SWORD,frames);

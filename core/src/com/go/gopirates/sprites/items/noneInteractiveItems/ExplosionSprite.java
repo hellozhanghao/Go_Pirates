@@ -62,7 +62,6 @@ public class ExplosionSprite  extends NonInteractiveSprites{
         }
     }
 
-
     public void draw(Batch batch){
         if (!destroyed){
             super.draw(batch);

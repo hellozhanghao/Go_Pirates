@@ -17,8 +17,10 @@ import com.go.gopirates.sprites.items.noneInteractiveItems.ExplosionSprite;
  */
 public class TNT extends ExplosiveItem {
 
+
     public TNT(PlayScreen screen, float x, float y) {
         super(screen,x,y);
+        setRegion(screen.getAtlas().findRegion("object_bomb"), 0, 0, 500, 500);
     }
 
     @Override
@@ -29,35 +31,35 @@ public class TNT extends ExplosiveItem {
 
     @Override
     public void use() {
-
         world.destroyBody(body);
+        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
+                posY - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
+        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
+                posY + (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
+        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+                posX + (PirateGame.TILE_SIZE/2) / PirateGame.PPM,
+                posY + (PirateGame.TILE_SIZE/2) / PirateGame.PPM));
+        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+                posX + (PirateGame.TILE_SIZE/2) / PirateGame.PPM,
+                posY - (PirateGame.TILE_SIZE/2) / PirateGame.PPM));
+        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
+                posY - (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM));
+        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+                posX - (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM,
+                posY - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
+        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
+                posY + (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM));
+        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
+                posX + (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM,
+                posY - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
 
-//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-//                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
-//                posY - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
-//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-//                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
-//                posY + (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
-//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-//                posX + (PirateGame.TILE_SIZE/2) / PirateGame.PPM,
-//                posY + (PirateGame.TILE_SIZE/2) / PirateGame.PPM));
-//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-//                posX + (PirateGame.TILE_SIZE/2) / PirateGame.PPM,
-//                posY - (PirateGame.TILE_SIZE/2) / PirateGame.PPM));
-//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-//                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
-//                posY - (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM));
-//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-//                posX - (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM,
-//                posY - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
-//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-//                posX - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM,
-//                posY + (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM));
-//        screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,
-//                posX + (PirateGame.TILE_SIZE * 3 / 2) / PirateGame.PPM,
-//                posY - (PirateGame.TILE_SIZE / 2) / PirateGame.PPM));
 
         PirateGame.manager.get("audio/sounds/bomb.ogg", Sound.class).play();
+
         BodyDef bdef = new BodyDef();
         bdef.position.set(posX,posY);
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -74,70 +76,128 @@ public class TNT extends ExplosiveItem {
         body.createFixture(fdef).setUserData(this);
 
         EdgeShape exploEdge1 = new EdgeShape();
-        exploEdge1.set(new Vector2(-PirateGame.TILE_SIZE/ PirateGame.PPM, 0 / PirateGame.PPM), new Vector2(PirateGame.TILE_SIZE / PirateGame.PPM, 0 / PirateGame.PPM));
+        exploEdge1.set(new Vector2(-PirateGame.TILE_SIZE * 2 / PirateGame.PPM, 0 / PirateGame.PPM), new Vector2(PirateGame.TILE_SIZE * 2 / PirateGame.PPM, 0 / PirateGame.PPM));
 
         fdef.shape = exploEdge1;
         fdef.isSensor = true;
-        body.createFixture(fdef).setUserData("HerizontalCross2");
+        body.createFixture(fdef).setUserData("explosionCross1");
         fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+        fdef.filter.maskBits = PirateGame.BARREL_BIT | PirateGame.COCONUT_TREE_BIT |
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
 
         EdgeShape exploEdge2 = new EdgeShape();
-        exploEdge2.set(new Vector2(-PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(20 / PirateGame.PPM, 20/ PirateGame.PPM));
+        exploEdge2.set(new Vector2(0 / PirateGame.PPM, -PirateGame.TILE_SIZE * 2 / PirateGame.PPM), new Vector2(0 / PirateGame.PPM, PirateGame.TILE_SIZE * 2 / PirateGame.PPM));
 
         fdef.shape = exploEdge2;
         fdef.isSensor = true;
-        body.createFixture(fdef).setUserData("HerizontalCross1");
+        body.createFixture(fdef).setUserData("explosionCross2");
         fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT|
+        fdef.filter.maskBits = PirateGame.BARREL_BIT | PirateGame.COCONUT_TREE_BIT |
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
         EdgeShape exploEdge3 = new EdgeShape();
-        exploEdge3.set(new Vector2(-PirateGame.TILE_SIZE / PirateGame.PPM, -PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(20 / PirateGame.PPM, -20 / PirateGame.PPM));
+        exploEdge3.set(new Vector2(-PirateGame.TILE_SIZE / PirateGame.PPM, 0 / PirateGame.PPM), new Vector2(PirateGame.TILE_SIZE / PirateGame.PPM, 0 / PirateGame.PPM));
 
         fdef.shape = exploEdge3;
         fdef.isSensor = true;
-        body.createFixture(fdef).setUserData("HerizontalCross3");
+        body.createFixture(fdef).setUserData("explosionCross3");
         fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+        fdef.filter.maskBits = PirateGame.BARREL_BIT | PirateGame.COCONUT_TREE_BIT |
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
 
         EdgeShape exploEdge4 = new EdgeShape();
-        exploEdge4.set(new Vector2(-PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(-20 / PirateGame.PPM, -20 / PirateGame.PPM));
+        exploEdge4.set(new Vector2(0 / PirateGame.PPM, -PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(0 / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM));
 
         fdef.shape = exploEdge4;
         fdef.isSensor = true;
-        body.createFixture(fdef).setUserData("VerticalCross1");
+        body.createFixture(fdef).setUserData("explosionCross4");
         fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT|
-                PirateGame.PLAYER_BIT |
-                PirateGame.ROCK_BIT;
-
-        EdgeShape exploEdge5 = new EdgeShape();
-        exploEdge5.set(new Vector2(0 / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(0 / PirateGame.PPM, -20 / PirateGame.PPM));
-        fdef.shape = exploEdge5;
-        fdef.isSensor = true;
-        body.createFixture(fdef).setUserData("VerticalCross2");
-        fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT |
-                PirateGame.PLAYER_BIT |
-                PirateGame.ROCK_BIT;
-
-        EdgeShape exploEdge6 = new EdgeShape();
-        exploEdge6.set(new Vector2(PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(20 / PirateGame.PPM, -20 / PirateGame.PPM));
-
-        fdef.shape = exploEdge6;
-        fdef.isSensor = true;
-        body.createFixture(fdef).setUserData("VerticalCross3");
-        fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+        fdef.filter.maskBits = PirateGame.BARREL_BIT | PirateGame.COCONUT_TREE_BIT |
                 PirateGame.PLAYER_BIT |
                 PirateGame.ROCK_BIT;
     }
-
-
 }
 
+
+//
+//        PirateGame.manager.get("audio/sounds/bomb.ogg", Sound.class).play();
+//        BodyDef bdef = new BodyDef();
+//        bdef.position.set(posX,posY);
+//        bdef.type = BodyDef.BodyType.DynamicBody;
+//        body = world.createBody(bdef);
+//        FixtureDef fdef = new FixtureDef();
+//        CircleShape shape = new CircleShape();
+//        shape.setRadius(BOMB_FIXTURE_RADIUS / PirateGame.PPM);
+//        fdef.shape = shape;
+//        fdef.filter.categoryBits = PirateGame.NOTHING_BIT;
+//        fdef.filter.maskBits = PirateGame.BARREL_BIT | PirateGame.COCONUT_TREE_BIT |
+//                PirateGame.PLAYER_BIT |
+//                PirateGame.ROCK_BIT;
+//        fdef.shape = shape;
+//        body.createFixture(fdef).setUserData(this);
+//
+//        EdgeShape exploEdge1 = new EdgeShape();
+//        exploEdge1.set(new Vector2(-PirateGame.TILE_SIZE/ PirateGame.PPM, 0 / PirateGame.PPM), new Vector2(PirateGame.TILE_SIZE / PirateGame.PPM, 0 / PirateGame.PPM));
+//
+//        fdef.shape = exploEdge1;
+//        fdef.isSensor = true;
+//        body.createFixture(fdef).setUserData("HerizontalCross2");
+//        fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
+//        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+//                PirateGame.PLAYER_BIT |
+//                PirateGame.ROCK_BIT;
+//
+//        EdgeShape exploEdge2 = new EdgeShape();
+//        exploEdge2.set(new Vector2(-PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(20 / PirateGame.PPM, 20/ PirateGame.PPM));
+//
+//        fdef.shape = exploEdge2;
+//        fdef.isSensor = true;
+//        body.createFixture(fdef).setUserData("HerizontalCross1");
+//        fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
+//        fdef.filter.maskBits = PirateGame.BARREL_BIT|
+//                PirateGame.PLAYER_BIT |
+//                PirateGame.ROCK_BIT;
+//        EdgeShape exploEdge3 = new EdgeShape();
+//        exploEdge3.set(new Vector2(-PirateGame.TILE_SIZE / PirateGame.PPM, -PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(20 / PirateGame.PPM, -20 / PirateGame.PPM));
+//
+//        fdef.shape = exploEdge3;
+//        fdef.isSensor = true;
+//        body.createFixture(fdef).setUserData("HerizontalCross3");
+//        fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
+//        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+//                PirateGame.PLAYER_BIT |
+//                PirateGame.ROCK_BIT;
+//
+//        EdgeShape exploEdge4 = new EdgeShape();
+//        exploEdge4.set(new Vector2(-PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(-20 / PirateGame.PPM, -20 / PirateGame.PPM));
+//
+//        fdef.shape = exploEdge4;
+//        fdef.isSensor = true;
+//        body.createFixture(fdef).setUserData("VerticalCross1");
+//        fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
+//        fdef.filter.maskBits = PirateGame.BARREL_BIT|
+//                PirateGame.PLAYER_BIT |
+//                PirateGame.ROCK_BIT;
+//
+//        EdgeShape exploEdge5 = new EdgeShape();
+//        exploEdge5.set(new Vector2(0 / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(0 / PirateGame.PPM, -20 / PirateGame.PPM));
+//        fdef.shape = exploEdge5;
+//        fdef.isSensor = true;
+//        body.createFixture(fdef).setUserData("VerticalCross2");
+//        fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
+//        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+//                PirateGame.PLAYER_BIT |
+//                PirateGame.ROCK_BIT;
+//
+//        EdgeShape exploEdge6 = new EdgeShape();
+//        exploEdge6.set(new Vector2(PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM), new Vector2(20 / PirateGame.PPM, -20 / PirateGame.PPM));
+//
+//        fdef.shape = exploEdge6;
+//        fdef.isSensor = true;
+//        body.createFixture(fdef).setUserData("VerticalCross3");
+//        fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
+//        fdef.filter.maskBits = PirateGame.BARREL_BIT |
+//                PirateGame.PLAYER_BIT |
+//                PirateGame.ROCK_BIT;
