@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
+<resources>
+    <string name="achievement_newbie">CgkIrePe2cAPEAIQAQ</string>
+    <string name="achievement_beginner">CgkIrePe2cAPEAIQAg</string>
+    <string name="achievement_expert">CgkIrePe2cAPEAIQAw</string>
+    <string name="achievement_bomberman">CgkIrePe2cAPEAIQBA</string>
+    <string name="achievement_bombermaster">CgkIrePe2cAPEAIQBQ</string>
+</resources>

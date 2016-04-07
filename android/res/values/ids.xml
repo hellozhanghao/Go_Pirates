@@ -4,7 +4,6 @@ Google Play game services IDs.
 Save this file as res/values/games-ids.xml in your project.
 -->
 <resources>
-    <string name="app_id">434882397243</string>
+    <string name="app_id">532764144045</string>
     <string name="package_name">com.go.gopirates</string>
-    <string name="leaderboard_beginner">CgkIu4iLiNQMEAIQAQ</string>
 </resources>
