@@ -83,9 +83,7 @@ public class Coconut extends PrimitiveWeaponItem {
         stateTime += dt;
         setPosition(body.getPosition().x - COCONUT_RADIUS / PirateGame.PPM,
                 body.getPosition().y  - COCONUT_RADIUS / PirateGame.PPM);
-        System.out.println(body.getPosition().x + " " + screen.getPirate().b2body.getPosition().x);
         setRegion(screen.coconutAnimation.getKeyFrame(stateTime, true));
-//        setRegion(new Texture("img/objects/coconut.png"));
     }
 
     @Override
