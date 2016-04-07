@@ -38,7 +38,7 @@ public class Pirate extends Sprite {
     public World world;
     public Body b2body;
 
-    private int health;
+    public  int health;
     private float healthTimer;
     public boolean swordInUse;
 

@@ -25,6 +25,7 @@ import com.go.gopirates.sprites.items.ItemDef;
 import com.go.gopirates.sprites.items.explosiveItems.Bomb;
 import com.go.gopirates.sprites.items.explosiveItems.ExplosiveItem;
 import com.go.gopirates.sprites.items.explosiveItems.TNT;
+import com.go.gopirates.sprites.items.noneInteractiveItems.HealthSprite;
 import com.go.gopirates.sprites.items.noneInteractiveItems.NonInteractiveSprites;
 import com.go.gopirates.sprites.items.noneInteractiveItems.ShieldSprite;
 import com.go.gopirates.sprites.items.noneInteractiveItems.ShoeSprite;
@@ -54,6 +55,7 @@ public class PlayScreen implements Screen {
     private TextureAtlas atlas;
     public Animation explosionAnimation;
     public Animation coconutAnimation;
+    public Array<TextureRegion> healthTexture;
 
     //basic playscreen variables
     private OrthographicCamera gamecam;
@@ -143,6 +145,7 @@ public class PlayScreen implements Screen {
         swordConfirm=true;
         coconutConfirmTimer=0;
         coconutConfirm=true;
+        getPirate().nonInteractiveSprites.add(new HealthSprite(this));
     }
 
 
@@ -163,7 +166,18 @@ public class PlayScreen implements Screen {
         for (int i = 0; i < 4; i++)
             coconutFrames.add(new TextureRegion(coconutTexture, PirateGame.TILE_SIZE*i, 0, PirateGame.TILE_SIZE, PirateGame.TILE_SIZE));
         coconutAnimation = new Animation(0.1f, coconutFrames);
+
+        healthTexture=new Array<TextureRegion>();
+        Texture healthTexureAll1=new Texture("img/hud/health_1.png");
+        for (int i = 0; i < 8; i++) {
+            healthTexture.add(new TextureRegion(healthTexureAll1,i*256,0,256,768));
+        }
+        Texture healthTexutreAll2=new Texture("img/hud/health_2.png");
+        for (int i = 8; i < 11; i++) {
+            healthTexture.add(new TextureRegion(healthTexutreAll2,(i-8)*256,0,256,768));
+        }
     }
+
 
     public void handleSpawningItems() {
         if (!itemsToSpawn.isEmpty()) {

@@ -5,4 +5,5 @@ package com.go.gopirates;
  */
 public class EventMessage {
 
+
 }
