@@ -1,7 +1,9 @@
 package com.go.gopirates.sprites.items.noneInteractiveItems;
 
+/**
+ * Created by zhanghao on 8/4/16.
+ */
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -13,7 +15,7 @@ import com.go.gopirates.screen.PlayScreen;
 /**
  * Created by zhanghao on 5/4/16.
  */
-public class ExplosionDetector extends NonInteractiveSprites {
+public class TNTExplosionDetector extends NonInteractiveSprites {
 
     PlayScreen screen;
     World world;
@@ -23,20 +25,15 @@ public class ExplosionDetector extends NonInteractiveSprites {
     private float posX,posY;
     private float RADIUS=10;
     private float VELOCITY=400;
-    ExpolsionDirection direction;
-    public float destroyedTimeStamp,TTL;
+    public final float TTL=0.35f;
 
-    public enum ExpolsionDirection{UP,DOWN,LEFT,RIGHT}
 
-    public ExplosionDetector(PlayScreen screen, float x, float y, ExpolsionDirection direction,float TTL){
+    public TNTExplosionDetector(PlayScreen screen, float x, float y){
         this.screen=screen;
         this.world=this.screen.getWorld();
         posX=x;
         posY=y;
-        this.direction=direction;
         this.stateTime=TTL;
-        this.TTL=TTL;
-        destroyedTimeStamp=-1f;
         defineExplosionDetector();
     }
 
@@ -48,39 +45,23 @@ public class ExplosionDetector extends NonInteractiveSprites {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(RADIUS / PirateGame.PPM);
-        fdef.filter.categoryBits = PirateGame.EXPLOSION_BIT;
-        fdef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.BARREL_BIT | PirateGame.COCONUT_TREE_BIT |PirateGame.ROCK_BIT;
+        fdef.filter.categoryBits = PirateGame.TNT_EXPLOSION_BIT;
+        fdef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.BARREL_BIT ;
         fdef.shape = shape;
         body.createFixture(fdef).setUserData(this);
 
-        switch (direction){
-            case UP:
-                body.setLinearVelocity(new Vector2(0,VELOCITY));
-                break;
-            case DOWN:
-                body.setLinearVelocity(0,-VELOCITY);
-                break;
-            case LEFT:
-                body.setLinearVelocity(-VELOCITY,0);
-                break;
-            case RIGHT:
-                body.setLinearVelocity(VELOCITY,0);
-                break;
-        }
+        body.setLinearVelocity(0,-VELOCITY);
+
     }
     @Override
     public void update(float dt) {
         stateTime-=dt;
         if (setToDestroy & !destroyed){
-            destroyedTimeStamp=TTL-stateTime;
             world.destroyBody(body);
             destroyed=true;
         }
-        if (!destroyed){
-            if (stateTime<0){
-                setToDestroy=true;
-            }
-//            System.out.println(body.getPosition().x+" "+body.getPosition().y+" "+screen.getPirate().b2body.getPosition().x+" "+screen.getPirate().b2body.getPosition().y );
+        if (stateTime<0){
+            setToDestroy=true;
         }
     }
 
@@ -88,9 +69,6 @@ public class ExplosionDetector extends NonInteractiveSprites {
 
     }
 
-    public void onHit(){
-        setToDestroy=true;
-    }
 
 
 

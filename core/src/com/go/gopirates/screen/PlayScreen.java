@@ -25,7 +25,7 @@ import com.go.gopirates.sprites.items.ItemDef;
 import com.go.gopirates.sprites.items.explosiveItems.Bomb;
 import com.go.gopirates.sprites.items.explosiveItems.ExplosiveItem;
 import com.go.gopirates.sprites.items.explosiveItems.TNT;
-import com.go.gopirates.sprites.items.noneInteractiveItems.ExplosionDetector;
+import com.go.gopirates.sprites.items.noneInteractiveItems.BombExplosionDetector;
 import com.go.gopirates.sprites.items.noneInteractiveItems.NonInteractiveSprites;
 import com.go.gopirates.sprites.items.noneInteractiveItems.ShieldSprite;
 import com.go.gopirates.sprites.items.noneInteractiveItems.ShoeSprite;
@@ -284,14 +284,14 @@ public class PlayScreen implements Screen {
             item.update(dt);
         for (Pirate player : players) {
             player.update(dt);
-            for (ExplosiveItem explosiveItems : player.explosiveItems) {
-                explosiveItems.update(dt);
-                if (explosiveItems instanceof Bomb){
-                    for (ExplosionDetector explosionDetector :((Bomb) explosiveItems).explosionDetectors){
-                        explosionDetector.update(dt);
-                    }
-                }
-
+            for (ExplosiveItem item : player.explosiveItems) {
+                item.update(dt);
+                if (item instanceof Bomb)
+                    for (BombExplosionDetector bombExplosionDetector :((Bomb) item).explosionDetectors)
+                        bombExplosionDetector.update(dt);
+//                if (item instanceof TNT)
+//                    for (TNTExplosionDetector tntExplosionDetector : ((TNT) item).explosionDetectors)
+//                        tntExplosionDetector.update(dt);
             }
 
             for (NonInteractiveSprites sprite : player.nonInteractiveSprites) {
@@ -304,10 +304,9 @@ public class PlayScreen implements Screen {
         }
 //        hud.update(dt);
 
-
         Pirate player = getPirate();
-        //update our gamecam with correct coordinates after changes
-        //x position
+
+        //update gamecam
         gamecam.setToOrtho(false, PirateGame.V_WIDTH / PirateGame.PPM, PirateGame.V_HEIGHT / PirateGame.PPM);
 
         if (player.b2body.getPosition().x < (PirateGame.V_WIDTH / PirateGame.PPM) / 2)
@@ -356,30 +355,16 @@ public class PlayScreen implements Screen {
             player.draw(PirateGame.batch);
             for (NonInteractiveSprites sprite : player.nonInteractiveSprites)
                 sprite.draw(PirateGame.batch);
-            for (ExplosiveItem item: player.explosiveItems){
+            for (ExplosiveItem item: player.explosiveItems)
                 item.draw(PirateGame.batch);
-                if (item instanceof Bomb){
-                    for (ExplosionDetector explosionDetector : ((Bomb) item).explosionDetectors) {
-                        explosionDetector.draw(PirateGame.batch);
-                    }
-                }
-            }
-
             for (PrimitiveWeaponItem item : player.primitiveWeaponItems)
                 item.draw(PirateGame.batch);
             player.draw(PirateGame.batch);
         }
         for (PowerUp powerup : powerUps)
             powerup.draw(PirateGame.batch);
-
-
         PirateGame.batch.end();
-
-
-
-//        Gdx.gl.glViewport(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         controller.render();
-
 //        if(gameOver()){
 //            game.setScreen(new GameOverScreen(game));
 //            dispose();

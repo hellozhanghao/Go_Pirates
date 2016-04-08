@@ -5,7 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
-import com.go.gopirates.sprites.items.noneInteractiveItems.ExplosionDetector;
+import com.go.gopirates.sprites.items.noneInteractiveItems.BombExplosionDetector;
 import com.go.gopirates.sprites.items.noneInteractiveItems.ExplosionSprite;
 
 
@@ -14,13 +14,13 @@ import com.go.gopirates.sprites.items.noneInteractiveItems.ExplosionSprite;
  */
 public class Bomb extends ExplosiveItem {
 
-    public Array<ExplosionDetector> explosionDetectors;
+    public Array<BombExplosionDetector> explosionDetectors;
     private boolean detectorCreated,showedExplosion;
     private final float EXPLOSION_THRESHOLD=0.25f;
 
     public Bomb(PlayScreen screen, float x, float y) {
         super(screen, x, y);
-        explosionDetectors=new Array<ExplosionDetector>();
+        explosionDetectors=new Array<BombExplosionDetector>();
         setRegion(screen.getAtlas().findRegion("object_bomb"), 0, 0, 500, 500);
         detectorCreated=false;
         showedExplosion=false;
@@ -37,10 +37,10 @@ public class Bomb extends ExplosiveItem {
     public void use() {
 //        world.destroyBody(body);
         float TTL=0.4f;
-        explosionDetectors.add(new ExplosionDetector(screen,posX,posY, ExplosionDetector.ExpolsionDirection.UP,TTL));
-        explosionDetectors.add(new ExplosionDetector(screen,posX,posY, ExplosionDetector.ExpolsionDirection.DOWN,TTL));
-        explosionDetectors.add(new ExplosionDetector(screen,posX,posY, ExplosionDetector.ExpolsionDirection.LEFT,TTL));
-        explosionDetectors.add(new ExplosionDetector(screen, posX, posY, ExplosionDetector.ExpolsionDirection.RIGHT, TTL));
+        explosionDetectors.add(new BombExplosionDetector(screen,posX,posY, BombExplosionDetector.ExpolsionDirection.UP,TTL));
+        explosionDetectors.add(new BombExplosionDetector(screen,posX,posY, BombExplosionDetector.ExpolsionDirection.DOWN,TTL));
+        explosionDetectors.add(new BombExplosionDetector(screen,posX,posY, BombExplosionDetector.ExpolsionDirection.LEFT,TTL));
+        explosionDetectors.add(new BombExplosionDetector(screen, posX, posY, BombExplosionDetector.ExpolsionDirection.RIGHT, TTL));
         detectorCreated=true;
     }
 
@@ -60,6 +60,7 @@ public class Bomb extends ExplosiveItem {
                 if (explosionDetectors.get(3).destroyedTimeStamp>EXPLOSION_THRESHOLD)
                     screen.getPirate().nonInteractiveSprites.add(new ExplosionSprite(screen,posX+PirateGame.TILE_SIZE/PirateGame.PPM,posY));
                 showedExplosion=true;
+                toDestroy=true;
             }
 
         }

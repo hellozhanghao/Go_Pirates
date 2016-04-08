@@ -22,8 +22,7 @@ public class PirateGame extends Game {
     public static final int MAP_SIZE_X =25;
 
     //User Selct
-    public static final int PLAYER_ID=0;
-
+    public static final int PLAYER_ID=2;
 
     //Settings:
     public static  int DEFAULT_VELOCITY =100;
@@ -45,13 +44,13 @@ public class PirateGame extends Game {
     public static final short PLAYER_BIT = 2;
     public static final short ROCK_BIT = 4;
     public static final short BARREL_BIT = 8;
-    public static final short EXPLOSION_BIT = 16;
+    public static final short BOMB_EXPLOSION_BIT = 16;
     public static final short SWORD_BIT = 32;
     public static final short TREASURE_BIT = 64;
     public static final short SHIELD_BIT = 128;
     public static final short BOMB_BIT = 256;
     public static final short COCONUT_BIT = 2048;
-    public static final short UNUSED = 4096;
+    public static final short TNT_EXPLOSION_BIT = 4096;
     public static final short POWERUP_BIT = 8192;
 
     public static SpriteBatch batch;

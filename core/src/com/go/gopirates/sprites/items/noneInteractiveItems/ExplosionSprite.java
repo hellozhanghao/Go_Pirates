@@ -20,7 +20,7 @@ public class ExplosionSprite  extends NonInteractiveSprites{
     boolean destroyed,setToDestroy;
     Body b2body;
     private float posX,posY;
-    private final float EXPLSION_SIZE=400;
+    private final float EXPLSION_SIZE=500;
     public ExplosionSprite(PlayScreen screen, float x, float y) {
         setPosition(x-EXPLSION_SIZE/PirateGame.PPM/2,y-EXPLSION_SIZE/PirateGame.PPM/2);
         setSize(EXPLSION_SIZE/PirateGame.PPM,EXPLSION_SIZE/PirateGame.PPM);

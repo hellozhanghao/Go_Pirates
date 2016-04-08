@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
-import com.go.gopirates.sprites.items.noneInteractiveItems.ExplosionDetector;
+import com.go.gopirates.sprites.items.noneInteractiveItems.BombExplosionDetector;
 import com.go.gopirates.sprites.items.powerUps.PowerUp;
 import com.go.gopirates.sprites.items.primitiveWeaponItem.Coconut;
 import com.go.gopirates.sprites.items.primitiveWeaponItem.Sword;
@@ -47,24 +47,31 @@ public class WorldContactListener implements ContactListener {
                     ((Treasure) fixA.getUserData()).onHit();
                 break;
 
-            case PirateGame.BARREL_BIT | PirateGame.EXPLOSION_BIT:
+            case PirateGame.BARREL_BIT | PirateGame.BOMB_EXPLOSION_BIT:
                 if(fixA.getFilterData().categoryBits == PirateGame.BARREL_BIT)
                     ((Barrel) fixA.getUserData()).onHit();
                 else
                     ((Barrel) fixB.getUserData()).onHit();
                 break;
 
-            case PirateGame.COCONUT_TREE_BIT | PirateGame.EXPLOSION_BIT:
+            case PirateGame.COCONUT_TREE_BIT | PirateGame.BOMB_EXPLOSION_BIT:
                 if(fixA.getFilterData().categoryBits == PirateGame.COCONUT_TREE_BIT)
                     ((CoconutTree) fixA.getUserData()).onHit();
                 else
                     ((CoconutTree) fixB.getUserData()).onHit();
                 break;
-            case PirateGame.ROCK_BIT | PirateGame.EXPLOSION_BIT:
-                if(fixA.getFilterData().categoryBits == PirateGame.EXPLOSION_BIT)
-                    ((ExplosionDetector) fixA.getUserData()).onHit();
+            case PirateGame.BARREL_BIT | PirateGame.TNT_EXPLOSION_BIT:
+                if(fixA.getFilterData().categoryBits == PirateGame.BARREL_BIT)
+                    ((Barrel) fixA.getUserData()).onHit();
                 else
-                    ((ExplosionDetector) fixB.getUserData()).onHit();
+                    ((Barrel) fixB.getUserData()).onHit();
+                break;
+
+            case PirateGame.ROCK_BIT | PirateGame.BOMB_EXPLOSION_BIT:
+                if(fixA.getFilterData().categoryBits == PirateGame.BOMB_EXPLOSION_BIT)
+                    ((BombExplosionDetector) fixA.getUserData()).onHit();
+                else
+                    ((BombExplosionDetector) fixB.getUserData()).onHit();
                 break;
 
              //Player vs. power up
@@ -124,15 +131,12 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Sword) fixB.getUserData()).hitOnPlayer();
                 break;
-
-            case PirateGame.PLAYER_BIT | PirateGame.EXPLOSION_BIT:
+            case PirateGame.PLAYER_BIT | PirateGame.BOMB_EXPLOSION_BIT:
                 screen.getPirate().hitInExplosion();
                 break;
-
-
-
-
-
+            case PirateGame.PLAYER_BIT | PirateGame.TNT_EXPLOSION_BIT:
+                screen.getPirate().hitInExplosion();
+                break;
         }
     }
 

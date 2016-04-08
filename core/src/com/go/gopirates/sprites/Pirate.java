@@ -222,7 +222,7 @@ public class Pirate extends Sprite {
         fixtureDef.filter.categoryBits = PirateGame.PLAYER_BIT;
         fixtureDef.filter.maskBits = PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
                                      PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT | PirateGame.POWERUP_BIT|
-                                     PirateGame.EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT;
+                                     PirateGame.BOMB_EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT;
 
         fixtureDef.shape=shape;
         b2body.createFixture(fixtureDef);
@@ -246,7 +246,7 @@ public class Pirate extends Sprite {
         fixtureDef.filter.categoryBits = PirateGame.PLAYER_BIT;
         fixtureDef.filter.maskBits = PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
                 PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT | PirateGame.POWERUP_BIT|
-                PirateGame.EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT;
+                PirateGame.BOMB_EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT;
 
         fixtureDef.shape=shape;
         b2body.createFixture(fixtureDef);
