@@ -20,15 +20,14 @@ public class ExplosionSprite  extends NonInteractiveSprites{
     boolean destroyed,setToDestroy;
     Body b2body;
     private float posX,posY;
-
-
+    private final float EXPLSION_SIZE=400;
     public ExplosionSprite(PlayScreen screen, float x, float y) {
-        setBounds(x, y, PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM);
+        setPosition(x-EXPLSION_SIZE/PirateGame.PPM/2,y-EXPLSION_SIZE/PirateGame.PPM/2);
+        setSize(EXPLSION_SIZE/PirateGame.PPM,EXPLSION_SIZE/PirateGame.PPM);
         this.screen = screen;
         this.world = screen.getWorld();
         this.posX=x;
         this.posY=y;
-
         stateTime=0;
         defineExplosion();
     }
@@ -46,7 +45,6 @@ public class ExplosionSprite  extends NonInteractiveSprites{
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);
         shape.dispose();
-
     }
 
 

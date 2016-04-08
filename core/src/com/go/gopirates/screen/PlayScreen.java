@@ -25,6 +25,7 @@ import com.go.gopirates.sprites.items.ItemDef;
 import com.go.gopirates.sprites.items.explosiveItems.Bomb;
 import com.go.gopirates.sprites.items.explosiveItems.ExplosiveItem;
 import com.go.gopirates.sprites.items.explosiveItems.TNT;
+import com.go.gopirates.sprites.items.noneInteractiveItems.ExplosionDetector;
 import com.go.gopirates.sprites.items.noneInteractiveItems.NonInteractiveSprites;
 import com.go.gopirates.sprites.items.noneInteractiveItems.ShieldSprite;
 import com.go.gopirates.sprites.items.noneInteractiveItems.ShoeSprite;
@@ -285,6 +286,12 @@ public class PlayScreen implements Screen {
             player.update(dt);
             for (ExplosiveItem explosiveItems : player.explosiveItems) {
                 explosiveItems.update(dt);
+                if (explosiveItems instanceof Bomb){
+                    for (ExplosionDetector explosionDetector :((Bomb) explosiveItems).explosionDetectors){
+                        explosionDetector.update(dt);
+                    }
+                }
+
             }
 
             for (NonInteractiveSprites sprite : player.nonInteractiveSprites) {
@@ -349,8 +356,15 @@ public class PlayScreen implements Screen {
             player.draw(PirateGame.batch);
             for (NonInteractiveSprites sprite : player.nonInteractiveSprites)
                 sprite.draw(PirateGame.batch);
-            for (ExplosiveItem item: player.explosiveItems)
+            for (ExplosiveItem item: player.explosiveItems){
                 item.draw(PirateGame.batch);
+                if (item instanceof Bomb){
+                    for (ExplosionDetector explosionDetector : ((Bomb) item).explosionDetectors) {
+                        explosionDetector.draw(PirateGame.batch);
+                    }
+                }
+            }
+
             for (PrimitiveWeaponItem item : player.primitiveWeaponItems)
                 item.draw(PirateGame.batch);
             player.draw(PirateGame.batch);

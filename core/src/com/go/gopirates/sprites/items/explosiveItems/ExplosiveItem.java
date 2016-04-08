@@ -25,7 +25,7 @@ public abstract class ExplosiveItem extends Sprite {
     protected Body body;
     protected float posX,posY,stateTime;
 
-    final int BOMB_FIXTURE_RADIUS = 80;
+    final int BOMB_FIXTURE_RADIUS = 40;
     protected final float TIME_TO_EXPLODE = 4;
     protected final float TIME_TO_PRESENCE = 1.5f;
     protected final float EXPLOSION_TIME=0.1f;
@@ -55,9 +55,7 @@ public abstract class ExplosiveItem extends Sprite {
         shape.setRadius(BOMB_FIXTURE_RADIUS / PirateGame.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = PirateGame.NOTHING_BIT;
-        fdef.filter.maskBits = PirateGame.BARREL_BIT | PirateGame.COCONUT_TREE_BIT |
-                PirateGame.PLAYER_BIT |
-                PirateGame.ROCK_BIT;
+        fdef.filter.maskBits = PirateGame.BARREL_BIT | PirateGame.COCONUT_TREE_BIT | PirateGame.PLAYER_BIT | PirateGame.ROCK_BIT;
         fdef.shape = shape;
         body.createFixture(fdef).setUserData(this);
     }
