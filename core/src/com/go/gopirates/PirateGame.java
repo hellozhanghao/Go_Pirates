@@ -68,7 +68,6 @@ public class PirateGame extends Game {
         manager.load("audio/music/pirate.mp3", Music.class);
         manager.load("audio/sounds/sword.mp3", Sound.class);
         manager.load("audio/sounds/bump.wav", Sound.class);
-        manager.load("audio/sounds/breakblock.wav", Sound.class);
         manager.load("audio/sounds/powerup_spawn.wav", Sound.class);
         manager.load("audio/sounds/powerup.wav", Sound.class);
         manager.load("audio/sounds/powerdown.wav", Sound.class);

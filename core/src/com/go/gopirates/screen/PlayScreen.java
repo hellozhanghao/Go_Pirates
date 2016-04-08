@@ -55,12 +55,10 @@ public class PlayScreen implements Screen {
     private TextureAtlas atlas;
     public Animation explosionAnimation;
     public Animation coconutAnimation;
-    public Array<TextureRegion> healthTexture;
 
     //basic playscreen variables
     private OrthographicCamera gamecam;
     private Viewport gamePort;
-//    private Hud hud;
 
     private Controller controller;
 
@@ -122,10 +120,6 @@ public class PlayScreen implements Screen {
         players.add(new Pirate(this, 2, "Thomas"));
         players.add(new Pirate(this, 3, "Zack"));
 
-        //create our game HUD for scores/timers/level info
-//        hud = new Hud(PirateGame.batch,players.get(thisPlayerIndex));
-
-
         world.setContactListener(new WorldContactListener(this));
         music = PirateGame.manager.get("audio/music/pirate.mp3", Music.class);
         music.setLooping(true);
@@ -148,7 +142,6 @@ public class PlayScreen implements Screen {
         controller.setUpUserProfilePanel(getPirate().character);
 
     }
-
 
     public void loadAssets(){
         atlas = new TextureAtlas("img/pirates.pack");
@@ -289,9 +282,6 @@ public class PlayScreen implements Screen {
                 if (item instanceof Bomb)
                     for (BombExplosionDetector bombExplosionDetector :((Bomb) item).explosionDetectors)
                         bombExplosionDetector.update(dt);
-//                if (item instanceof TNT)
-//                    for (TNTExplosionDetector tntExplosionDetector : ((TNT) item).explosionDetectors)
-//                        tntExplosionDetector.update(dt);
             }
 
             for (NonInteractiveSprites sprite : player.nonInteractiveSprites) {
@@ -302,7 +292,6 @@ public class PlayScreen implements Screen {
             }
 
         }
-//        hud.update(dt);
 
         Pirate player = getPirate();
 
@@ -326,6 +315,8 @@ public class PlayScreen implements Screen {
         //tell our renderer to draw only what our camera can see in our game world.
         renderer.setView(gamecam);
         updatePowerUp();
+
+
     }
 
     @Override
@@ -365,10 +356,6 @@ public class PlayScreen implements Screen {
             powerup.draw(PirateGame.batch);
         PirateGame.batch.end();
         controller.render();
-//        if(gameOver()){
-//            game.setScreen(new GameOverScreen(game));
-//            dispose();
-//        }
     }
 
     @Override
@@ -401,10 +388,6 @@ public class PlayScreen implements Screen {
 //        hud.dispose();
     }
 
-
-//    public Hud getHud(){ return hud; }
-
-
     //Getters
     public Pirate getPirate() {
         return players.get(PirateGame.PLAYER_ID);
@@ -423,6 +406,7 @@ public class PlayScreen implements Screen {
     public Pirate getPirate(int id){
         return players.get(id);
     }
+
     public TiledMap getMap() {
         return map;
     }
