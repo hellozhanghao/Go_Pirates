@@ -3,14 +3,16 @@ package com.go.gopirates.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.go.gopirates.PirateGame;
 
 /**
@@ -18,49 +20,56 @@ import com.go.gopirates.PirateGame;
  */
 public class LoginScreen implements Screen {
 
-    private float gameWidth;
-    private float gameHeight;
-    private float BUTTON_WIDTH;
-    private float BUTTON_HEIGHT;
+    Viewport viewport;
+    OrthographicCamera cam;
 
     private SpriteBatch batch;
+    private Sprite backgroundSprite;
     private Texture background;
-    private Sprite sprite;
 
-    private TextButton quickGameButton;
+    private Image quickGameButton;
+    private Image joinRoomButton;
 
     private Stage stage;
-
-
-
     private PirateGame game;
 
-    public LoginScreen(PirateGame game, float gameWidth, float gameHeight) {
-        this.gameWidth = gameWidth;
-        this.gameHeight = gameHeight;
-
-        BUTTON_WIDTH = 120;
-        BUTTON_HEIGHT = 40;
-
-        stage = new Stage(new ExtendViewport(gameWidth, gameHeight));
-
+    public LoginScreen(PirateGame game) {
+        this.game=game;
+        batch=new SpriteBatch();
+        cam=new OrthographicCamera();
+        viewport=new FitViewport(1920f,1080f);
+        stage = new Stage(viewport,batch);
 
     }
 
     @Override
     public void show() {
 
-        batch = new SpriteBatch();
+
+
+        background=new Texture("img/MainScreen.png");
         background.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        sprite = new Sprite(background);
-        sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        backgroundSprite = new Sprite(background);
+
+        quickGameButton=new Image(new Texture("img/QuickGame.png"));
+        quickGameButton.setSize(600,200);
+        quickGameButton.setPosition(250, 600);
+        stage.addActor(quickGameButton);
 
         quickGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                game.setScreen(new PlayScreen(game));
             }
         });
+
+        joinRoomButton=new Image(new Texture("img/JoinRoom.png"));
+        joinRoomButton.setSize(600, 200);
+        joinRoomButton.setPosition(1050, 600);
+        stage.addActor(joinRoomButton);
+
+
+
 
 
 
@@ -73,7 +82,7 @@ public class LoginScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        sprite.draw(batch);
+        backgroundSprite.draw(batch);
         batch.end();
 
         stage.act();

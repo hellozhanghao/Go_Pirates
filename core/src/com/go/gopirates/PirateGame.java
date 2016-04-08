@@ -6,7 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.go.gopirates.screen.PlayScreen;
+import com.go.gopirates.screen.LoginScreen;
 import com.go.gopirates.sprites.Pirate;
 
 
@@ -76,7 +76,8 @@ public class PirateGame extends Game {
 
         manager.finishLoading();
 
-        setScreen(new PlayScreen(this));
+//        setScreen(new PlayScreen(this));
+        setScreen(new LoginScreen(this));
     }
 
 

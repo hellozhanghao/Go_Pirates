@@ -59,7 +59,6 @@ public class PlayScreen implements Screen {
     //basic playscreen variables
     private OrthographicCamera gamecam;
     private Viewport gamePort;
-
     private Controller controller;
 
     //Tiled map variables
