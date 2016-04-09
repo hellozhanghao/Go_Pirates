@@ -219,7 +219,9 @@ public class Pirate extends Sprite {
         FixtureDef fixtureDef=new FixtureDef();
         CircleShape shape=new CircleShape();
         shape.setRadius(128/PirateGame.PPM);
-        fixtureDef.filter.categoryBits = PirateGame.PLAYER_BIT;
+        if (playerId==PirateGame.PLAYER_ID)
+            fixtureDef.filter.categoryBits = PirateGame.PLAYER_BIT;
+        else  fixtureDef.filter.categoryBits = PirateGame.OTHER_PLAYER_BIT;
         fixtureDef.filter.maskBits = PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
                                      PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT | PirateGame.POWERUP_BIT|
                                      PirateGame.BOMB_EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT;
@@ -243,7 +245,9 @@ public class Pirate extends Sprite {
         FixtureDef fixtureDef=new FixtureDef();
         CircleShape shape=new CircleShape();
         shape.setRadius(128/PirateGame.PPM);
-        fixtureDef.filter.categoryBits = PirateGame.PLAYER_BIT;
+        if (playerId==PirateGame.PLAYER_ID)
+            fixtureDef.filter.categoryBits = PirateGame.PLAYER_BIT;
+        else  fixtureDef.filter.categoryBits = PirateGame.OTHER_PLAYER_BIT;
         fixtureDef.filter.maskBits = PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
                 PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT | PirateGame.POWERUP_BIT|
                 PirateGame.BOMB_EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT;

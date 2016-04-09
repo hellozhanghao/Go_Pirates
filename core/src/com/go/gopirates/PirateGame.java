@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.go.gopirates.screen.LoginScreen;
 import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.Pirate;
+import com.go.gopirates.sprites.items.explosiveItems.Bomb;
 
 
 public class PirateGame extends Game {
@@ -55,6 +56,7 @@ public class PirateGame extends Game {
     public static final short COCONUT_BIT = 2048;
     public static final short TNT_EXPLOSION_BIT = 4096;
     public static final short POWERUP_BIT = 8192;
+    public static final short OTHER_PLAYER_BIT = 16384;
 
     public static SpriteBatch batch;
 
@@ -105,20 +107,27 @@ public class PirateGame extends Game {
     }
 
     public static void resloveMessage(String message){
-        Gdx.app.log("PirateGame", message);
+
         String[] words=message.split(";");
         if (words[0].equals("Location")){
             int playerId=Integer.parseInt(words[1]);
             float x=Float.parseFloat(words[2]);
             float y=Float.parseFloat(words[3]);
             Pirate.Direction direction= Pirate.Direction.valueOf(words[4]);
-            Pirate.State state=Pirate.State.valueOf(words[5]);
-            boolean swordInuse=Boolean.valueOf(words[6]);
+            Pirate.State currentState=Pirate.State.valueOf(words[5]);
+            Pirate.State previousState= Pirate.State.valueOf(words[6]);
+            boolean swordInuse=Boolean.valueOf(words[7]);
             screen.getPirate(playerId).b2body.setTransform(x,y,0);
             screen.getPirate(playerId).direction=direction;
-            screen.getPirate(playerId).currentState=state;
+            screen.getPirate(playerId).currentState=currentState;
+            screen.getPirate(playerId).previousState=previousState;
             screen.getPirate(playerId).swordInUse=swordInuse;
-        }else if (words[0].equals("Bomb"));
+        }else {
+            Gdx.app.log("PirateGame", message);
+            if (words[0].equals("Bomb"));{
+                screen.getPirate().explosiveItems.add(new Bomb(screen,Float.valueOf(words[1]),Float.valueOf(words[2])));
+            }
+        }
     }
 
 

@@ -81,6 +81,12 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((PowerUp) fixB.getUserData()).use();
                 break;
+            case PirateGame.POWERUP_BIT | PirateGame.OTHER_PLAYER_BIT:
+                if(fixA.getFilterData().categoryBits == PirateGame.POWERUP_BIT)
+                    ((PowerUp) fixA.getUserData()).usebyOthers();
+                else
+                    ((PowerUp) fixB.getUserData()).usebyOthers();
+                break;
             case PirateGame.POWERUP_BIT | PirateGame.SHIELD_BIT:
                 if(fixA.getFilterData().categoryBits == PirateGame.POWERUP_BIT)
                     ((PowerUp) fixA.getUserData()).use();

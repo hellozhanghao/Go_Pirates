@@ -46,13 +46,17 @@ public abstract class PowerUp extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(80 / PirateGame.PPM);
         fdef.filter.categoryBits = PirateGame.POWERUP_BIT;
-        fdef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.SHIELD_BIT;
+        fdef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.SHIELD_BIT|PirateGame.OTHER_PLAYER_BIT;
 
         fdef.shape = shape;
         body.createFixture(fdef).setUserData(this);
     }
 
     public abstract void use();
+
+    public void usebyOthers() {
+        destroy();
+    }
 
     public void update(float dt){
         if(toDestroy && !destroyed){

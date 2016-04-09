@@ -237,6 +237,7 @@ public class PlayScreen implements Screen {
         //Bomb Pressed:
         if (!controller.previousBombPress & controller.bombPress & bombConfirm) {
             player.explosiveItems.add(new Bomb(this, player.b2body.getPosition().x, player.b2body.getPosition().y));
+            game.playServices.broadcastMessage("Bomb;"+player.b2body.getPosition().x+";"+player.b2body.getPosition().y);
             bombConfirm = false;
         }
         //Sword Pressed:
@@ -280,7 +281,7 @@ public class PlayScreen implements Screen {
     public void sendLocation(){
         game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+
                 getPirate().b2body.getPosition().x+";"+getPirate().b2body.getPosition().y+";" +
-                getPirate().direction+";"+getPirate().currentState+";"+getPirate().swordInUse);
+                getPirate().direction+";"+getPirate().currentState+";"+getPirate().previousState+";"+getPirate().swordInUse);
     }
 
     public void update(float dt) {
