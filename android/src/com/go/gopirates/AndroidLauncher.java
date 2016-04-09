@@ -152,11 +152,11 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 					byte[] MsgBuf = message.getBytes(Charset.forName("UTF-8"));
 
 					for (Object o : sessionInfo.mParticipants) {
-						Participant p=(Participant) o;
+						Participant p = (Participant) o;
 						if (p.getParticipantId().equals(sessionInfo.mId)) {
 							continue;
 						}
-						Games.RealTimeMultiplayer.sendUnreliableMessage(gameHelper.getApiClient(),MsgBuf,sessionInfo.mRoomId,p.getParticipantId());
+						Games.RealTimeMultiplayer.sendUnreliableMessage(gameHelper.getApiClient(), MsgBuf, sessionInfo.mRoomId, p.getParticipantId());
 						continue;
 					}
 				}
@@ -173,10 +173,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		byte buf[] = rtm.getMessageData();
 		try {
 			final String t = new String(buf);
-//
-
-			Gdx.app.log("PirateGame",t);
-
+			PirateGame.resloveMessage(t);
 		} catch (Exception e) {
 
 		}

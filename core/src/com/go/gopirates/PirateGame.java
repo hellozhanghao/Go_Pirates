@@ -2,11 +2,13 @@ package com.go.gopirates;
 
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.go.gopirates.screen.LoginScreen;
+import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.Pirate;
 
 
@@ -60,8 +62,9 @@ public class PirateGame extends Game {
     Instead you may want to pass around Assetmanager to those the classes that need it.
     We will use it in the static context to save time for now. */
     public static AssetManager manager;
-
     public SessionInfo sessionInfo;
+
+    public static PlayScreen screen;
 
     @Override
     public void create () {
@@ -101,5 +104,22 @@ public class PirateGame extends Game {
         this.playServices=playServices;
     }
 
-    public PirateGame(){}
+    public static void resloveMessage(String message){
+        Gdx.app.log("PirateGame", message);
+        String[] words=message.split(";");
+        if (words[0].equals("Location")){
+            int playerId=Integer.parseInt(words[1]);
+            float x=Float.parseFloat(words[2]);
+            float y=Float.parseFloat(words[3]);
+            Pirate.Direction direction= Pirate.Direction.valueOf(words[4]);
+            Pirate.State state=Pirate.State.valueOf(words[5]);
+            boolean swordInuse=Boolean.valueOf(words[6]);
+            screen.getPirate(playerId).b2body.setTransform(x,y,0);
+            screen.getPirate(playerId).direction=direction;
+            screen.getPirate(playerId).currentState=state;
+            screen.getPirate(playerId).swordInUse=swordInuse;
+        }else if (words[0].equals("Bomb"));
+    }
+
+
 }

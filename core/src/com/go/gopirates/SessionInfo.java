@@ -26,7 +26,7 @@ public class SessionInfo {
         mRoomId="";
         mParticipants=new ArrayList();
         mState="";
-        mParticipants=new ArrayList<String>();
+        mParticipantsString=new ArrayList<String>();
     }
 
     public void setUpGame(){
@@ -34,10 +34,9 @@ public class SessionInfo {
         Gdx.app.log("PirateGame",String.valueOf(mParticipants.size()));
         Collections.sort(mParticipantsString);
         for (int i = 0; i < mParticipants.size(); i++) {
-            if (mId.equals(mParticipants.get(i)))
+            if (mId.equals(mParticipantsString.get(i)))
                 PirateGame.PLAYER_ID=i;
         }
-
     }
 
     public void endSession(){

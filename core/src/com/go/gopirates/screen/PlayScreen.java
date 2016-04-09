@@ -93,6 +93,7 @@ public class PlayScreen implements Screen {
     public PlayScreen(PirateGame game) {
         loadAssets();
         this.game = game;
+        PirateGame.screen=this;
         //create cam used to follow mario through cam world
         gamecam = new OrthographicCamera();
         gamecam.setToOrtho(false, PirateGame.V_WIDTH, PirateGame.V_HEIGHT);
@@ -276,10 +277,17 @@ public class PlayScreen implements Screen {
         }
     }
 
+    public void sendLocation(){
+        game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+
+                getPirate().b2body.getPosition().x+";"+getPirate().b2body.getPosition().y+";" +
+                getPirate().direction+";"+getPirate().currentState+";"+getPirate().swordInUse);
+    }
+
     public void update(float dt) {
         //handle user input first
         handleInput(dt);
         handleSpawningItems();
+        sendLocation();
 
         //takes 1 step in the physics simulation(60 times per second)
         world.step(1 / 60f, 6, 2);
