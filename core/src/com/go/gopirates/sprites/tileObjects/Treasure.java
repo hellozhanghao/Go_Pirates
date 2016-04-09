@@ -29,6 +29,10 @@ public class Treasure extends InteractiveTileObject {
         getCell().setTile(null);
         setCategoryFilter(PirateGame.NOTHING_BIT);
     }
+    public void onHitbyOthers(){
+        getCell().setTile(null);
+        setCategoryFilter(PirateGame.NOTHING_BIT);
+    }
 
 //    public void findTreasure(Pirate pirate){
 //        Hud.findTreasure();
