@@ -114,10 +114,22 @@ public class PlayScreen implements Screen {
         creator = new B2WorldCreator(this);
         //create pirates in our game world
         players = new Array<Pirate>();
-        players.add(new Pirate(this, 0,"Sophia"));
-        players.add(new Pirate(this, 1, "Taka"));
-        players.add(new Pirate(this, 2, "Thomas"));
-        players.add(new Pirate(this, 3, "Zack"));
+        switch (PirateGame.NUMBER_OF_PLAYERS){
+            case 2:
+                players.add(new Pirate(this, 0,"Sophia"));
+                players.add(new Pirate(this, 1, "Taka"));
+                break;
+            case 3:
+                players.add(new Pirate(this, 0,"Sophia"));
+                players.add(new Pirate(this, 1, "Taka"));
+                players.add(new Pirate(this, 2, "Thomas"));
+                break;
+            case 4:
+                players.add(new Pirate(this, 0,"Sophia"));
+                players.add(new Pirate(this, 1, "Taka"));
+                players.add(new Pirate(this, 2, "Thomas"));
+                players.add(new Pirate(this, 3, "Zack"));
+        }
 
         world.setContactListener(new WorldContactListener(this));
         music = PirateGame.manager.get("audio/music/pirate.mp3", Music.class);

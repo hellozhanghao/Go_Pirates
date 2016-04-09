@@ -1,16 +1,16 @@
 package com.go.gopirates;
 
-import com.badlogic.gdx.utils.Array;
-
-
 /**
  * Created by zhanghao on 1/4/16.
  */
 public interface PlayServices
 {
-    public void signIn();
-    public void signOut();
-    public boolean isSignedIn();
+    void signIn();
+    void signOut();
+    boolean isSignedIn();
+    void startQuickGame();
+    void broadcastMessage(String msg);
+
 
 //    public void goToWaitingRoom();
 

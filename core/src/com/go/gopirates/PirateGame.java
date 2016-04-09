@@ -22,7 +22,8 @@ public class PirateGame extends Game {
     public static final int MAP_SIZE_X =25;
 
     //User Selct
-    public static final int PLAYER_ID=2;
+    public static int PLAYER_ID=2;
+    public static int NUMBER_OF_PLAYERS;
 
     //Settings:
     public static  int DEFAULT_VELOCITY =100;
@@ -60,6 +61,8 @@ public class PirateGame extends Game {
     We will use it in the static context to save time for now. */
     public static AssetManager manager;
 
+    public SessionInfo sessionInfo;
+
     @Override
     public void create () {
         batch = new SpriteBatch();
@@ -73,10 +76,8 @@ public class PirateGame extends Game {
         manager.load("audio/sounds/powerdown.wav", Sound.class);
         manager.load("audio/sounds/stomp.wav", Sound.class);
         manager.load("audio/sounds/mariodie.wav", Sound.class);
-
         manager.finishLoading();
 
-//        setScreen(new PlayScreen(this));
         setScreen(new LoginScreen(this));
     }
 
@@ -93,9 +94,10 @@ public class PirateGame extends Game {
         super.render();
     }
 
-    private PlayServices playServices;
+    public PlayServices playServices;
 
-    public PirateGame(PlayServices playServices){
+    public PirateGame(PlayServices playServices, SessionInfo sessionInfo){
+        this.sessionInfo=sessionInfo;
         this.playServices=playServices;
     }
 

@@ -32,21 +32,20 @@ public class LoginScreen implements Screen {
 
     private Stage stage;
     private PirateGame game;
+    private boolean screenChanged;
 
     public LoginScreen(PirateGame game) {
+
         this.game=game;
         batch=new SpriteBatch();
         cam=new OrthographicCamera();
         viewport=new FitViewport(1920f,1080f);
         stage = new Stage(viewport,batch);
-
+        screenChanged=false;
     }
 
     @Override
     public void show() {
-
-
-
         background=new Texture("img/MainScreen.png");
         background.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         backgroundSprite = new Sprite(background);
@@ -59,7 +58,7 @@ public class LoginScreen implements Screen {
         quickGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new PlayScreen(game));
+                game.playServices.startQuickGame();
             }
         });
 
@@ -67,12 +66,6 @@ public class LoginScreen implements Screen {
         joinRoomButton.setSize(600, 200);
         joinRoomButton.setPosition(1050, 600);
         stage.addActor(joinRoomButton);
-
-
-
-
-
-
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -88,6 +81,13 @@ public class LoginScreen implements Screen {
         stage.act();
         stage.draw();
 
+        if (game.sessionInfo.mState.equals("Play") & !screenChanged){
+            game.setScreen(new PlayScreen(game));
+            screenChanged=true;
+            Gdx.app.log("Login","ChangeScreen");
+            game.playServices.broadcastMessage("Hello World!");
+            Gdx.app.log("PirateGame",game.sessionInfo.mId);
+        }
     }
 
     @Override
