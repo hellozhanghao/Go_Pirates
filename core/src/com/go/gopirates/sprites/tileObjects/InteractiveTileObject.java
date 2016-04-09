@@ -73,6 +73,4 @@ public abstract class InteractiveTileObject {
                 (int)(body.getPosition().y * PirateGame.PPM / PirateGame.TILE_SIZE));
     }
 
-
-
 }

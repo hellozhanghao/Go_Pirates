@@ -13,9 +13,9 @@ import com.go.gopirates.screen.PlayScreen;
  */
 
 public class Coconut extends PrimitiveWeaponItem {
-    float stateTime;
     private final float COCONUT_RADIUS = 80;
     private final float COCONUT_SPEED = 100;
+    float stateTime;
 
     public Coconut(PlayScreen screen) {
         super(screen);
@@ -56,7 +56,6 @@ public class Coconut extends PrimitiveWeaponItem {
         fixtureDef.filter.categoryBits = PirateGame.COCONUT_BIT;
         fixtureDef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
                 PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT |  PirateGame.COCONUT_TREE_BIT;
-
 
         fixtureDef.shape=shape;
         body.createFixture(fixtureDef).setUserData(this);

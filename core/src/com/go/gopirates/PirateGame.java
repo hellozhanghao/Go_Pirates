@@ -23,13 +23,6 @@ public class PirateGame extends Game {
     public static final int TILE_SIZE=256;
     public static final int MAP_SIZE_Y =19;
     public static final int MAP_SIZE_X =25;
-
-    //User Selct
-    public static int PLAYER_ID;
-    public static int NUMBER_OF_PLAYERS;
-
-    //Settings:
-    public static  int DEFAULT_VELOCITY =100;
     public static final float BUTTON_INTERVAL=1f;
     public static final float POWERUP_TIME=10f;
     public static final int ININTIAL_HEALTH=10;
@@ -39,9 +32,6 @@ public class PirateGame extends Game {
     public static final Pirate.PowerUpHolding INITIAL_POWERUP = Pirate.PowerUpHolding.NONE;
     public static  final float EXPLOSION_FRAME_DURATION=0.08f;
     public static final float MIN_TIME_BETWEEN_SWORD=10f;
-
-
-    //Box2D Collision Bits
     //Box2D Collision Bits
     public static final short NOTHING_BIT = 0;
     public static final short COCONUT_TREE_BIT = 1;
@@ -57,19 +47,53 @@ public class PirateGame extends Game {
     public static final short TNT_EXPLOSION_BIT = 4096;
     public static final short POWERUP_BIT = 8192;
     public static final short OTHER_PLAYER_BIT = 16384;
-
+    //User Selct
+    public static int PLAYER_ID;
+    public static int NUMBER_OF_PLAYERS;
+    //Settings:
+    public static int DEFAULT_VELOCITY = 100;
     public static SpriteBatch batch;
 
     /* WARNING Using AssetManager in a static way can cause issues, especially on Android.
     Instead you may want to pass around Assetmanager to those the classes that need it.
     We will use it in the static context to save time for now. */
     public static AssetManager manager;
-    public SessionInfo sessionInfo;
-
     public static PlayScreen screen;
+    public SessionInfo sessionInfo;
+    public PlayServices playServices;
+
+
+    public PirateGame(PlayServices playServices, SessionInfo sessionInfo) {
+        this.sessionInfo = sessionInfo;
+        this.playServices = playServices;
+    }
+
+    public static void resloveMessage(String message) {
+
+        String[] words = message.split(";");
+        if (words[0].equals("Location")) {
+            int playerId = Integer.parseInt(words[1]);
+            float x = Float.parseFloat(words[2]);
+            float y = Float.parseFloat(words[3]);
+            Pirate.Direction direction = Pirate.Direction.valueOf(words[4]);
+            Pirate.State currentState = Pirate.State.valueOf(words[5]);
+            Pirate.State previousState = Pirate.State.valueOf(words[6]);
+            boolean swordInuse = Boolean.valueOf(words[7]);
+            screen.getPirate(playerId).b2body.setTransform(x, y, 0);
+            screen.getPirate(playerId).direction = direction;
+            screen.getPirate(playerId).currentState = currentState;
+            screen.getPirate(playerId).previousState = previousState;
+            screen.getPirate(playerId).swordInUse = swordInuse;
+        } else {
+            Gdx.app.log("PirateGame", message);
+            if (words[0].equals("Bomb")) {
+                screen.getPirate().explosiveItems.add(new Bomb(screen, Float.valueOf(words[1]), Float.valueOf(words[2])));
+            }
+        }
+    }
 
     @Override
-    public void create () {
+    public void create() {
         batch = new SpriteBatch();
         manager = new AssetManager();
         manager.load("audio/sounds/bomb.ogg", Sound.class);
@@ -86,7 +110,6 @@ public class PirateGame extends Game {
         setScreen(new LoginScreen(this));
     }
 
-
     @Override
     public void dispose() {
         super.dispose();
@@ -99,36 +122,11 @@ public class PirateGame extends Game {
         super.render();
     }
 
-    public PlayServices playServices;
+    // TODO: 9/4/16 Synchronize coconut spawing (not using random)
+    // TODO: 9/4/16 Synchronize sword animaition
+    // TODO: 9/4/16 Add coconut
+    // TODO: 9/4/16 Add wait screen and gameover screen
 
-    public PirateGame(PlayServices playServices, SessionInfo sessionInfo){
-        this.sessionInfo=sessionInfo;
-        this.playServices=playServices;
-    }
-
-    public static void resloveMessage(String message){
-
-        String[] words=message.split(";");
-        if (words[0].equals("Location")){
-            int playerId=Integer.parseInt(words[1]);
-            float x=Float.parseFloat(words[2]);
-            float y=Float.parseFloat(words[3]);
-            Pirate.Direction direction= Pirate.Direction.valueOf(words[4]);
-            Pirate.State currentState=Pirate.State.valueOf(words[5]);
-            Pirate.State previousState= Pirate.State.valueOf(words[6]);
-            boolean swordInuse=Boolean.valueOf(words[7]);
-            screen.getPirate(playerId).b2body.setTransform(x,y,0);
-            screen.getPirate(playerId).direction=direction;
-            screen.getPirate(playerId).currentState=currentState;
-            screen.getPirate(playerId).previousState=previousState;
-            screen.getPirate(playerId).swordInUse=swordInuse;
-        }else {
-            Gdx.app.log("PirateGame", message);
-            if (words[0].equals("Bomb"));{
-                screen.getPirate().explosiveItems.add(new Bomb(screen,Float.valueOf(words[1]),Float.valueOf(words[2])));
-            }
-        }
-    }
 
 
 }

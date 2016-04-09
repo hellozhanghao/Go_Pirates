@@ -1,7 +1,6 @@
 package com.go.gopirates.sprites.tileObjects;
 
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Vector2;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
@@ -16,15 +15,12 @@ import com.go.gopirates.sprites.items.powerUps.TNTPowerUp;
  */
 
 public class Barrel extends InteractiveTileObject {
-    private static TiledMapTileSet tileSet;
 
     public Barrel(PlayScreen screen, MapObject object) {
         super(screen, object);
-        tileSet = map.getTileSets().getTileSet("tileset");
         fixture.setUserData(this);
         setCategoryFilter(PirateGame.BARREL_BIT);
     }
-
 
     @Override
     public void onHit() {

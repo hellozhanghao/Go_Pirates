@@ -30,15 +30,14 @@ public class TNT extends ExplosiveItem {
     @Override
     public void use() {
         for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < 5; j++)
                 screen.getPirate().nonInteractiveSprites.add(
                         new ExplosionSprite(screen,posX-(2-i)*PirateGame.TILE_SIZE/PirateGame.PPM,
                                                    posY+(j-2)*PirateGame.TILE_SIZE/PirateGame.PPM));
-            }
         }
         for (int i = 0; i < 5; i++) {
-            explosionDetectors.add(new TNTExplosionDetector(screen,posX-(2-i)*PirateGame.TILE_SIZE/PirateGame.PPM,
-                                                             posY+2*PirateGame.TILE_SIZE/PirateGame.PPM));
+            explosionDetectors.add(new TNTExplosionDetector(screen, posX - (2 - i) * PirateGame.TILE_SIZE / PirateGame.PPM,
+                    posY + 2 * PirateGame.TILE_SIZE / PirateGame.PPM));
         }
         setToDestroy();
     }

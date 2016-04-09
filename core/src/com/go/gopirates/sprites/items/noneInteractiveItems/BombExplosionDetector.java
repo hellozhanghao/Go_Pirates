@@ -15,18 +15,16 @@ import com.go.gopirates.screen.PlayScreen;
  */
 public class BombExplosionDetector extends NonInteractiveSprites {
 
+    public float destroyedTimeStamp, TTL;
     PlayScreen screen;
     World world;
     float stateTime;
     boolean destroyed,setToDestroy;
     Body body;
+    ExpolsionDirection direction;
     private float posX,posY;
     private float RADIUS=10;
     private float VELOCITY=400;
-    ExpolsionDirection direction;
-    public float destroyedTimeStamp,TTL;
-
-    public enum ExpolsionDirection{UP,DOWN,LEFT,RIGHT}
 
     public BombExplosionDetector(PlayScreen screen, float x, float y, ExpolsionDirection direction, float TTL){
         this.screen=screen;
@@ -68,6 +66,7 @@ public class BombExplosionDetector extends NonInteractiveSprites {
                 break;
         }
     }
+
     @Override
     public void update(float dt) {
         stateTime-=dt;
@@ -80,7 +79,6 @@ public class BombExplosionDetector extends NonInteractiveSprites {
             if (stateTime<0){
                 setToDestroy=true;
             }
-//            System.out.println(body.getPosition().x+" "+body.getPosition().y+" "+screen.getPirate().b2body.getPosition().x+" "+screen.getPirate().b2body.getPosition().y );
         }
     }
 
@@ -91,6 +89,8 @@ public class BombExplosionDetector extends NonInteractiveSprites {
     public void onHit(){
         setToDestroy=true;
     }
+
+    public enum ExpolsionDirection {UP, DOWN, LEFT, RIGHT}
 
 
 

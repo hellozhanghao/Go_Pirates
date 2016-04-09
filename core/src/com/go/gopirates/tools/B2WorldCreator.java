@@ -18,9 +18,6 @@ import com.go.gopirates.sprites.tileObjects.Treasure;
  * Created by Amy on 1/3/16.
  */
 public class B2WorldCreator {
-//    private Array<Goomba> goombas;
-//    private Array<Turtle> turtles;
-
     public B2WorldCreator(PlayScreen screen){
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
@@ -29,8 +26,6 @@ public class B2WorldCreator {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
-
-
 
         for(MapObject object : map.getLayers().get(2).getObjects().getByType(MapObject.class)){
             new Rock(screen, object);
@@ -44,9 +39,5 @@ public class B2WorldCreator {
         for(MapObject object : map.getLayers().get(5).getObjects().getByType(MapObject.class)){
             new Treasure(screen, object);
         }
-
-
-
     }
-
 }

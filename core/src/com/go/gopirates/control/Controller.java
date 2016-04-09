@@ -23,14 +23,14 @@ import com.go.gopirates.sprites.Pirate;
  * Created by Amy on 26/2/16.
  */
 public class Controller implements ApplicationListener {
-    Viewport viewport;
-    Stage stage;
     public boolean upPressed, downPressed, leftPressed, rightPressed;
     public boolean coconutPress, powerUpPress, bombPress, swordPress;
     public boolean previousCoconutPress, previousPowerUpPress, previousBombPress, previousSwordPress;
+    public Touchpad touchpad;
+    Viewport viewport;
+    Stage stage;
     OrthographicCamera cam;
     private Skin touchpadSkin;
-    public Touchpad touchpad;
     private Drawable touchBackground;
     private Drawable touchKnob;
     private Touchpad.TouchpadStyle touchpadStyle;
@@ -221,7 +221,6 @@ public class Controller implements ApplicationListener {
         touchpad.setBounds(30, 30, 300, 300);
 
         //Create a Stage and add TouchPad
-//        stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, PirateGame.batch);
         stage.addActor(touchpad);
         Gdx.input.setInputProcessor(stage);
     }

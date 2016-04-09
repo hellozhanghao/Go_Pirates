@@ -24,39 +24,30 @@ import com.go.gopirates.sprites.items.primitiveWeaponItem.PrimitiveWeaponItem;
  */
 public class Pirate extends Sprite {
 
+    private final float FRAME_DURATION = 0.1f;
+    private final float FRAME_DURATION_WITH_SWORD = 0.1f;
     public int playerId;
-    public enum Direction {UP, DOWN, LEFT, RIGHT}
-    public enum State { WALKING, STANDING}
-    public enum PowerUpHolding {TNT, SHIELD, SHOE, NONE}
-    private enum PirateState{ PIRATE, PIRATE_WITH_SHIELD}
-    private PirateState pirateState;
     public State currentState;
     public State previousState;
     public Direction direction;
     public PowerUpHolding powerUpHolding;
-
     public World world;
     public Body b2body;
-
     public  int health;
-    private float healthTimer;
     public boolean swordInUse;
-
+    public Array<ExplosiveItem> explosiveItems;
+    public Array<NonInteractiveSprites> nonInteractiveSprites;
+    public Array<PrimitiveWeaponItem> primitiveWeaponItems;
+    public int numberOfCoconut;
+    public String character;
+    private PirateState pirateState;
+    private float healthTimer;
     private TextureRegion pirateStandingDown,pirateStandingUp,pirateStandingLeft,pirateStandingRight;
     private Animation pirateWalkingDown,pirateWalkingUp,pirateWalkingLeft,pirateWalkingRight;
     private Animation pirateStandingDownWithSword,pirateStandingUpWithSword,pirateStandingLeftWithSword, pirateStadingRightWithSword;
     private Animation pirateWalkingDownWithSword, pirateWalkingUpWithSword, pirateWalkingLeftWithSword, pirateWalkingRightWithSword;
     private PlayScreen screen;
-    private final float FRAME_DURATION=0.1f;
-    private final float FRAME_DURATION_WITH_SWORD=0.1f;
-
-    public Array<ExplosiveItem> explosiveItems;
-    public Array<NonInteractiveSprites> nonInteractiveSprites;
-    public Array<PrimitiveWeaponItem> primitiveWeaponItems;
-
-    public int numberOfCoconut;
     private float stateTimer,powerUpTimer;
-    public  String character;
     public Pirate(PlayScreen screen, int playerId, String character){
         //initialize default values
         this.screen = screen;
@@ -173,7 +164,6 @@ public class Pirate extends Sprite {
         setBounds(0, 0, PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM);
         setRegion(pirateStandingDown);
     }
-
 
     public void update(float dt){
         healthTimer+=dt;
@@ -426,5 +416,13 @@ public class Pirate extends Sprite {
             }
         }
     }
+
+    public enum Direction {UP, DOWN, LEFT, RIGHT}
+
+    public enum State {WALKING, STANDING}
+
+    public enum PowerUpHolding {TNT, SHIELD, SHOE, NONE}
+
+    private enum PirateState {PIRATE, PIRATE_WITH_SHIELD}
 
 }

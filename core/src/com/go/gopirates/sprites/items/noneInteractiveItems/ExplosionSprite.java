@@ -14,13 +14,13 @@ import com.go.gopirates.screen.PlayScreen;
  */
 public class ExplosionSprite  extends NonInteractiveSprites{
 
+    private final float EXPLSION_SIZE = 500;
     PlayScreen screen;
     World world;
     float stateTime;
     boolean destroyed,setToDestroy;
     Body b2body;
     private float posX,posY;
-    private final float EXPLSION_SIZE=500;
     public ExplosionSprite(PlayScreen screen, float x, float y) {
         setPosition(x-EXPLSION_SIZE/PirateGame.PPM/2,y-EXPLSION_SIZE/PirateGame.PPM/2);
         setSize(EXPLSION_SIZE/PirateGame.PPM,EXPLSION_SIZE/PirateGame.PPM);
@@ -46,7 +46,6 @@ public class ExplosionSprite  extends NonInteractiveSprites{
         b2body.createFixture(fixtureDef).setUserData(this);
         shape.dispose();
     }
-
 
     @Override
     public void update(float dt) {

@@ -30,7 +30,6 @@ public abstract class PowerUp extends Sprite {
         this.world = screen.getWorld();
         this.map = screen.getMap();
         setPosition(x, y);
-//        setBounds(getX(),getY(), PirateGame.TILE_SIZE / PirateGame.PPM, PirateGame.TILE_SIZE / PirateGame.PPM);
         defineItem();
         toDestroy = false;
         destroyed = false;

@@ -52,8 +52,6 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Treasure) fixA.getUserData()).onHitbyOthers();
                 break;
-
-
             case PirateGame.BARREL_BIT | PirateGame.BOMB_EXPLOSION_BIT:
                 if(fixA.getFilterData().categoryBits == PirateGame.BARREL_BIT)
                     ((Barrel) fixA.getUserData()).onHit();

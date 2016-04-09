@@ -29,7 +29,6 @@ public class CoconutTree extends InteractiveTileObject {
             getCell().setTile(null);
             setCategoryFilter(PirateGame.NOTHING_BIT);
             return;
-
         }
         hit ++;
         Random rand = new Random();

@@ -19,17 +19,16 @@ import com.go.gopirates.tools.TileMapTranslator;
 public abstract class ExplosiveItem extends Sprite {
 
 
+    protected final float TIME_TO_EXPLODE = 4;
+    protected final float TIME_TO_PRESENCE = 1.5f;
+    protected final float EXPLOSION_TIME = 0.1f;
+    protected final float BOMB_SIZE = 350f;
+    final int BOMB_FIXTURE_RADIUS = 40;
     protected PlayScreen screen;
     protected World world;
     protected boolean toDestroy,setToDestroy,destroyed,exploded,redefined;
     protected Body body;
     protected float posX,posY,stateTime;
-
-    final int BOMB_FIXTURE_RADIUS = 40;
-    protected final float TIME_TO_EXPLODE = 4;
-    protected final float TIME_TO_PRESENCE = 1.5f;
-    protected final float EXPLOSION_TIME=0.1f;
-    protected final float BOMB_SIZE=350f;
 
     public ExplosiveItem(PlayScreen screen, float x, float y) {
         this.screen = screen;
@@ -81,7 +80,6 @@ public abstract class ExplosiveItem extends Sprite {
 
     public void update(float dt) {
         stateTime += dt;
-//        setPosition(posX,posY);
         if ((stateTime > TIME_TO_PRESENCE || setToDestroy) && !destroyed && !redefined) {
             definePresence();
             redefined = true;

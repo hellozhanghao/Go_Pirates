@@ -42,20 +42,16 @@ import com.go.gopirates.tools.WorldContactListener;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
-
-
-
 /**
  * Created by Amy on 25/2/16.
  */
 public class PlayScreen implements Screen {
     public static boolean alreadyDestroyed = false;
+    public Animation explosionAnimation;
+    public Animation coconutAnimation;
     //Reference to our Game, used to set Screens
     private PirateGame game;
     private TextureAtlas atlas;
-    public Animation explosionAnimation;
-    public Animation coconutAnimation;
-
     //basic playscreen variables
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -73,7 +69,6 @@ public class PlayScreen implements Screen {
 
     //sprites
     private Array<Pirate> players;
-
     private Music music;
 
     //powerups
@@ -166,31 +161,24 @@ public class PlayScreen implements Screen {
                         i*PirateGame.TILE_SIZE, j*PirateGame.TILE_SIZE, PirateGame.TILE_SIZE, PirateGame.TILE_SIZE));
         explosionAnimation = new Animation(PirateGame.EXPLOSION_FRAME_DURATION,explosionFrames);
 
-
         Array<TextureRegion> coconutFrames = new Array<TextureRegion>();
         Texture coconutTexture=new Texture("img/objects/coconut_animation.png");
         for (int i = 0; i < 4; i++)
             coconutFrames.add(new TextureRegion(coconutTexture, PirateGame.TILE_SIZE*i, 0, PirateGame.TILE_SIZE, PirateGame.TILE_SIZE));
         coconutAnimation = new Animation(0.1f, coconutFrames);
-
-
     }
 
     public void handleSpawningItems() {
         if (!itemsToSpawn.isEmpty()) {
             ItemDef idef = itemsToSpawn.poll();
-            if (idef.type == Shield.class) {
+            if (idef.type == Shield.class)
                 powerUps.add(new Shield(this, idef.position.x, idef.position.y));
-            }
-            if (idef.type == Shoe.class) {
+            if (idef.type == Shoe.class)
                 powerUps.add(new Shoe(this, idef.position.x, idef.position.y));
-            }
-            if (idef.type == TNTPowerUp.class) {
+            if (idef.type == TNTPowerUp.class)
                 powerUps.add(new TNTPowerUp(this, idef.position.x, idef.position.y));
-            }
-            if (idef.type == CoconutPowerUp.class) {
+            if (idef.type == CoconutPowerUp.class)
                 powerUps.add(new CoconutPowerUp(this, idef.position.x, idef.position.y));
-            }
         }
     }
 
@@ -213,16 +201,9 @@ public class PlayScreen implements Screen {
 
         Pirate player = players.get(PirateGame.PLAYER_ID);
 
-//        For phone:
+        //For phone:
         player.b2body.setLinearVelocity(controller.touchpad.getKnobPercentX() * PirateGame.DEFAULT_VELOCITY,
                 controller.touchpad.getKnobPercentY() * PirateGame.DEFAULT_VELOCITY);
-
-//        if (Math.abs(controller.touchpad.getKnobPercentX())>Math.abs(controller.touchpad.getKnobPercentY())){
-//            player.b2body.setLinearVelocity(controller.touchpad.getKnobPercentX()*PirateGame.DEFAULT_VELOCITY,0);
-//        }else {
-//            player.b2body.setLinearVelocity(0,controller.touchpad.getKnobPercentY()*PirateGame.DEFAULT_VELOCITY);
-//        }
-
 
         //for keyboard:
         if (controller.upPressed)
@@ -292,7 +273,6 @@ public class PlayScreen implements Screen {
 
         //takes 1 step in the physics simulation(60 times per second)
         world.step(1 / 60f, 6, 2);
-
         for (PowerUp item : powerUps)
             item.update(dt);
         for (Pirate player : players) {
@@ -303,21 +283,16 @@ public class PlayScreen implements Screen {
                     for (BombExplosionDetector bombExplosionDetector :((Bomb) item).explosionDetectors)
                         bombExplosionDetector.update(dt);
             }
-
-            for (NonInteractiveSprites sprite : player.nonInteractiveSprites) {
+            for (NonInteractiveSprites sprite : player.nonInteractiveSprites)
                 sprite.update(dt);
-            }
-            for (PrimitiveWeaponItem primitiveWeaponItem: player.primitiveWeaponItems){
+            for (PrimitiveWeaponItem primitiveWeaponItem : player.primitiveWeaponItems)
                 primitiveWeaponItem.update(dt);
-            }
-
         }
 
         Pirate player = getPirate();
 
         //update gamecam
         gamecam.setToOrtho(false, PirateGame.V_WIDTH / PirateGame.PPM, PirateGame.V_HEIGHT / PirateGame.PPM);
-
         if (player.b2body.getPosition().x < (PirateGame.V_WIDTH / PirateGame.PPM) / 2)
             gamecam.position.x = gamePort.getWorldWidth() / 2;
         else if (player.b2body.getPosition().x > (PirateGame.TILE_SIZE * PirateGame.MAP_SIZE_X / PirateGame.PPM) - (PirateGame.V_WIDTH / PirateGame.PPM) / 2)
@@ -335,13 +310,10 @@ public class PlayScreen implements Screen {
         //tell our renderer to draw only what our camera can see in our game world.
         renderer.setView(gamecam);
         updatePowerUp();
-
-
     }
 
     @Override
     public void show() {
-
     }
 
     @Override
@@ -390,12 +362,10 @@ public class PlayScreen implements Screen {
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
@@ -405,7 +375,6 @@ public class PlayScreen implements Screen {
         renderer.dispose();
         world.dispose();
         b2dr.dispose();
-//        hud.dispose();
     }
 
     //Getters

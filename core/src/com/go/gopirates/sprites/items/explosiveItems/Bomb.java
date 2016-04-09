@@ -14,9 +14,9 @@ import com.go.gopirates.sprites.items.noneInteractiveItems.ExplosionSprite;
  */
 public class Bomb extends ExplosiveItem {
 
+    private final float EXPLOSION_THRESHOLD = 0.25f;
     public Array<BombExplosionDetector> explosionDetectors;
     private boolean detectorCreated,showedExplosion;
-    private final float EXPLOSION_THRESHOLD=0.25f;
 
     public Bomb(PlayScreen screen, float x, float y) {
         super(screen, x, y);
@@ -24,7 +24,6 @@ public class Bomb extends ExplosiveItem {
         setRegion(screen.getAtlas().findRegion("object_bomb"), 0, 0, 500, 500);
         detectorCreated=false;
         showedExplosion=false;
-
     }
 
     @Override
@@ -35,7 +34,6 @@ public class Bomb extends ExplosiveItem {
 
     @Override
     public void use() {
-//        world.destroyBody(body);
         float TTL=0.4f;
         explosionDetectors.add(new BombExplosionDetector(screen,posX,posY, BombExplosionDetector.ExpolsionDirection.UP,TTL));
         explosionDetectors.add(new BombExplosionDetector(screen,posX,posY, BombExplosionDetector.ExpolsionDirection.DOWN,TTL));
@@ -62,7 +60,6 @@ public class Bomb extends ExplosiveItem {
                 showedExplosion=true;
                 toDestroy=true;
             }
-
         }
     }
 
