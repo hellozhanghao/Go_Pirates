@@ -82,11 +82,12 @@ public class LoginScreen implements Screen {
         stage.draw();
 
         if (game.sessionInfo.mState.equals("Play") & !screenChanged){
-            game.setScreen(new PlayScreen(game));
             screenChanged=true;
             Gdx.app.log("Login","ChangeScreen");
             game.playServices.broadcastMessage("Hello World!");
-            Gdx.app.log("PirateGame",game.sessionInfo.mId);
+            Gdx.app.log("PirateGame", game.sessionInfo.mId);
+            game.sessionInfo.setUpGame();
+            game.setScreen(new PlayScreen(game));
         }
     }
 

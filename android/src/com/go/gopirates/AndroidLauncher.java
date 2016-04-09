@@ -263,6 +263,10 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 			sessionInfo.mRoomId=room.getRoomId();
 			sessionInfo.mId=room.getParticipantId(Games.Players.getCurrentPlayerId(mGoogleApiClient));
 			sessionInfo.mState="Play";
+			for (Object o : sessionInfo.mParticipants) {
+				Participant p = (Participant) o;
+				sessionInfo.mParticipantsString.add(p.getParticipantId());
+			}
 		}
 
 	}

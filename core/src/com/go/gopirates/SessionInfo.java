@@ -2,7 +2,10 @@ package com.go.gopirates;
 
 
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by zhanghao on 8/4/16.
@@ -11,6 +14,7 @@ public class SessionInfo {
     public String mId;
     public String mRoomId;
     public ArrayList mParticipants;
+    public ArrayList<String> mParticipantsString;
     public String mState;
 
     public final int ROOM_NULL=1000;
@@ -22,17 +26,25 @@ public class SessionInfo {
         mRoomId="";
         mParticipants=new ArrayList();
         mState="";
+        mParticipants=new ArrayList<String>();
     }
 
     public void setUpGame(){
         PirateGame.NUMBER_OF_PLAYERS=mParticipants.size();
+        Gdx.app.log("PirateGame",String.valueOf(mParticipants.size()));
+        Collections.sort(mParticipantsString);
+        for (int i = 0; i < mParticipants.size(); i++) {
+            if (mId.equals(mParticipants.get(i)))
+                PirateGame.PLAYER_ID=i;
+        }
 
     }
 
     public void endSession(){
-        mId=null;
-        mRoomId=null;
-        mParticipants=null;
+        mId="";
+        mRoomId="";
+        mParticipants=new ArrayList();
+        mState="";
     }
 
 }
