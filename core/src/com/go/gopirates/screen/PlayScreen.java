@@ -223,14 +223,16 @@ public class PlayScreen implements Screen {
         }
         //Sword Pressed:
         if (!controller.previousSwordPress & controller.swordPress & swordConfirm){
-            player.primitiveWeaponItems.add(new Sword(this));
+            player.primitiveWeaponItems.add(new Sword(this, PirateGame.PLAYER_ID));
+            game.playServices.broadcastMessage("Sword;" + PirateGame.PLAYER_ID);
             swordConfirm=false;
         }
         //Coconut Pressed:
         if (!controller.previousCoconutPress & controller.coconutPress & coconutConfirm){
             System.out.println("Coconut pressed");
             if (player.numberOfCoconut>0){
-                player.primitiveWeaponItems.add(new Coconut(this));
+                player.primitiveWeaponItems.add(new Coconut(this, player.b2body.getPosition().x, player.b2body.getPosition().y, player.direction));
+                game.playServices.broadcastMessage("Coconut;" + player.b2body.getPosition().x + ";" + player.b2body.getPosition().y + ";" + player.direction.toString());
                 player.numberOfCoconut--;
                 updateCoconut();
             }
@@ -252,6 +254,7 @@ public class PlayScreen implements Screen {
                 case TNT:
                     player.powerUpHolding = Pirate.PowerUpHolding.NONE;
                     player.explosiveItems.add(new TNT(this,player.b2body.getPosition().x, player.b2body.getPosition().y));
+                    game.playServices.broadcastMessage("TNT;" + player.b2body.getPosition().x + ";" + player.b2body.getPosition().y);
                     break;
                 default:
                     break;
@@ -262,7 +265,7 @@ public class PlayScreen implements Screen {
     public void sendLocation(){
         game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+
                 getPirate().b2body.getPosition().x+";"+getPirate().b2body.getPosition().y+";" +
-                getPirate().direction+";"+getPirate().currentState+";"+getPirate().previousState+";"+getPirate().swordInUse);
+                getPirate().direction + ";" + getPirate().currentState);
     }
 
     public void update(float dt) {
@@ -271,6 +274,7 @@ public class PlayScreen implements Screen {
         handleSpawningItems();
         sendLocation();
 
+        Gdx.app.log("FPS", "FPS:" + 1 / dt);
         //takes 1 step in the physics simulation(60 times per second)
         world.step(1 / 60f, 6, 2);
         for (PowerUp item : powerUps)

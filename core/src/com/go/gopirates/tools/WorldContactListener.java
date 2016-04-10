@@ -136,6 +136,12 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Coconut) fixB.getUserData()).hitOnPlayer();
                 break;
+            case PirateGame.COCONUT_BIT | PirateGame.OTHER_PLAYER_BIT:
+                if (fixA.getFilterData().categoryBits == PirateGame.COCONUT_BIT)
+                    ((Coconut) fixA.getUserData()).hitOnOthers();
+                else
+                    ((Coconut) fixB.getUserData()).hitOnOthers();
+                break;
             case PirateGame.SWORD_BIT | PirateGame.PLAYER_BIT:
                 if(fixA.getFilterData().categoryBits == PirateGame.SWORD_BIT)
                     ((Sword) fixA.getUserData()).hitOnPlayer();

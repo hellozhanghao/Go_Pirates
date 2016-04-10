@@ -303,27 +303,8 @@ public class Pirate extends Sprite {
         //depending on the state, get corresponding animation keyFrame.
         if (swordInUse){
             switch(currentState){
-                case WALKING:
-                    switch (direction){
-                        case DOWN:
-                            region = pirateWalkingDownWithSword.getKeyFrame(stateTimer,true);
-                            break;
-                        case LEFT:
-                            region = pirateWalkingLeftWithSword.getKeyFrame(stateTimer,true);
-                            break;
-                        case RIGHT:
-                            region = pirateWalkingRightWithSword.getKeyFrame(stateTimer,true);
-                            break;
-                        case UP:
-                            region = pirateWalkingUpWithSword.getKeyFrame(stateTimer,true);
-                            break;
-                        default:
-                            region = pirateWalkingDownWithSword.getKeyFrame(stateTimer,true);
-                            break;
-                    }
-                    break;
+
                 case STANDING:
-                default:
                     switch (direction){
                         case UP:
                             region = pirateStandingUpWithSword.getKeyFrame(stateTimer,true);
@@ -342,10 +323,50 @@ public class Pirate extends Sprite {
                             break;
                     }
                     break;
+                case WALKING:
+                default:
+                    switch (direction) {
+                        case DOWN:
+                            region = pirateWalkingDownWithSword.getKeyFrame(stateTimer, true);
+                            break;
+                        case LEFT:
+                            region = pirateWalkingLeftWithSword.getKeyFrame(stateTimer, true);
+                            break;
+                        case RIGHT:
+                            region = pirateWalkingRightWithSword.getKeyFrame(stateTimer, true);
+                            break;
+                        case UP:
+                            region = pirateWalkingUpWithSword.getKeyFrame(stateTimer, true);
+                            break;
+                        default:
+                            region = pirateWalkingDownWithSword.getKeyFrame(stateTimer, true);
+                            break;
+                    }
+                    break;
             }
         }else {
             switch(currentState){
+                case STANDING:
+                    switch (direction) {
+                        case UP:
+                            region = pirateStandingUp;
+                            break;
+                        case DOWN:
+                            region = pirateStandingDown;
+                            break;
+                        case LEFT:
+                            region = pirateStandingLeft;
+                            break;
+                        case RIGHT:
+                            region = pirateStandingRight;
+                            break;
+                        default:
+                            region = pirateStandingDown;
+                            break;
+                    }
+                    break;
                 case WALKING:
+                default:
                     switch (direction){
                         case DOWN:
                             region = pirateWalkingDown.getKeyFrame(stateTimer,true);
@@ -364,26 +385,7 @@ public class Pirate extends Sprite {
                             break;
                     }
                     break;
-                case STANDING:
-                default:
-                    switch (direction){
-                        case UP:
-                            region = pirateStandingUp;
-                            break;
-                        case DOWN:
-                            region = pirateStandingDown;
-                            break;
-                        case LEFT:
-                            region = pirateStandingLeft;
-                            break;
-                        case RIGHT:
-                            region = pirateStandingRight;
-                            break;
-                        default:
-                            region = pirateStandingDown;
-                            break;
-                    }
-                    break;
+
             }
         }
         //if the current state is the same as the previous state increase the state timer.

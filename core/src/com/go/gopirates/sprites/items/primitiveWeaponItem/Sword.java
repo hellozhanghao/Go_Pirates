@@ -14,18 +14,18 @@ import com.go.gopirates.screen.PlayScreen;
  */
 public class Sword extends PrimitiveWeaponItem {
 
-    private float stateTimer;
-
     private final float SWORD_LENGTH =PirateGame.TILE_SIZE/4;
-
+    private float stateTimer;
     private boolean setSwordTofalse;
+    private int playerId;
 
 
-    public Sword(PlayScreen screen) {
+    public Sword(PlayScreen screen, int playerId) {
         super(screen);
         stateTimer=0;
-        screen.getPirate().swordInUse=true;
+        screen.getPirate(playerId).swordInUse = true;
         setSwordTofalse=false;
+        this.playerId = playerId;
         defineItem();
     }
 
@@ -33,10 +33,10 @@ public class Sword extends PrimitiveWeaponItem {
     public void defineItem() {
         PirateGame.manager.get("audio/sounds/sword.mp3", Sound.class).play();
         BodyDef bodyDef = new BodyDef();
-        float posX=screen.getPirate().b2body.getPosition().x;
-        float posY=screen.getPirate().b2body.getPosition().y;
+        float posX = screen.getPirate(playerId).b2body.getPosition().x;
+        float posY = screen.getPirate(playerId).b2body.getPosition().y;
 
-        switch (screen.getPirate().direction){
+        switch (screen.getPirate(playerId).direction) {
             case UP:
                 bodyDef.position.set(posX, posY + ((PirateGame.TILE_SIZE/2+ SWORD_LENGTH))/PirateGame.PPM);
                 break;
@@ -67,11 +67,11 @@ public class Sword extends PrimitiveWeaponItem {
     public void update(float dt){
         super.update(dt);
         stateTimer+=dt;
-        float posX=screen.getPirate().b2body.getPosition().x;
-        float posY=screen.getPirate().b2body.getPosition().y;
+        float posX = screen.getPirate(playerId).b2body.getPosition().x;
+        float posY = screen.getPirate(playerId).b2body.getPosition().y;
 
         if(!destroyed){
-            switch (screen.getPirate().direction){
+            switch (screen.getPirate(playerId).direction) {
                 case UP:
                     body.setTransform(posX, posY + ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH)) / PirateGame.PPM, 0);
                     break;
@@ -89,7 +89,7 @@ public class Sword extends PrimitiveWeaponItem {
         if (stateTimer>PirateGame.SWORD_VALID_TIME){
             destroy();
             if (!setSwordTofalse){
-                screen.getPirate().swordInUse=false;
+                screen.getPirate(playerId).swordInUse = false;
                 setSwordTofalse=true;
             }
         }

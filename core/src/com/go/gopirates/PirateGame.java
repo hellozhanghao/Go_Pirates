@@ -11,6 +11,9 @@ import com.go.gopirates.screen.LoginScreen;
 import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.Pirate;
 import com.go.gopirates.sprites.items.explosiveItems.Bomb;
+import com.go.gopirates.sprites.items.explosiveItems.TNT;
+import com.go.gopirates.sprites.items.primitiveWeaponItem.Coconut;
+import com.go.gopirates.sprites.items.primitiveWeaponItem.Sword;
 
 
 public class PirateGame extends Game {
@@ -77,17 +80,19 @@ public class PirateGame extends Game {
             float y = Float.parseFloat(words[3]);
             Pirate.Direction direction = Pirate.Direction.valueOf(words[4]);
             Pirate.State currentState = Pirate.State.valueOf(words[5]);
-            Pirate.State previousState = Pirate.State.valueOf(words[6]);
-            boolean swordInuse = Boolean.valueOf(words[7]);
             screen.getPirate(playerId).b2body.setTransform(x, y, 0);
             screen.getPirate(playerId).direction = direction;
             screen.getPirate(playerId).currentState = currentState;
-            screen.getPirate(playerId).previousState = previousState;
-            screen.getPirate(playerId).swordInUse = swordInuse;
         } else {
             Gdx.app.log("PirateGame", message);
             if (words[0].equals("Bomb")) {
                 screen.getPirate().explosiveItems.add(new Bomb(screen, Float.valueOf(words[1]), Float.valueOf(words[2])));
+            } else if (words[0].equals("TNT")) {
+                screen.getPirate().explosiveItems.add(new TNT(screen, Float.valueOf(words[1]), Float.valueOf(words[2])));
+            } else if (words[0].equals("Coconut")) {
+                screen.getPirate().primitiveWeaponItems.add(new Coconut(screen, Float.valueOf(words[1]), Float.valueOf(words[2]), Pirate.Direction.valueOf(words[3])));
+            } else if (words[0].equals("Sword")) {
+                screen.getPirate(Integer.valueOf(words[1])).primitiveWeaponItems.add(new Sword(screen, Integer.valueOf(words[1])));
             }
         }
     }
@@ -122,7 +127,6 @@ public class PirateGame extends Game {
         super.render();
     }
 
-    // TODO: 9/4/16 Synchronize coconut spawing (not using random)
     // TODO: 9/4/16 Synchronize sword animaition
     // TODO: 9/4/16 Add coconut
     // TODO: 9/4/16 Add wait screen and gameover screen
