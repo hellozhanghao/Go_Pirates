@@ -5,6 +5,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.5.0'
+//        compile "com.android.support:appcompat-v7:18.0.+"
     }
 }
 
@@ -83,6 +84,7 @@ project(":android") {
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
         compile 'com.google.android.gms:play-services-games:8.4.0'
+        compile "io.socket:socket.io-client:0.6.2"
         // 8.4 is the latest as of now, keep it updated
         compile project(':BaseGameUtils')
     }
@@ -101,6 +103,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+        compile "io.socket:socket.io-client:0.6.2"
     }
 }
 
