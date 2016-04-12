@@ -1,7 +1,5 @@
 package com.go.gopirates;
 
-
-
 import com.badlogic.gdx.Gdx;
 
 import java.util.ArrayList;
