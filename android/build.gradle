@@ -1,4 +1,12 @@
 android {
+    signingConfigs {
+        config {
+            keyAlias 'GoPirate'
+            keyPassword 'gopirate'
+            storeFile file('gopirate.jks')
+            storePassword 'gopirate'
+        }
+    }
     buildToolsVersion "23.0.2"
     compileSdkVersion 23
     sourceSets {
@@ -22,7 +30,7 @@ android {
     }
 }
 
-dependencies{
+dependencies {
     compile 'com.android.support:multidex:1.0.0'
 }
 
