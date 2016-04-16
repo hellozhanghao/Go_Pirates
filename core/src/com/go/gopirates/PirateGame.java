@@ -12,6 +12,7 @@ import com.go.gopirates.screen.PlayScreen;
 import com.go.gopirates.sprites.Pirate;
 import com.go.gopirates.sprites.items.explosiveItems.Bomb;
 import com.go.gopirates.sprites.items.explosiveItems.TNT;
+import com.go.gopirates.sprites.items.noneInteractiveItems.ShieldSprite;
 import com.go.gopirates.sprites.items.primitiveWeaponItem.Coconut;
 import com.go.gopirates.sprites.items.primitiveWeaponItem.Sword;
 
@@ -93,6 +94,8 @@ public class PirateGame extends Game {
                 screen.getPirate().primitiveWeaponItems.add(new Coconut(screen, Float.valueOf(words[1]), Float.valueOf(words[2]), Pirate.Direction.valueOf(words[3])));
             } else if (words[0].equals("Sword")) {
                 screen.getPirate(Integer.valueOf(words[1])).primitiveWeaponItems.add(new Sword(screen, Integer.valueOf(words[1])));
+            } else if (words[0].equals("Shield")) {
+                screen.getPirate(Integer.valueOf(words[1])).nonInteractiveSprites.add(new ShieldSprite(screen, Integer.valueOf(words[1])));
             }
         }
     }

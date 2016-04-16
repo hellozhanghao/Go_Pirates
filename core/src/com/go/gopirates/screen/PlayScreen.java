@@ -49,6 +49,7 @@ public class PlayScreen implements Screen {
     public static boolean alreadyDestroyed = false;
     public Animation explosionAnimation;
     public Animation coconutAnimation;
+    public TextureRegion shieldTextureRegion;
     //Reference to our Game, used to set Screens
     private PirateGame game;
     private TextureAtlas atlas;
@@ -166,6 +167,8 @@ public class PlayScreen implements Screen {
         for (int i = 0; i < 4; i++)
             coconutFrames.add(new TextureRegion(coconutTexture, PirateGame.TILE_SIZE*i, 0, PirateGame.TILE_SIZE, PirateGame.TILE_SIZE));
         coconutAnimation = new Animation(0.1f, coconutFrames);
+
+        shieldTextureRegion = new TextureRegion(new Texture("img/objects/shield.png"), 0, 0, 300, 300);
     }
 
     public void handleSpawningItems() {
@@ -245,7 +248,8 @@ public class PlayScreen implements Screen {
                 case SHIELD:
                     player.powerUpHolding = Pirate.PowerUpHolding.NONE;
                     player.redefinePirateWithShield();
-                    player.nonInteractiveSprites.add(new ShieldSprite(this));
+                    player.nonInteractiveSprites.add(new ShieldSprite(this, PirateGame.PLAYER_ID));
+                    game.playServices.broadcastMessage("Shield;" + PirateGame.PLAYER_ID);
                     break;
                 case SHOE:
                     player.powerUpHolding = Pirate.PowerUpHolding.NONE;

@@ -1,5 +1,6 @@
 package com.go.gopirates.tools;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -143,6 +144,7 @@ public class WorldContactListener implements ContactListener {
                     ((Coconut) fixB.getUserData()).hitOnOthers();
                 break;
             case PirateGame.SWORD_BIT | PirateGame.PLAYER_BIT:
+                Gdx.app.log("Sword", "Hit!");
                 if(fixA.getFilterData().categoryBits == PirateGame.SWORD_BIT)
                     ((Sword) fixA.getUserData()).hitOnPlayer();
                 else

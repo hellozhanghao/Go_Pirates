@@ -34,7 +34,7 @@ public class Bomb extends ExplosiveItem {
 
     @Override
     public void use() {
-        float TTL=0.4f;
+        float TTL = 0.3f;
         explosionDetectors.add(new BombExplosionDetector(screen,posX,posY, BombExplosionDetector.ExpolsionDirection.UP,TTL));
         explosionDetectors.add(new BombExplosionDetector(screen,posX,posY, BombExplosionDetector.ExpolsionDirection.DOWN,TTL));
         explosionDetectors.add(new BombExplosionDetector(screen,posX,posY, BombExplosionDetector.ExpolsionDirection.LEFT,TTL));

@@ -1,10 +1,7 @@
 package com.go.gopirates.sprites.items.noneInteractiveItems;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
@@ -18,21 +15,21 @@ public class ShieldSprite extends NonInteractiveSprites {
     float stateTime;
     boolean destroyed;
     boolean setToDestroy;
-    Body b2body;
-    TextureRegion textureRegion;
+    int playerId;
 
-    public ShieldSprite(PlayScreen screen) {
+    public ShieldSprite(PlayScreen screen, int playerId) {
         PirateGame.manager.get("audio/sounds/powerup.wav", Sound.class).play();
         setSize(300/PirateGame.PPM,300/PirateGame.PPM);
         this.screen = screen;
         this.world = screen.getWorld();
-        setRegion(new TextureRegion(new Texture("img/objects/shield.png"),0,0,300,300));
+        setRegion(screen.shieldTextureRegion);
+        this.playerId = playerId;
     }
 
 
     public void update(float dt) {
         stateTime += dt;
-        setPosition(screen.getPirate().b2body.getPosition().x - 150 / PirateGame.PPM, screen.getPirate().b2body.getPosition().y - 150 / PirateGame.PPM);
+        setPosition(screen.getPirate(playerId).b2body.getPosition().x - 150 / PirateGame.PPM, screen.getPirate(playerId).b2body.getPosition().y - 150 / PirateGame.PPM);
         if ((stateTime > PirateGame.POWERUP_TIME) & !destroyed){
             setToDestroy();
             destroyed=true;

@@ -37,16 +37,16 @@ public class Coconut extends PrimitiveWeaponItem {
 
         switch (direction) {
             case UP:
-                bodyDef.position.set(posX, posY + ((PirateGame.TILE_SIZE*3/5+COCONUT_RADIUS))/PirateGame.PPM);
+                bodyDef.position.set(posX, posY + ((PirateGame.TILE_SIZE + COCONUT_RADIUS)) / PirateGame.PPM);
                 break;
             case DOWN:
-                bodyDef.position.set(posX, posY - ((PirateGame.TILE_SIZE*3/5+COCONUT_RADIUS))/PirateGame.PPM);
+                bodyDef.position.set(posX, posY - ((PirateGame.TILE_SIZE + COCONUT_RADIUS)) / PirateGame.PPM);
                 break;
             case LEFT:
-                bodyDef.position.set(posX - ((PirateGame.TILE_SIZE/2+COCONUT_RADIUS))/PirateGame.PPM,posY);
+                bodyDef.position.set(posX - ((PirateGame.TILE_SIZE + COCONUT_RADIUS)) / PirateGame.PPM, posY);
                 break;
             case RIGHT:
-                bodyDef.position.set(posX + ((PirateGame.TILE_SIZE/2+COCONUT_RADIUS))/PirateGame.PPM,posY);
+                bodyDef.position.set(posX + ((PirateGame.TILE_SIZE + COCONUT_RADIUS)) / PirateGame.PPM, posY);
                 break;
         }
         bodyDef.type= BodyDef.BodyType.DynamicBody;
