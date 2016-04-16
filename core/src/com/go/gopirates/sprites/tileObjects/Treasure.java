@@ -19,6 +19,8 @@ public class Treasure extends InteractiveTileObject {
     @Override
     public void onHit() {
         Gdx.app.log("Treasure", "Find Treasure");
+        screen.game.playServices.broadcastMessage("Treasure");
+        screen.game.sessionInfo.mState = "win";
         getCell().setTile(null);
         setCategoryFilter(PirateGame.NOTHING_BIT);
     }

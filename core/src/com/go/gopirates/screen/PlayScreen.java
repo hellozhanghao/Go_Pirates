@@ -51,7 +51,7 @@ public class PlayScreen implements Screen {
     public Animation coconutAnimation;
     public TextureRegion shieldTextureRegion;
     //Reference to our Game, used to set Screens
-    private PirateGame game;
+    public PirateGame game;
     private TextureAtlas atlas;
     //basic playscreen variables
     private OrthographicCamera gamecam;
@@ -272,11 +272,21 @@ public class PlayScreen implements Screen {
                 getPirate().direction + ";" + getPirate().currentState);
     }
 
+    public void checkWin() {
+        if (game.sessionInfo.mState.equals("win")) {
+            game.setScreen(new WinScreen(game));
+            game.sessionInfo.endSession();
+        } else if (game.sessionInfo.mState.equals("lose")) {
+            game.setScreen(new LoseScreen(game));
+            game.sessionInfo.endSession();
+        }
+    }
     public void update(float dt) {
         //handle user input first
         handleInput(dt);
         handleSpawningItems();
         sendLocation();
+        checkWin();
 
         Gdx.app.log("FPS", "FPS:" + 1 / dt);
         //takes 1 step in the physics simulation(60 times per second)

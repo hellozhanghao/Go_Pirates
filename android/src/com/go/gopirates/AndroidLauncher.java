@@ -27,25 +27,20 @@ import java.util.List;
 
 public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		RoomUpdateListener, RoomStatusUpdateListener, RealTimeMessageReceivedListener {
-	Activity activity;
-	SessionInfo sessionInfo;
-	GoogleApiClient mGoogleApiClient;
-
-	private GameHelper gameHelper;
-	private final static int requestCode = 1;
-
-
 	// For room creation:
 	// Does not include self in player count
 	final static int MIN_PLAYERS = 1;
 	final static int MAX_PLAYERS = 3;
 	final static long MASK = 0;
-
 	// Waiting room UI
 	final static int RC_WAITING_ROOM = 10002;
-
+	private final static int requestCode = 1;
+	Activity activity;
+	SessionInfo sessionInfo;
+	GoogleApiClient mGoogleApiClient;
 	// Is a game ongoing?
 	boolean mPlaying = false;
+	private GameHelper gameHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +160,6 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 
 		} catch (Exception e) {
 			Gdx.app.log("MainActivity", "Quick game failed: " + e.getMessage());
-
 		}
 	}
 
