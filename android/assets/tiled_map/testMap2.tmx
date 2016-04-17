@@ -10,7 +10,7 @@
  </layer>
  <layer name="Graphics" width="25" height="19">
   <data encoding="base64" compression="zlib">
-   eJytVMsOwCAI4+BhB5Pt/792l5EQ1vJQm5gaVl1RUOSPYYaPC4kjPcP9aRELYaRjGGAwnefKOtVaP08xH6Tr5DHcd6/t5qG+Mt8+3rkPlI8UGemjPE4wAzp/G7scR/0S/cPWCfI3Sdyvy8DOneURzdHeJ+6j+qbs1FWGVd/d/rBAtRO9u9U+V47qa/W9Ukwzz/wrr+ZR5Z37qPZv5v8FDuEHEQ==
+   eJytVMsOgDAI47CDBxP9/6/1MhKCLY9tTZYa7LRsgMgfwywfFxJHeoZnahELYaRjGGAxnefKPtVaP28xH6Tr5DHce6/t5qG+Mt8+3rkPlI8UGemjPE4wAzp/G7scR/0S/cPWCfJ3k7jfl4GdO8sjekbfPnEf1ZmyU1cZVn13+8MC1U40d6t9rhzV1+q8Qsj8K6/mUeWd+6j2b+b/AwHBBwU=
   </data>
  </layer>
  <objectgroup name="Rock">
@@ -248,7 +248,6 @@
   <object id="141" x="4352" y="768" width="256" height="256"/>
  </objectgroup>
  <objectgroup name="Treasure">
-  <object id="142" x="1280" y="4096" width="256" height="256"/>
   <object id="143" x="3072" y="2304" width="256" height="256"/>
  </objectgroup>
 </map>

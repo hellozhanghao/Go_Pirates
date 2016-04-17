@@ -79,11 +79,13 @@ public class PirateGame extends Game {
             int playerId = Integer.parseInt(words[1]);
             float x = Float.parseFloat(words[2]);
             float y = Float.parseFloat(words[3]);
-            Pirate.Direction direction = Pirate.Direction.valueOf(words[4]);
-            Pirate.State currentState = Pirate.State.valueOf(words[5]);
-            screen.getPirate(playerId).b2body.setTransform(x, y, 0);
-            screen.getPirate(playerId).direction = direction;
-            screen.getPirate(playerId).currentState = currentState;
+            screen.getPirate(playerId).b2body.setLinearVelocity(x*Gdx.graphics.getDeltaTime(),y*Gdx.graphics.getDeltaTime());
+            Gdx.app.log("Loc:" , playerId + " " + x + ", " + y);
+//            Pirate.Direction direction = Pirate.Direction.valueOf(words[4]);
+//            Pirate.State currentState = Pirate.State.valueOf(words[5]);
+//            screen.getPirate(playerId).b2body.setTransform(x, y, 0);
+//            screen.getPirate(playerId).direction = direction;
+//            screen.getPirate(playerId).currentState = currentState;
         } else {
             Gdx.app.log("PirateGame", message);
             int playerId = Integer.parseInt(words[1]);

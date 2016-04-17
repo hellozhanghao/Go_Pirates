@@ -204,25 +204,36 @@ public class PlayScreen implements Screen {
         //For phone:
         player.b2body.setLinearVelocity(controller.touchpad.getKnobPercentX() * PirateGame.DEFAULT_VELOCITY,
                 controller.touchpad.getKnobPercentY() * PirateGame.DEFAULT_VELOCITY);
+        sendLocation();
 
+        /*
         //for keyboard:
+        boolean moved = false;
         if (controller.upPressed){
             player.b2body.setLinearVelocity(0, PirateGame.DEFAULT_VELOCITY);
-            sendLocation();
+            Gdx.app.log("Controller: ", "UP");
+            moved = true;
         }
         if (controller.downPressed) {
             player.b2body.setLinearVelocity(0, -PirateGame.DEFAULT_VELOCITY);
-            sendLocation();
+            Gdx.app.log("Controller: ", "DOWN");
+            moved = true;
         }
         if (controller.leftPressed) {
             player.b2body.setLinearVelocity(-PirateGame.DEFAULT_VELOCITY, 0);
-            sendLocation();
+            Gdx.app.log("Controller: ", "LEFT");
+            moved = true;
         }
         if (controller.rightPressed) {
             player.b2body.setLinearVelocity(PirateGame.DEFAULT_VELOCITY, 0);
-            sendLocation();
+            Gdx.app.log("Controller: ", "RIGHT");
+            moved = true;
         }
+        if(moved)
+            sendLocation();
 
+        Gdx.app.log("Moved", moved + "");
+        */
         //Bomb Pressed:
         if (!controller.previousBombPress & controller.bombPress & bombConfirm) {
             player.explosiveItems.add(new Bomb(this, player.b2body.getPosition().x, player.b2body.getPosition().y));
@@ -276,7 +287,8 @@ public class PlayScreen implements Screen {
 
     public void sendLocation(){
         game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+
-                getPirate().b2body.getLinearVelocity().x+";"+getPirate().b2body.getLinearVelocity().y);
+                getPirate().b2body.getLinearVelocity().x / Gdx.graphics.getDeltaTime()+";"
+                +getPirate().b2body.getLinearVelocity().y / Gdx.graphics.getDeltaTime());
 //        game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+
 //                getPirate().b2body.getPosition().x+";"+getPirate().b2body.getPosition().y+";" +
 //                getPirate().direction + ";" + getPirate().currentState);
@@ -320,7 +332,7 @@ public class PlayScreen implements Screen {
                     player.primitiveWeaponItems.removeValue(primitiveWeaponItem,true);
             }
         }
-        sendLocation();
+//        sendLocation();
         Pirate player = getPirate();
 
         //update gamecam
