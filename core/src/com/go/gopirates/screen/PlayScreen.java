@@ -206,19 +206,27 @@ public class PlayScreen implements Screen {
                 controller.touchpad.getKnobPercentY() * PirateGame.DEFAULT_VELOCITY);
 
         //for keyboard:
-        if (controller.upPressed)
+        if (controller.upPressed){
             player.b2body.setLinearVelocity(0, PirateGame.DEFAULT_VELOCITY);
-        if (controller.downPressed)
+            sendLocation();
+        }
+        if (controller.downPressed) {
             player.b2body.setLinearVelocity(0, -PirateGame.DEFAULT_VELOCITY);
-        if (controller.leftPressed)
+            sendLocation();
+        }
+        if (controller.leftPressed) {
             player.b2body.setLinearVelocity(-PirateGame.DEFAULT_VELOCITY, 0);
-        if (controller.rightPressed)
+            sendLocation();
+        }
+        if (controller.rightPressed) {
             player.b2body.setLinearVelocity(PirateGame.DEFAULT_VELOCITY, 0);
+            sendLocation();
+        }
 
         //Bomb Pressed:
         if (!controller.previousBombPress & controller.bombPress & bombConfirm) {
             player.explosiveItems.add(new Bomb(this, player.b2body.getPosition().x, player.b2body.getPosition().y));
-            game.playServices.broadcastMessage("Bomb;"+ PirateGame.PLAYER_ID + ";" +player.b2body.getPosition().x+";"+player.b2body.getPosition().y);
+            game.playServices.broadcastMessage("Bomb;" + PirateGame.PLAYER_ID + ";" + player.b2body.getPosition().x + ";" + player.b2body.getPosition().y);
             bombConfirm = false;
         }
         //Sword Pressed:
@@ -287,7 +295,7 @@ public class PlayScreen implements Screen {
         //handle user input first
         handleInput(dt);
         handleSpawningItems();
-        sendLocation();
+//        sendLocation();
         checkWin();
 
         Gdx.app.log("FPS", "FPS:" + 1 / dt);
