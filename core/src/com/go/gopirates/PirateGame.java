@@ -86,20 +86,24 @@ public class PirateGame extends Game {
             screen.getPirate(playerId).currentState = currentState;
         } else {
             Gdx.app.log("PirateGame", message);
-            if (words[0].equals("Bomb")) {
-                screen.getPirate().explosiveItems.add(new Bomb(screen, Float.valueOf(words[1]), Float.valueOf(words[2])));
-            } else if (words[0].equals("TNT")) {
-                screen.getPirate().explosiveItems.add(new TNT(screen, Float.valueOf(words[1]), Float.valueOf(words[2])));
-            } else if (words[0].equals("Coconut")) {
-                screen.getPirate().primitiveWeaponItems.add(new Coconut(screen, Float.valueOf(words[1]), Float.valueOf(words[2]), Pirate.Direction.valueOf(words[3])));
-            } else if (words[0].equals("Sword")) {
-                screen.getPirate(Integer.valueOf(words[1])).primitiveWeaponItems.add(new Sword(screen, Integer.valueOf(words[1])));
-            } else if (words[0].equals("Shield")) {
-                screen.getPirate(Integer.valueOf(words[1])).nonInteractiveSprites.add(new ShieldSprite(screen, Integer.valueOf(words[1])));
+            int playerId = Integer.parseInt(words[1]);
+            Pirate player = screen.getPirate(playerId);
+            String action = words[0];
+            Gdx.app.log("ACTION", action + " " + playerId);
+            if (action.equals("Bomb")) {
+                screen.getPirate().explosiveItems.add(new Bomb(screen, player.b2body.getPosition().x, player.b2body.getPosition().y));
+            } else if (action.equals("TNT")) {
+                screen.getPirate(playerId).explosiveItems.add(new TNT(screen, player.b2body.getPosition().x, player.b2body.getPosition().y));
+            } else if (action.equals("Coconut")) {
+                screen.getPirate(playerId).primitiveWeaponItems.add(new Coconut(screen, player.b2body.getPosition().x, player.b2body.getPosition().y, player.direction));
+            } else if (action.equals("Sword")) {
+                screen.getPirate(playerId).primitiveWeaponItems.add(new Sword(screen, Integer.valueOf(playerId)));}
+            else if (words[0].equals("Shield")) {
+                screen.getPirate(playerId).nonInteractiveSprites.add(new ShieldSprite(screen, playerId));
             } else if (words[0].equals("Treasure")) {
                 screen.game.sessionInfo.mState = "lose";
             } else if (words[0].equals("Die")) {
-                screen.getPirate(Integer.valueOf(words[1])).destroy();
+                screen.getPirate(playerId).destroy();
             }
         }
     }

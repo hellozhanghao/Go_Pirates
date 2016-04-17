@@ -333,17 +333,22 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 
 	@Override
 	public void	onRoomCreated(int statusCode, Room room) {
-		if (statusCode != GamesStatusCodes.STATUS_OK) {
-			// Sleep the screen
-			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-			Toast.makeText(activity,"Room created", Toast.LENGTH_SHORT).show();
+		try{
+			if (statusCode != GamesStatusCodes.STATUS_OK) {
+				// Sleep the screen
+				getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+				Toast.makeText(activity,"Room created", Toast.LENGTH_SHORT).show();
 
-			// Show error message or do nothing, return to main screen.
-			return;
+				// Show error message or do nothing, return to main screen.
+				return;
+			}
+
+			// get waiting room intent
+			Intent i = Games.RealTimeMultiplayer.getWaitingRoomIntent(gameHelper.getApiClient(), room, Integer.MAX_VALUE);
+			startActivityForResult(i, RC_WAITING_ROOM);
+		}catch (NullPointerException e){
+			log("FAILED TO CREATE ROOM", e.getMessage());
 		}
 
-		// get waiting room intent
-		Intent i = Games.RealTimeMultiplayer.getWaitingRoomIntent(gameHelper.getApiClient(), room, Integer.MAX_VALUE);
-		startActivityForResult(i, RC_WAITING_ROOM);
 	}
 }

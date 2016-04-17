@@ -12,23 +12,7 @@ import com.go.gopirates.sprites.Pirate;
 public class Shield extends PowerUp {
     public Shield(PlayScreen screen, float x, float y) {
         super(screen, x, y);
-
-
-        switch (PirateGame.PLAYER_ID) {
-            case 0:
-                setRegion(new TextureRegion(new Texture("powerup/shield_sophia.png"), 0, 0, 256, 256));
-                break;
-            case 1:
-                setRegion(new TextureRegion(new Texture("powerup/shield_taka.png"), 0, 0, 256, 256));
-                break;
-            case 2:
-                setRegion(new TextureRegion(new Texture("powerup/shield_thomas.png"), 0, 0, 256, 256));
-                break;
-            case 3:
-                setRegion(new TextureRegion(new Texture("powerup/shield_zack.png"), 0, 0, 256, 256));
-                break;
-
-        }
+        setRegion(new TextureRegion(new Texture("shield_"+ screen.getPirate().character+".png"), 0, 0, 256, 256));
         setSize(150 / PirateGame.PPM, 150 / PirateGame.PPM);
         setPosition(x - 75 / PirateGame.PPM, y - 75 / PirateGame.PPM);
     }

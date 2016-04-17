@@ -50,5 +50,7 @@ public abstract class PrimitiveWeaponItem  extends Sprite{
             super.draw(batch);
     }
 
-
+    public boolean isDestroyed(){
+        return destroyed;
+    }
 }

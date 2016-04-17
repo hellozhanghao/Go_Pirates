@@ -218,7 +218,7 @@ public class PlayScreen implements Screen {
         //Bomb Pressed:
         if (!controller.previousBombPress & controller.bombPress & bombConfirm) {
             player.explosiveItems.add(new Bomb(this, player.b2body.getPosition().x, player.b2body.getPosition().y));
-            game.playServices.broadcastMessage("Bomb;"+player.b2body.getPosition().x+";"+player.b2body.getPosition().y);
+            game.playServices.broadcastMessage("Bomb;"+ PirateGame.PLAYER_ID + ";" +player.b2body.getPosition().x+";"+player.b2body.getPosition().y);
             bombConfirm = false;
         }
         //Sword Pressed:
@@ -232,7 +232,9 @@ public class PlayScreen implements Screen {
             System.out.println("Coconut pressed");
             if (player.numberOfCoconut>0){
                 player.primitiveWeaponItems.add(new Coconut(this, player.b2body.getPosition().x, player.b2body.getPosition().y, player.direction));
-                game.playServices.broadcastMessage("Coconut;" + player.b2body.getPosition().x + ";" + player.b2body.getPosition().y + ";" + player.direction.toString());
+                game.playServices.broadcastMessage("Coconut;" + PirateGame.PLAYER_ID + ";" +
+                        player.b2body.getPosition().x + ";" + player.b2body.getPosition().y + ";"
+                        + player.direction.toString());
                 player.numberOfCoconut--;
                 updateCoconut();
             }
@@ -255,7 +257,8 @@ public class PlayScreen implements Screen {
                 case TNT:
                     player.powerUpHolding = Pirate.PowerUpHolding.NONE;
                     player.explosiveItems.add(new TNT(this,player.b2body.getPosition().x, player.b2body.getPosition().y));
-                    game.playServices.broadcastMessage("TNT;" + player.b2body.getPosition().x + ";" + player.b2body.getPosition().y);
+                    game.playServices.broadcastMessage("TNT;" + PirateGame.PLAYER_ID + ";" +
+                            player.b2body.getPosition().x + ";" + player.b2body.getPosition().y);
                     break;
                 default:
                     break;
@@ -265,8 +268,10 @@ public class PlayScreen implements Screen {
 
     public void sendLocation(){
         game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+
-                getPirate().b2body.getPosition().x+";"+getPirate().b2body.getPosition().y+";" +
-                getPirate().direction + ";" + getPirate().currentState);
+                getPirate().b2body.getLinearVelocity().x+";"+getPirate().b2body.getLinearVelocity().y);
+//        game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+
+//                getPirate().b2body.getPosition().x+";"+getPirate().b2body.getPosition().y+";" +
+//                getPirate().direction + ";" + getPirate().currentState);
     }
 
     public void checkWin() {
@@ -300,10 +305,14 @@ public class PlayScreen implements Screen {
             }
             for (NonInteractiveSprites sprite : player.nonInteractiveSprites)
                 sprite.update(dt);
-            for (PrimitiveWeaponItem primitiveWeaponItem : player.primitiveWeaponItems)
+            for (PrimitiveWeaponItem primitiveWeaponItem : player.primitiveWeaponItems) {
+                Gdx.app.log("Primitive Weapon", primitiveWeaponItem.getClass()+ " " +player.playerId);
                 primitiveWeaponItem.update(dt);
+                if(primitiveWeaponItem.isDestroyed())
+                    player.primitiveWeaponItems.removeValue(primitiveWeaponItem,true);
+            }
         }
-
+        sendLocation();
         Pirate player = getPirate();
 
         //update gamecam
