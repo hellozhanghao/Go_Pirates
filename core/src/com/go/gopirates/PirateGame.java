@@ -98,6 +98,8 @@ public class PirateGame extends Game {
                 screen.getPirate(Integer.valueOf(words[1])).nonInteractiveSprites.add(new ShieldSprite(screen, Integer.valueOf(words[1])));
             } else if (words[0].equals("Treasure")) {
                 screen.game.sessionInfo.mState = "lose";
+            } else if (words[0].equals("Die")) {
+                screen.getPirate(Integer.valueOf(words[1])).destroy();
             }
         }
     }

@@ -38,7 +38,7 @@ public abstract class PrimitiveWeaponItem  extends Sprite{
     }
 
     public  void hitOnPlayer(){
-        screen.getPirate().decreaseHealth();
+        screen.getPirate().decreaseHealth(1);
     }
 
     public void destroy(){

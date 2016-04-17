@@ -48,6 +48,7 @@ public class Pirate extends Sprite {
     private Animation pirateWalkingDownWithSword, pirateWalkingUpWithSword, pirateWalkingLeftWithSword, pirateWalkingRightWithSword;
     private PlayScreen screen;
     private float stateTimer,powerUpTimer;
+    private boolean toDestroy, destroyed;
     public Pirate(PlayScreen screen, int playerId, String character){
         //initialize default values
         this.screen = screen;
@@ -67,6 +68,8 @@ public class Pirate extends Sprite {
         health = PirateGame.ININTIAL_HEALTH;
         healthTimer = 0;
         swordInUse=false;
+        toDestroy = false;
+        destroyed = false;
 
         loadAnimation();
     }
@@ -178,6 +181,10 @@ public class Pirate extends Sprite {
             setSize(400/PirateGame.PPM,400/PirateGame.PPM);
         }else {
             setSize(PirateGame.TILE_SIZE/PirateGame.PPM,PirateGame.TILE_SIZE/PirateGame.PPM);
+        }
+        if (toDestroy && !destroyed) {
+            world.destroyBody(b2body);
+            destroyed = true;
         }
     }
 
@@ -398,25 +405,33 @@ public class Pirate extends Sprite {
     }
 
     public void draw(Batch batch){
-        super.draw(batch);
+        if (!destroyed)
+            super.draw(batch);
     }
 
     public void hitInExplosion(){
-        decreaseHealth();
+        decreaseHealth(3);
     }
 
-    public void decreaseHealth(){
+    public void decreaseHealth(int amount) {
         if (healthTimer > PirateGame.PROTECTED_TIME_AFTER_DECREASE_HEALTH){
-            if (health > 0){
-                health--;
-                Gdx.app.log("Pirate", "Health decrease 1, Current Health "+health);
+            if (health - amount > 0) {
+                health -= amount;
+                Gdx.app.log("Pirate", "Health decrease " + amount + ", Current Health " + health);
                 screen.updateHealth();
                 healthTimer = 0;
             }else {
+                health = 0;
                 healthTimer = 0;
                 Gdx.app.log("Pirate", "Pirated is dead.");
+                screen.game.playServices.broadcastMessage("Die;" + PirateGame.PLAYER_ID);
+                screen.game.sessionInfo.mState = "lose";
             }
         }
+    }
+
+    public void destroy() {
+        toDestroy = true;
     }
 
     public enum Direction {UP, DOWN, LEFT, RIGHT}
