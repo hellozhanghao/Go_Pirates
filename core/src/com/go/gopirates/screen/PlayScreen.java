@@ -129,10 +129,7 @@ public class PlayScreen implements Screen {
         }
 
         world.setContactListener(new WorldContactListener(this));
-        music = PirateGame.manager.get("audio/music/pirate.mp3", Music.class);
-        music.setLooping(true);
-        music.setVolume(0.5f);
-        music.play();
+
 
         powerUps = new Array<PowerUp>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();

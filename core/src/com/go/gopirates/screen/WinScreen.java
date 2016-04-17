@@ -18,12 +18,10 @@ import com.go.gopirates.PirateGame;
 public class WinScreen implements Screen {
     Viewport viewport;
     OrthographicCamera cam;
-
+    int numberOfTouch;
     private SpriteBatch batch;
     private Sprite backgroundSprite;
     private Texture background;
-
-
     private Stage stage;
     private PirateGame game;
     private boolean screenChanged;
@@ -36,6 +34,7 @@ public class WinScreen implements Screen {
         viewport = new FitViewport(1920f, 1080f);
         stage = new Stage(viewport, batch);
         screenChanged = false;
+        numberOfTouch = 0;
     }
 
     @Override
@@ -59,6 +58,9 @@ public class WinScreen implements Screen {
         stage.draw();
 
         if (Gdx.input.justTouched()) {
+            numberOfTouch++;
+        }
+        if (numberOfTouch > 2) {
             game.setScreen(new LoginScreen(game));
         }
     }

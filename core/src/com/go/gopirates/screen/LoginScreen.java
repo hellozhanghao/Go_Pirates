@@ -2,6 +2,7 @@ package com.go.gopirates.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -33,6 +34,7 @@ public class LoginScreen implements Screen {
     private Stage stage;
     private PirateGame game;
     private boolean screenChanged;
+    private Music music;
 
     public LoginScreen(PirateGame game) {
 
@@ -42,6 +44,11 @@ public class LoginScreen implements Screen {
         viewport=new FitViewport(1920f,1080f);
         stage = new Stage(viewport,batch);
         screenChanged=false;
+
+        music = PirateGame.manager.get("audio/music/pirate.mp3", Music.class);
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
     }
 
     @Override

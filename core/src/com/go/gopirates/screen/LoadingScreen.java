@@ -27,6 +27,7 @@ public class LoadingScreen implements Screen {
     private Stage stage;
     private PirateGame game;
     private boolean screenChanged;
+    private int numberOfTap;
 
     public LoadingScreen(PirateGame game) {
 
@@ -36,6 +37,7 @@ public class LoadingScreen implements Screen {
         viewport = new FitViewport(1920f, 1080f);
         stage = new Stage(viewport, batch);
         screenChanged = false;
+        numberOfTap = 0;
     }
 
     @Override
@@ -65,6 +67,13 @@ public class LoadingScreen implements Screen {
             Gdx.app.log("PirateGame", game.sessionInfo.mId);
             game.sessionInfo.setUpGame();
             game.setScreen(new PlayScreen(game));
+        }
+
+        if (Gdx.input.justTouched()) {
+            numberOfTap++;
+        }
+        if (numberOfTap > 3) {
+            game.setScreen(new LoginScreen(game));
         }
     }
 

@@ -27,7 +27,7 @@ public class LoseScreen implements Screen {
     private Stage stage;
     private PirateGame game;
     private boolean screenChanged;
-
+    private int numberOfTouch;
     public LoseScreen(PirateGame game) {
 
         this.game = game;
@@ -36,6 +36,7 @@ public class LoseScreen implements Screen {
         viewport = new FitViewport(1920f, 1080f);
         stage = new Stage(viewport, batch);
         screenChanged = false;
+        numberOfTouch = 0;
     }
 
     @Override
@@ -58,6 +59,9 @@ public class LoseScreen implements Screen {
         stage.draw();
 
         if (Gdx.input.justTouched()) {
+            numberOfTouch++;
+        }
+        if (numberOfTouch > 2) {
             game.setScreen(new LoginScreen(game));
         }
     }

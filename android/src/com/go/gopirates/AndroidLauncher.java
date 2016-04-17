@@ -151,7 +151,11 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 						if (p.getParticipantId().equals(sessionInfo.mId)) {
 							continue;
 						}
-						Games.RealTimeMultiplayer.sendUnreliableMessage(gameHelper.getApiClient(), MsgBuf, sessionInfo.mRoomId, p.getParticipantId());
+						try {
+							Games.RealTimeMultiplayer.sendUnreliableMessage(gameHelper.getApiClient(), MsgBuf, sessionInfo.mRoomId, p.getParticipantId());
+						} catch (Exception e) {
+
+						}
 						continue;
 					}
 				}
@@ -220,7 +224,18 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	@Override
 	public void onConnectedToRoom(Room room) {}
 	@Override
-	public void onDisconnectedFromRoom(Room room) {}
+	public void onDisconnectedFromRoom(Room room) {
+//		try{
+//			// leave the room
+//			Games.RealTimeMultiplayer.leave(mGoogleApiClient, null, sessionInfo.mRoomId);
+//
+//			// clear the flag that keeps the screen on
+//			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//
+//			// show error message and return to main screen
+//		}catch (Exception e){}
+
+	}
 	@Override
 	public void onP2PConnected(String participantId) {}
 	@Override
