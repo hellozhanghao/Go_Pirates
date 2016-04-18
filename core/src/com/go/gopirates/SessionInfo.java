@@ -39,7 +39,6 @@ public class SessionInfo {
             map.put(mParticipantsString.get(i), i);
             Gdx.app.log("Map", mParticipantsString.get(i) + " " + i);
         }
-
         PirateGame.PLAYER_ID = map.get(mId);
     }
 
