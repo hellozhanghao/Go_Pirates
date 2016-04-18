@@ -32,14 +32,16 @@ public class SessionInfo {
 
     public void setUpGame(){
         PirateGame.NUMBER_OF_PLAYERS=mParticipants.size();
-        Gdx.app.log("PirateGame",String.valueOf(mParticipants.size()));
+        Gdx.app.log("PirateGame", String.valueOf(mParticipants.size()));
         Collections.sort(mParticipantsString);
+        Gdx.app.log("SET UP GAME", mParticipantsMap.toString());
         for (int i = 0; i < mParticipants.size(); i++) {
             if (mId.equals(mParticipantsString.get(i))) {
                 PirateGame.PLAYER_ID = i;
             }
             mParticipantsMap.put(mParticipantsString.get(i),i);
         }
+        Gdx.app.log("PirateGame", mParticipantsMap.toString());
     }
 
     public void endSession(){

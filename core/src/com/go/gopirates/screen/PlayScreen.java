@@ -314,7 +314,7 @@ public class PlayScreen implements Screen {
         //handle user input first
         handleInput(dt);
         handleSpawningItems();
-        if(updateLocationTimer >=3){
+        if(updateLocationTimer >= 2){
             updateLocationTimer = 0;
             sendLocation();
         }
@@ -322,7 +322,7 @@ public class PlayScreen implements Screen {
 //        sendVelocity(); IS BEING CALLED RIGHT AFTER WE GET SOMETHING FROM CONTROLLER
 //        checkWin(); IS BEING CALLED ONLY WHEN THE VALUE OF mState IS CHANGED
         checkWin();
-        Gdx.app.log("FPS", "FPS:" + 1 / dt);
+//        Gdx.app.log("FPS", "FPS:" + 1 / dt);
         //takes 1 step in the physics simulation(60 times per second)
         world.step(1 / 60f, 6, 2);
         for (PowerUp item : powerUps)
@@ -472,13 +472,17 @@ public class PlayScreen implements Screen {
     }
 
     public void removePlayer(int playerId){
-        for(Pirate p: players){
-            if (p.playerId == playerId){
-//                p.destroy();
-                players.removeValue(p,true);
-                game.NUMBER_OF_PLAYERS --;
-                return;
+        try {
+            for (Pirate p : players) {
+                if (p.playerId == playerId) {
+                    //                p.destroy();
+                    players.removeValue(p, true);
+                    game.NUMBER_OF_PLAYERS--;
+                    return;
+                }
             }
+        }catch (Exception e){
+            Gdx.app.error("Failed to remove player", e.getMessage());
         }
     }
 

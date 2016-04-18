@@ -274,8 +274,8 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		if (shouldStartGame(room)) {
 //			initialize(new PirateGame(this), new AndroidApplicationConfiguration());
 			sessionInfo.mParticipants = room.getParticipants();
-			sessionInfo.mRoomId=room.getRoomId();
-			sessionInfo.mId=room.getParticipantId(Games.Players.getCurrentPlayerId(mGoogleApiClient));
+			sessionInfo.mRoomId = room.getRoomId();
+			sessionInfo.mId = room.getParticipantId(Games.Players.getCurrentPlayerId(mGoogleApiClient));
 			sessionInfo.mState="Play";
 			for (Object o : sessionInfo.mParticipants) {
 				Participant p = (Participant) o;
@@ -292,24 +292,22 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 			// do game-specific handling of this -- remove player's avatar
 			// from the screen, etc. If not enough players are left for
 			// the game to go on, end the game and leave the room.
-			for(String s: participantIds){
-				Log.i("onPeersDisconnected",s);
-			}
-			int id = sessionInfo.mParticipantsMap.get(participantIds.get(0));
-			PirateGame.screen.removePlayer(id);
-//			for (int i = 0; i < sessionInfo.mParticipants.size(); i++) {
-//				if(!participantIds.contains(sessionInfo.mParticipants.get(i))) {
-//					int id = sessionInfo.mParticipantsMap.get(sessionInfo.mParticipants.get(i));
-//					PirateGame.screen.removePlayer(id);
-//				}
-//			}
-			PirateGame.screen.checkWin();
 		}
 		else if (shouldCancelGame(room)){
 			// cancel the game
 			Games.RealTimeMultiplayer.leave(gameHelper.getApiClient(), null, sessionInfo.mRoomId);
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		}
+
+		// Removing the pirates that left the game
+		for(int i = 0; i < participantIds.size(); i++){
+			int id = sessionInfo.mParticipantsMap.get(participantIds.get(i));
+			Log.i("PirateGame","Removing " + participantIds.get(i)+ "; " + id);
+			PirateGame.screen.removePlayer(id);
+		}
+		int id = sessionInfo.mParticipantsMap.get(participantIds.get(0));
+		PirateGame.screen.removePlayer(id);
+		PirateGame.screen.checkWin();
 	}
 	@Override
 	public void	onRoomAutoMatching(Room room) {}
