@@ -310,15 +310,10 @@ public class PlayScreen implements Screen {
         //handle user input first
         handleInput(dt);
         handleSpawningItems();
-        if(updateLocationTimer >=3){
-            updateLocationTimer = 0;
-            sendLocation();
-        }
-        updateLocationTimer += dt;
-//        sendVelocity(); IS BEING CALLED RIGHT AFTER WE GET SOMETHING FROM CONTROLLER
-//        checkWin(); IS BEING CALLED ONLY WHEN THE VALUE OF mState IS CHANGED
+        sendLocation();
         checkWin();
-        Gdx.app.log("FPS", "FPS:" + 1 / dt);
+
+
         //takes 1 step in the physics simulation(60 times per second)
         world.step(1 / 60f, 6, 2);
         for (PowerUp item : powerUps)
