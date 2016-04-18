@@ -19,7 +19,6 @@ public class Sword extends PrimitiveWeaponItem {
     private boolean setSwordTofalse;
     private int playerId;
 
-
     public Sword(PlayScreen screen, int playerId) {
         super(screen);
         stateTimer=0;
