@@ -53,8 +53,8 @@ public class PlayScreen implements Screen {
     //Reference to our Game, used to set Screens
     public PirateGame game;
     //Multiplayer
-    private float updateLocationTimer = 0;
     private TextureAtlas atlas;
+
     //basic playscreen variables
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -285,7 +285,6 @@ public class PlayScreen implements Screen {
             }
         }
     }
-
 
     public void sendLocation(){
         game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -337,15 +336,10 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 			// let screen go to sleep
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 			// show error message, return to main screen.
-			Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
-
-			Log.i("Zhang Hao","room connevted");
 		}
 		sessionInfo.mRoomId = room.getRoomId();
 		sessionInfo.mParticipants = room.getParticipants();
 		sessionInfo.mId=room.getParticipantId(Games.Players.getCurrentPlayerId(mGoogleApiClient));
-
-		Log.i("Zhang Hao",sessionInfo.mRoomId);
 	}
 
 	@Override
@@ -353,7 +347,6 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		if (statusCode != GamesStatusCodes.STATUS_OK) {
 			// Sleep the screen
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
 			// Show error message or do nothing, return to main screen.
 			return;
 		}
