@@ -296,7 +296,7 @@ public class PlayScreen implements Screen {
     public void sendLocation(){
         game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+
                 getPirate().b2body.getPosition().x+";"+getPirate().b2body.getPosition().y+";" +
-                getPirate().direction + ";" + getPirate().currentState);
+                getPirate().direction + ";" + getPirate().currentState + ";" + getPirate().b2body.getLinearVelocity().x + ";" + getPirate().b2body.getLinearVelocity().y);
     }
 
     public void checkWin() {
@@ -309,7 +309,11 @@ public class PlayScreen implements Screen {
             game.setScreen(new LoseScreen(game));
             game.sessionInfo.endSession();
         }
+        if (PirateGame.PLAYERS_ALIVE <= 1) {
+            game.sessionInfo.mState = "win";
+        }
     }
+
     public void update(float dt) {
         //handle user input first
         handleInput(dt);
@@ -402,6 +406,8 @@ public class PlayScreen implements Screen {
         for (PowerUp powerup : powerUps)
             powerup.draw(PirateGame.batch);
         PirateGame.batch.end();
+
+
         controller.render();
     }
 

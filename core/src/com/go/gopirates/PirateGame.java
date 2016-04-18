@@ -54,6 +54,7 @@ public class PirateGame extends Game {
     //User Selct
     public static int PLAYER_ID;
     public static int NUMBER_OF_PLAYERS;
+    public static int PLAYERS_ALIVE;
     //Settings:
     public static int DEFAULT_VELOCITY = 100;
     public static SpriteBatch batch;
@@ -98,6 +99,7 @@ public class PirateGame extends Game {
             screen.getPirate(playerId).b2body.setTransform(x, y, 0);
             screen.getPirate(playerId).direction = direction;
             screen.getPirate(playerId).currentState = currentState;
+            screen.getPirate(playerId).b2body.setLinearVelocity(Float.valueOf(words[6]), Float.valueOf(words[7]));
         } else {
             Gdx.app.log("PirateGame", message);
             Pirate player = screen.getPirate(playerId);
@@ -135,8 +137,8 @@ public class PirateGame extends Game {
         manager.load("audio/sounds/powerup_spawn.wav", Sound.class);
         manager.load("audio/sounds/powerup.wav", Sound.class);
         manager.load("audio/sounds/powerdown.wav", Sound.class);
-        manager.load("audio/sounds/stomp.wav", Sound.class);
-        manager.load("audio/sounds/mariodie.wav", Sound.class);
+        manager.load("audio/sounds/TNT.mp3", Sound.class);
+        manager.load("audio/sounds/coconut.mp3", Sound.class);
         manager.finishLoading();
 
         setScreen(new LoginScreen(this));

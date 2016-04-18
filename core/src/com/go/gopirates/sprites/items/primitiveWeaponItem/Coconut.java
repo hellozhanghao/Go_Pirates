@@ -1,6 +1,7 @@
 package com.go.gopirates.sprites.items.primitiveWeaponItem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -22,6 +23,8 @@ public class Coconut extends PrimitiveWeaponItem {
 
     public Coconut(PlayScreen screen, float x, float y, Pirate.Direction direction) {
         super(screen);
+
+        PirateGame.manager.get("audio/sounds/coconut.mp3", Sound.class).play();
         stateTime=0;
         setRegion(screen.coconutAnimation.getKeyFrame(0, true));
         setSize(COCONUT_RADIUS * 2 / PirateGame.PPM, COCONUT_RADIUS * 2 / PirateGame.PPM);
@@ -35,18 +38,19 @@ public class Coconut extends PrimitiveWeaponItem {
     public void defineItem() {
         BodyDef bodyDef = new BodyDef();
 
+        float position = 0.8f;
         switch (direction) {
             case UP:
-                bodyDef.position.set(posX, posY + ((PirateGame.TILE_SIZE + COCONUT_RADIUS)) / PirateGame.PPM);
+                bodyDef.position.set(posX, posY + ((PirateGame.TILE_SIZE * position)) / PirateGame.PPM);
                 break;
             case DOWN:
-                bodyDef.position.set(posX, posY - ((PirateGame.TILE_SIZE + COCONUT_RADIUS)) / PirateGame.PPM);
+                bodyDef.position.set(posX, posY - ((PirateGame.TILE_SIZE * position)) / PirateGame.PPM);
                 break;
             case LEFT:
-                bodyDef.position.set(posX - ((PirateGame.TILE_SIZE + COCONUT_RADIUS)) / PirateGame.PPM, posY);
+                bodyDef.position.set(posX - ((PirateGame.TILE_SIZE * position)) / PirateGame.PPM, posY);
                 break;
             case RIGHT:
-                bodyDef.position.set(posX + ((PirateGame.TILE_SIZE + COCONUT_RADIUS)) / PirateGame.PPM, posY);
+                bodyDef.position.set(posX + ((PirateGame.TILE_SIZE * position)) / PirateGame.PPM, posY);
                 break;
         }
         bodyDef.type= BodyDef.BodyType.DynamicBody;
@@ -55,7 +59,7 @@ public class Coconut extends PrimitiveWeaponItem {
 
         FixtureDef fixtureDef=new FixtureDef();
         CircleShape shape=new CircleShape();
-        shape.setRadius(COCONUT_RADIUS / PirateGame.PPM);
+        shape.setRadius(COCONUT_RADIUS / 2 / PirateGame.PPM);
         fixtureDef.filter.categoryBits = PirateGame.COCONUT_BIT;
         fixtureDef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.OTHER_PLAYER_BIT | PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
                 PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT |  PirateGame.COCONUT_TREE_BIT;
