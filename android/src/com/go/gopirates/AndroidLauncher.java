@@ -262,7 +262,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 
 		for (String player : sessionInfo.mParticipantsString) {
 			if (!peers.contains(player)) {
-				PirateGame.screen.getPirate(sessionInfo.map.get(player)).destroy();
+				PirateGame.screen.getPirate(sessionInfo.mParticipantsMap.get(player)).destroy();
 				Log.i("Left", player + "left");
 			}
 		}
@@ -310,8 +310,6 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 			Log.i("PirateGame","Removing " + participantIds.get(i)+ "; " + id);
 			PirateGame.screen.removePlayer(id);
 		}
-		int id = sessionInfo.mParticipantsMap.get(participantIds.get(0));
-		PirateGame.screen.removePlayer(id);
 		PirateGame.screen.checkWin();
 	}
 	@Override

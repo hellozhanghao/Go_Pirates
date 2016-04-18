@@ -54,7 +54,7 @@ public class PirateGame extends Game {
     //User Selct
     public static int PLAYER_ID;
     public static int NUMBER_OF_PLAYERS;
-    public static int PLAYERS_ALIVE;
+//    public static int PLAYERS_ALIVE;
     //Settings:
     public static int DEFAULT_VELOCITY = 100;
     public static SpriteBatch batch;

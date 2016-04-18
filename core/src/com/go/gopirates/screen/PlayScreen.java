@@ -305,7 +305,7 @@ public class PlayScreen implements Screen {
             game.setScreen(new LoseScreen(game));
             game.sessionInfo.endSession();
         }
-        if (PirateGame.PLAYERS_ALIVE <= 1) {
+        if (PirateGame.NUMBER_OF_PLAYERS <= 1) {
             game.sessionInfo.mState = "win";
         }
     }

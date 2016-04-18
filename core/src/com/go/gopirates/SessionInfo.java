@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by zhanghao on 8/4/16.
@@ -20,7 +19,7 @@ public class SessionInfo {
     public ArrayList<String> mParticipantsString;
     public String mState;
 
-    public HashMap<String, Integer> map;
+    public HashMap<String, Integer> mParticipantsMap;
 
     public SessionInfo(){
         mId="";
@@ -28,19 +27,19 @@ public class SessionInfo {
         mParticipants=new ArrayList();
         mState="";
         mParticipantsString=new ArrayList<String>();
-        map = new HashMap<String, Integer>();
+        mParticipantsMap = new HashMap<String, Integer>();
     }
 
     public void setUpGame(){
         PirateGame.NUMBER_OF_PLAYERS=mParticipants.size();
-        PirateGame.PLAYERS_ALIVE = mParticipants.size();
+//        PirateGame.PLAYERS_ALIVE = mParticipants.size();
         Gdx.app.log("PirateGame",String.valueOf(mParticipants.size()));
         Collections.sort(mParticipantsString);
         for (int i = 0; i < mParticipantsString.size(); i++) {
-            map.put(mParticipantsString.get(i), i);
-            Gdx.app.log("Map", mParticipantsString.get(i) + " " + i);
+            mParticipantsMap.put(mParticipantsString.get(i), i);
+            Gdx.app.log("mParticipantsMap", mParticipantsString.get(i) + " " + i);
         }
-        PirateGame.PLAYER_ID = map.get(mId);
+        PirateGame.PLAYER_ID = mParticipantsMap.get(mId);
     }
 
     public void endSession(){
@@ -49,7 +48,7 @@ public class SessionInfo {
         mParticipants=new ArrayList();
         mState="";
         mParticipantsString = new ArrayList<String>();
-        map = new HashMap<String, Integer>();
+        mParticipantsMap = new HashMap<String, Integer>();
     }
 
 }
