@@ -277,8 +277,6 @@ public class Pirate extends Sprite {
         fixtureDef.shape=shape;
         b2body.createFixture(fixtureDef);
         shape.dispose();
-
-
     }
 
     private State getState(){

@@ -24,6 +24,7 @@ import com.google.android.gms.games.multiplayer.realtime.RoomUpdateListener;
 import com.google.example.games.basegameutils.GameHelper;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AndroidLauncher extends AndroidApplication implements PlayServices,
@@ -269,6 +270,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	@Override
 	public void	onPeersConnected(Room room, List<String> participantIds) {
 		// Checks for conditions to start game, if so - start game
+		Log.i("onPeersConnected", participantIds.toString());
 		if (shouldStartGame(room)) {
 //			initialize(new PirateGame(this), new AndroidApplicationConfiguration());
 			sessionInfo.mParticipants = room.getParticipants();
@@ -290,12 +292,17 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 			// do game-specific handling of this -- remove player's avatar
 			// from the screen, etc. If not enough players are left for
 			// the game to go on, end the game and leave the room.
-			for (int i = 0; i < sessionInfo.mParticipants.size(); i++) {
-				if(!participantIds.contains(sessionInfo.mParticipants.get(i))) {
-					int id = sessionInfo.mParticipantsMap.get(sessionInfo.mParticipants.get(i));
-					PirateGame.screen.removePlayer(id);
-				}
+			for(String s: participantIds){
+				Log.i("onPeersDisconnected",s);
 			}
+			int id = sessionInfo.mParticipantsMap.get(participantIds.get(0));
+			PirateGame.screen.removePlayer(id);
+//			for (int i = 0; i < sessionInfo.mParticipants.size(); i++) {
+//				if(!participantIds.contains(sessionInfo.mParticipants.get(i))) {
+//					int id = sessionInfo.mParticipantsMap.get(sessionInfo.mParticipants.get(i));
+//					PirateGame.screen.removePlayer(id);
+//				}
+//			}
 			PirateGame.screen.checkWin();
 		}
 		else if (shouldCancelGame(room)){
