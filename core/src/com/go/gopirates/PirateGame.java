@@ -75,22 +75,33 @@ public class PirateGame extends Game {
     public static void resloveMessage(String message) {
 
         String[] words = message.split(";");
-        if (words[0].equals("Location")) {
-            int playerId = Integer.parseInt(words[1]);
+        String action = words[0];
+        int playerId = Integer.parseInt(words[1]);
+        if(action.equals("SignedOut")){
+            screen.removePlayer(playerId);
+            if(NUMBER_OF_PLAYERS < 2){
+                // TODO: 18/4/16 winning screen then sign out
+                screen.game.sessionInfo.mState = "win";
+                screen.checkWin();
+            }
+        }
+        if (action.equals("Velocity")) {
+            float dx = Float.parseFloat(words[2]);
+            float dy = Float.parseFloat(words[3]);
+            screen.getPirate(playerId).b2body.setLinearVelocity(dx * Gdx.graphics.getDeltaTime(), dy * Gdx.graphics.getDeltaTime());
+            Gdx.app.log("Loc:", playerId + " " + dx + ", " + dy);
+        }else if(action.equals("Location")){
             float x = Float.parseFloat(words[2]);
             float y = Float.parseFloat(words[3]);
-            screen.getPirate(playerId).b2body.setLinearVelocity(x*Gdx.graphics.getDeltaTime(),y*Gdx.graphics.getDeltaTime());
-            Gdx.app.log("Loc:" , playerId + " " + x + ", " + y);
-//            Pirate.Direction direction = Pirate.Direction.valueOf(words[4]);
-//            Pirate.State currentState = Pirate.State.valueOf(words[5]);
-//            screen.getPirate(playerId).b2body.setTransform(x, y, 0);
-//            screen.getPirate(playerId).direction = direction;
-//            screen.getPirate(playerId).currentState = currentState;
+            Pirate.Direction direction = Pirate.Direction.valueOf(words[4]);
+            Pirate.State currentState = Pirate.State.valueOf(words[5]);
+            screen.getPirate(playerId).b2body.setTransform(x, y, 0);
+            screen.getPirate(playerId).direction = direction;
+            screen.getPirate(playerId).currentState = currentState;
         } else {
             Gdx.app.log("PirateGame", message);
-            int playerId = Integer.parseInt(words[1]);
             Pirate player = screen.getPirate(playerId);
-            String action = words[0];
+
             Gdx.app.log("ACTION", action + " " + playerId);
             if (action.equals("Bomb")) {
                 screen.getPirate().explosiveItems.add(new Bomb(screen, player.b2body.getPosition().x, player.b2body.getPosition().y));
@@ -99,13 +110,16 @@ public class PirateGame extends Game {
             } else if (action.equals("Coconut")) {
                 screen.getPirate(playerId).primitiveWeaponItems.add(new Coconut(screen, player.b2body.getPosition().x, player.b2body.getPosition().y, player.direction));
             } else if (action.equals("Sword")) {
-                screen.getPirate(playerId).primitiveWeaponItems.add(new Sword(screen, Integer.valueOf(playerId)));}
-            else if (words[0].equals("Shield")) {
+                screen.getPirate(playerId).primitiveWeaponItems.add(new Sword(screen, Integer.valueOf(playerId)));
+            } else if (action.equals("Shield")) {
                 screen.getPirate(playerId).nonInteractiveSprites.add(new ShieldSprite(screen, playerId));
-            } else if (words[0].equals("Treasure")) {
+            } else if (action.equals("Treasure")) {
                 screen.game.sessionInfo.mState = "lose";
-            } else if (words[0].equals("Die")) {
-                screen.getPirate(playerId).destroy();
+                screen.checkWin();
+            } else if (action.equals("Die")) {
+//                screen.getPirate(playerId).destroy();
+                screen.removePlayer(playerId);
+                screen.checkWin();
             }
         }
     }

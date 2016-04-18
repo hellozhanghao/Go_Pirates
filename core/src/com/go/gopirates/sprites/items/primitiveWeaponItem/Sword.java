@@ -14,7 +14,7 @@ import com.go.gopirates.screen.PlayScreen;
  */
 public class Sword extends PrimitiveWeaponItem {
 
-    private final float SWORD_LENGTH =PirateGame.TILE_SIZE/4;
+    private final float SWORD_LENGTH =PirateGame.TILE_SIZE/3;
     private float stateTimer;
     private boolean setSwordTofalse;
     private int playerId;
@@ -57,7 +57,7 @@ public class Sword extends PrimitiveWeaponItem {
         CircleShape shape=new CircleShape();
         shape.setRadius(SWORD_LENGTH / PirateGame.PPM);
         fixtureDef.filter.categoryBits = PirateGame.SWORD_BIT;
-        fixtureDef.filter.maskBits = PirateGame.PLAYER_BIT;
+        fixtureDef.filter.maskBits = PirateGame.PLAYER_BIT | PirateGame.OTHER_PLAYER_BIT;
         fixtureDef.shape=shape;
         body.createFixture(fixtureDef).setUserData(this);
     }

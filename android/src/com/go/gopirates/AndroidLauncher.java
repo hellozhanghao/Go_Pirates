@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.go.gopirates.sprites.Pirate;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.GamesStatusCodes;
@@ -38,9 +39,11 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	Activity activity;
 	SessionInfo sessionInfo;
 	GoogleApiClient mGoogleApiClient;
+
 	// Is a game ongoing?
 	boolean mPlaying = false;
 	private GameHelper gameHelper;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +140,8 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 			Log.d("Game", "Log out failed");
 		}
 	}
+
+
 
 	public void broadcastMessage(final String message) {
 
@@ -254,6 +259,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	public void	onPeerJoined(Room room, List<String> participantIds) {}
 	@Override
 	public void onPeerLeft(Room room, List<String> peers) {
+		Log.i("onPeerLeft", peers.toString());
 		// peer left -- see if game should be canceled
 		if (!mPlaying && shouldCancelGame(room)) {
 			Games.RealTimeMultiplayer.leave(gameHelper.getApiClient(), null, sessionInfo.mRoomId);
@@ -278,10 +284,19 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	}
 	@Override
 	public void	onPeersDisconnected(Room room, List<String> participantIds) {
+		Log.i("onPeersDisconnected", participantIds.toString());
+		// TODO: 18/4/16 check the logic
 		if (mPlaying) {
 			// do game-specific handling of this -- remove player's avatar
 			// from the screen, etc. If not enough players are left for
 			// the game to go on, end the game and leave the room.
+			for (int i = 0; i < sessionInfo.mParticipants.size(); i++) {
+				if(!participantIds.contains(sessionInfo.mParticipants.get(i))) {
+					int id = sessionInfo.mParticipantsMap.get(sessionInfo.mParticipants.get(i));
+					PirateGame.screen.removePlayer(id);
+				}
+			}
+			PirateGame.screen.checkWin();
 		}
 		else if (shouldCancelGame(room)){
 			// cancel the game
@@ -312,7 +327,17 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	}
 
 	@Override
-	public void	onLeftRoom(int statusCode, String roomId) {}
+	public void	onLeftRoom(int statusCode, String roomId) {
+		// TODO: 18/4/16
+		Log.i("onLeftRoom", statusCode+"");
+		broadcastMessage("SignedOut;" + PirateGame.PLAYER_ID);
+//		if (statusCode == GamesStatusCodes.STATUS_OK){
+//			broadcastMessage("SignedOut;"+PirateGame.PLAYER_ID);
+//			signOut();
+//		}
+//		else if(statusCode == GamesStatusCodes.STATUS_CLIENT_RECONNECT_REQUIRED){}
+//		else if(statusCode == GamesStatusCodes.STATUS_INTERNAL_ERROR){}
+	}
 
 	@Override
 	public void	onRoomConnected(int statusCode, Room room) {
@@ -322,7 +347,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 			// show error message, return to main screen.
 			Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
 
-			Log.i("Zhang Hao","room connevted");
+			Log.i("Zhang Hao","room connected");
 		}
 		sessionInfo.mRoomId = room.getRoomId();
 		sessionInfo.mParticipants = room.getParticipants();

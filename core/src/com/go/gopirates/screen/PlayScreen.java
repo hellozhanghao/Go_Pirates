@@ -46,6 +46,9 @@ import java.util.concurrent.LinkedBlockingQueue;
  * Created by Amy on 25/2/16.
  */
 public class PlayScreen implements Screen {
+    //Multiplayer
+    private float updateLocationTimer = 0;
+
     public static boolean alreadyDestroyed = false;
     public Animation explosionAnimation;
     public Animation coconutAnimation;
@@ -204,7 +207,7 @@ public class PlayScreen implements Screen {
         //For phone:
         player.b2body.setLinearVelocity(controller.touchpad.getKnobPercentX() * PirateGame.DEFAULT_VELOCITY,
                 controller.touchpad.getKnobPercentY() * PirateGame.DEFAULT_VELOCITY);
-        sendLocation();
+        sendVelocity();
 
         /*
         //for keyboard:
@@ -230,7 +233,7 @@ public class PlayScreen implements Screen {
             moved = true;
         }
         if(moved)
-            sendLocation();
+            sendVelocity();
 
         Gdx.app.log("Moved", moved + "");
         */
@@ -285,17 +288,21 @@ public class PlayScreen implements Screen {
         }
     }
 
+    public void sendVelocity() {
+        game.playServices.broadcastMessage("Velocity;" + PirateGame.PLAYER_ID + ";" +
+                getPirate().b2body.getLinearVelocity().x / Gdx.graphics.getDeltaTime() + ";"
+                + getPirate().b2body.getLinearVelocity().y / Gdx.graphics.getDeltaTime());
+    }
     public void sendLocation(){
         game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+
-                getPirate().b2body.getLinearVelocity().x / Gdx.graphics.getDeltaTime()+";"
-                +getPirate().b2body.getLinearVelocity().y / Gdx.graphics.getDeltaTime());
-//        game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+
-//                getPirate().b2body.getPosition().x+";"+getPirate().b2body.getPosition().y+";" +
-//                getPirate().direction + ";" + getPirate().currentState);
+                getPirate().b2body.getPosition().x+";"+getPirate().b2body.getPosition().y+";" +
+                getPirate().direction + ";" + getPirate().currentState);
     }
 
     public void checkWin() {
-        if (game.sessionInfo.mState.equals("win")) {
+        if(game.NUMBER_OF_PLAYERS < 2)
+            game.sessionInfo.mState = "win";
+        if (game.sessionInfo.mState.equals("win") ) {
             game.setScreen(new WinScreen(game));
             game.sessionInfo.endSession();
         } else if (game.sessionInfo.mState.equals("lose")) {
@@ -307,9 +314,14 @@ public class PlayScreen implements Screen {
         //handle user input first
         handleInput(dt);
         handleSpawningItems();
-//        sendLocation();
+        if(updateLocationTimer >=3){
+            updateLocationTimer = 0;
+            sendLocation();
+        }
+        updateLocationTimer += dt;
+//        sendVelocity(); IS BEING CALLED RIGHT AFTER WE GET SOMETHING FROM CONTROLLER
+//        checkWin(); IS BEING CALLED ONLY WHEN THE VALUE OF mState IS CHANGED
         checkWin();
-
         Gdx.app.log("FPS", "FPS:" + 1 / dt);
         //takes 1 step in the physics simulation(60 times per second)
         world.step(1 / 60f, 6, 2);
@@ -332,7 +344,6 @@ public class PlayScreen implements Screen {
                     player.primitiveWeaponItems.removeValue(primitiveWeaponItem,true);
             }
         }
-//        sendLocation();
         Pirate player = getPirate();
 
         //update gamecam
@@ -434,7 +445,10 @@ public class PlayScreen implements Screen {
         controller.changePowerUp(getPirate().powerUpHolding);
     }
 
-    public void updateHealth(){ controller.changeHealth(getPirate().health);}
+    public void updateHealth(){
+        controller.changeHealth(getPirate().health);
+        checkWin();
+    }
 
     public Pirate getPirate(int id){
         return players.get(id);
@@ -455,6 +469,17 @@ public class PlayScreen implements Screen {
     //Spawing item helper
     public void spawnItem(ItemDef idef) {
         itemsToSpawn.add(idef);
+    }
+
+    public void removePlayer(int playerId){
+        for(Pirate p: players){
+            if (p.playerId == playerId){
+//                p.destroy();
+                players.removeValue(p,true);
+                game.NUMBER_OF_PLAYERS --;
+                return;
+            }
+        }
     }
 
 }
