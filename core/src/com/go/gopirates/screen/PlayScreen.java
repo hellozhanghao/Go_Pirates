@@ -46,15 +46,14 @@ import java.util.concurrent.LinkedBlockingQueue;
  * Created by Amy on 25/2/16.
  */
 public class PlayScreen implements Screen {
-    //Multiplayer
-    private float updateLocationTimer = 0;
-
     public static boolean alreadyDestroyed = false;
     public Animation explosionAnimation;
     public Animation coconutAnimation;
     public TextureRegion shieldTextureRegion;
     //Reference to our Game, used to set Screens
     public PirateGame game;
+    //Multiplayer
+    private float updateLocationTimer = 0;
     private TextureAtlas atlas;
     //basic playscreen variables
     private OrthographicCamera gamecam;
@@ -207,7 +206,6 @@ public class PlayScreen implements Screen {
         //For phone:
         player.b2body.setLinearVelocity(controller.touchpad.getKnobPercentX() * PirateGame.DEFAULT_VELOCITY,
                 controller.touchpad.getKnobPercentY() * PirateGame.DEFAULT_VELOCITY);
-        sendVelocity();
 
         /*
         //for keyboard:
@@ -300,8 +298,6 @@ public class PlayScreen implements Screen {
     }
 
     public void checkWin() {
-        if(game.NUMBER_OF_PLAYERS < 2)
-            game.sessionInfo.mState = "win";
         if (game.sessionInfo.mState.equals("win") ) {
             game.setScreen(new WinScreen(game));
             game.sessionInfo.endSession();
@@ -309,7 +305,11 @@ public class PlayScreen implements Screen {
             game.setScreen(new LoseScreen(game));
             game.sessionInfo.endSession();
         }
+        if (PirateGame.PLAYERS_ALIVE <= 1) {
+            game.sessionInfo.mState = "win";
+        }
     }
+
     public void update(float dt) {
         //handle user input first
         handleInput(dt);

@@ -1,0 +1,70 @@
+package com.go.gopirates.sprites.items.primitiveWeaponItem;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.go.gopirates.PirateGame;
+import com.go.gopirates.screen.PlayScreen;
+import com.go.gopirates.sprites.Pirate;
+import com.go.gopirates.sprites.items.noneInteractiveItems.SwordSprite;
+
+/**
+ * Created by zhanghao on 3/4/16.
+ */
+public class Sword extends PrimitiveWeaponItem {
+
+    private final float SWORD_LENGTH =PirateGame.TILE_SIZE/4;
+    private float stateTimer,fireNewTimer;
+    private boolean setSwordTofalse;
+    private int playerId;
+    private float FIRE_NEW_INTERVAL=0.5f;
+
+
+    public Sword(PlayScreen screen, int playerId) {
+        super(screen);
+        stateTimer=0;
+        fireNewTimer=0;
+        screen.getPirate(playerId).swordInUse = true;
+        setSwordTofalse=false;
+        this.playerId = playerId;
+        defineItem();
+    }
+
+
+    @Override
+    public void defineItem() {
+        body=world.createBody(new BodyDef());
+    }
+
+    public void update(float dt){
+        super.update(dt);
+        stateTimer+=dt;
+        fireNewTimer+=dt;
+        if (fireNewTimer>FIRE_NEW_INTERVAL & !destroyed){
+            screen.getPirate(playerId).nonInteractiveSprites.add(new SwordSprite(screen,screen.getPirate(playerId).b2body.getPosition().x,
+                    screen.getPirate(playerId).b2body.getPosition().y,
+                    SwordSprite.ExpolsionDirection.valueOf(screen.getPirate(playerId).direction.toString()),1f));
+            fireNewTimer=0;
+        }
+
+        if (stateTimer>PirateGame.SWORD_VALID_TIME){
+            destroy();
+            if (!setSwordTofalse){
+                screen.getPirate(playerId).swordInUse = false;
+                setSwordTofalse=true;
+            }
+        }
+    }
+    @Override
+    public void hitOnPlayer() {
+        super.hitOnPlayer();
+        Gdx.app.log("Weapon","Hit by Sword");
+    }
+
+    public void draw(Batch batch){
+
+    }
+}

@@ -54,6 +54,7 @@ public class PirateGame extends Game {
     //User Selct
     public static int PLAYER_ID;
     public static int NUMBER_OF_PLAYERS;
+    public static int PLAYERS_ALIVE;
     //Settings:
     public static int DEFAULT_VELOCITY = 100;
     public static SpriteBatch batch;
@@ -76,21 +77,9 @@ public class PirateGame extends Game {
 
         String[] words = message.split(";");
         String action = words[0];
-        int playerId = Integer.parseInt(words[1]);
-        if(action.equals("SignedOut")){
-            screen.removePlayer(playerId);
-            if(NUMBER_OF_PLAYERS < 2){
-                // TODO: 18/4/16 winning screen then sign out
-                screen.game.sessionInfo.mState = "win";
-                screen.checkWin();
-            }
-        }
-        if (action.equals("Velocity")) {
-            float dx = Float.parseFloat(words[2]);
-            float dy = Float.parseFloat(words[3]);
-            screen.getPirate(playerId).b2body.setLinearVelocity(dx * Gdx.graphics.getDeltaTime(), dy * Gdx.graphics.getDeltaTime());
-            Gdx.app.log("Loc:", playerId + " " + dx + ", " + dy);
-        }else if(action.equals("Location")){
+        if (action.equals("Location")) {
+            int playerId = Integer.parseInt(words[1]);
+
             float x = Float.parseFloat(words[2]);
             float y = Float.parseFloat(words[3]);
             Pirate.Direction direction = Pirate.Direction.valueOf(words[4]);
@@ -98,10 +87,11 @@ public class PirateGame extends Game {
             screen.getPirate(playerId).b2body.setTransform(x, y, 0);
             screen.getPirate(playerId).direction = direction;
             screen.getPirate(playerId).currentState = currentState;
+            screen.getPirate(playerId).b2body.setLinearVelocity(Float.valueOf(words[6]), Float.valueOf(words[7]));
         } else {
             Gdx.app.log("PirateGame", message);
+            int playerId = Integer.parseInt(words[1]);
             Pirate player = screen.getPirate(playerId);
-
             Gdx.app.log("ACTION", action + " " + playerId);
             if (action.equals("Bomb")) {
                 screen.getPirate().explosiveItems.add(new Bomb(screen, player.b2body.getPosition().x, player.b2body.getPosition().y));
@@ -115,11 +105,8 @@ public class PirateGame extends Game {
                 screen.getPirate(playerId).nonInteractiveSprites.add(new ShieldSprite(screen, playerId));
             } else if (action.equals("Treasure")) {
                 screen.game.sessionInfo.mState = "lose";
-                screen.checkWin();
             } else if (action.equals("Die")) {
-//                screen.getPirate(playerId).destroy();
-                screen.removePlayer(playerId);
-                screen.checkWin();
+                screen.getPirate(playerId).destroy();
             }
         }
     }
@@ -135,8 +122,8 @@ public class PirateGame extends Game {
         manager.load("audio/sounds/powerup_spawn.wav", Sound.class);
         manager.load("audio/sounds/powerup.wav", Sound.class);
         manager.load("audio/sounds/powerdown.wav", Sound.class);
-        manager.load("audio/sounds/stomp.wav", Sound.class);
-        manager.load("audio/sounds/mariodie.wav", Sound.class);
+        manager.load("audio/sounds/TNT.mp3", Sound.class);
+        manager.load("audio/sounds/coconut.mp3", Sound.class);
         manager.finishLoading();
 
         setScreen(new LoginScreen(this));
@@ -153,10 +140,6 @@ public class PirateGame extends Game {
     public void render () {
         super.render();
     }
-
-    // TODO: 9/4/16 Synchronize sword animaition
-    // TODO: 9/4/16 Add coconut
-    // TODO: 9/4/16 Add wait screen and gameover screen
 
 
 

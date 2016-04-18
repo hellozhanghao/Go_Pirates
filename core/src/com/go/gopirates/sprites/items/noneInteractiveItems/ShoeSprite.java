@@ -1,6 +1,7 @@
 package com.go.gopirates.sprites.items.noneInteractiveItems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.go.gopirates.PirateGame;
 
 /**
@@ -16,6 +17,8 @@ public class ShoeSprite extends NonInteractiveSprites {
         stateTimer = 0;
         shoesOn = true;
         PirateGame.DEFAULT_VELOCITY = PirateGame.DEFAULT_VELOCITY * times;
+        PirateGame.manager.get("audio/sounds/powerup.wav", Sound.class).play();
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.go.gopirates.sprites.items.explosiveItems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
@@ -29,6 +30,7 @@ public class TNT extends ExplosiveItem {
 
     @Override
     public void use() {
+        PirateGame.manager.get("audio/sounds/TNT.mp3", Sound.class).play();
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++)
                 screen.getPirate().nonInteractiveSprites.add(

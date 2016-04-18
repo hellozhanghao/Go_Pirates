@@ -221,7 +221,7 @@ public class Pirate extends Sprite {
         else  fixtureDef.filter.categoryBits = PirateGame.OTHER_PLAYER_BIT;
         fixtureDef.filter.maskBits = PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
                                      PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT | PirateGame.POWERUP_BIT|
-                                     PirateGame.BOMB_EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT;
+                PirateGame.BOMB_EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT | PirateGame.SWORD_BIT;
 
         fixtureDef.shape=shape;
         b2body.createFixture(fixtureDef);
@@ -247,7 +247,7 @@ public class Pirate extends Sprite {
         else  fixtureDef.filter.categoryBits = PirateGame.OTHER_PLAYER_BIT;
         fixtureDef.filter.maskBits = PirateGame.BOMB_BIT | PirateGame.COCONUT_BIT | PirateGame.ROCK_BIT |
                 PirateGame.BARREL_BIT | PirateGame.TREASURE_BIT | PirateGame.POWERUP_BIT|
-                PirateGame.BOMB_EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT;
+                PirateGame.BOMB_EXPLOSION_BIT | PirateGame.COCONUT_TREE_BIT | PirateGame.SWORD_BIT;
 
         fixtureDef.shape=shape;
         b2body.createFixture(fixtureDef);
@@ -431,6 +431,7 @@ public class Pirate extends Sprite {
 
     public void destroy() {
         toDestroy = true;
+        PirateGame.PLAYERS_ALIVE--;
     }
 
     public enum Direction {UP, DOWN, LEFT, RIGHT}
