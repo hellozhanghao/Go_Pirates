@@ -32,7 +32,7 @@ public class SessionInfo {
 
     public void setUpGame(){
         PirateGame.NUMBER_OF_PLAYERS=mParticipants.size();
-//        PirateGame.PLAYERS_ALIVE = mParticipants.size();
+        PirateGame.PLAYERS_ALIVE = mParticipants.size();
         Gdx.app.log("PirateGame",String.valueOf(mParticipants.size()));
         Collections.sort(mParticipantsString);
         for (int i = 0; i < mParticipantsString.size(); i++) {

@@ -42,7 +42,6 @@ public class WinScreen implements Screen {
         background = new Texture("img/WinScreen.png");
         background.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         backgroundSprite = new Sprite(background);
-
     }
 
     @Override

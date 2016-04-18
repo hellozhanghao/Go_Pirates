@@ -308,9 +308,8 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		for(int i = 0; i < participantIds.size(); i++){
 			int id = sessionInfo.mParticipantsMap.get(participantIds.get(i));
 			Log.i("PirateGame","Removing " + participantIds.get(i)+ "; " + id);
-			PirateGame.screen.removePlayer(id);
+			PirateGame.screen.getPirate(id).destroy();
 		}
-		PirateGame.screen.checkWin();
 	}
 	@Override
 	public void	onRoomAutoMatching(Room room) {}

@@ -431,7 +431,7 @@ public class Pirate extends Sprite {
 
     public void destroy() {
         toDestroy = true;
-//        PirateGame.PLAYERS_ALIVE--;
+        PirateGame.PLAYERS_ALIVE--;
     }
 
     public enum Direction {UP, DOWN, LEFT, RIGHT}

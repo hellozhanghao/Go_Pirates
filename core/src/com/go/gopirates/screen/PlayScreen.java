@@ -286,11 +286,6 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public void sendVelocity() {
-        game.playServices.broadcastMessage("Velocity;" + PirateGame.PLAYER_ID + ";" +
-                getPirate().b2body.getLinearVelocity().x / Gdx.graphics.getDeltaTime() + ";"
-                + getPirate().b2body.getLinearVelocity().y / Gdx.graphics.getDeltaTime());
-    }
     public void sendLocation(){
         game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+
                 getPirate().b2body.getPosition().x+";"+getPirate().b2body.getPosition().y+";" +
@@ -305,7 +300,7 @@ public class PlayScreen implements Screen {
             game.setScreen(new LoseScreen(game));
             game.sessionInfo.endSession();
         }
-        if (PirateGame.NUMBER_OF_PLAYERS <= 1) {
+        if (PirateGame.PLAYERS_ALIVE <= 1) {
             game.sessionInfo.mState = "win";
         }
     }
@@ -314,14 +309,9 @@ public class PlayScreen implements Screen {
         //handle user input first
         handleInput(dt);
         handleSpawningItems();
-        if(updateLocationTimer >= 2){
-            updateLocationTimer = 0;
-            sendLocation();
-        }
-        updateLocationTimer += dt;
-//        sendVelocity(); IS BEING CALLED RIGHT AFTER WE GET SOMETHING FROM CONTROLLER
-//        checkWin(); IS BEING CALLED ONLY WHEN THE VALUE OF mState IS CHANGED
+        sendLocation();
         checkWin();
+
 //        Gdx.app.log("FPS", "FPS:" + 1 / dt);
         //takes 1 step in the physics simulation(60 times per second)
         world.step(1 / 60f, 6, 2);
@@ -477,7 +467,7 @@ public class PlayScreen implements Screen {
                 if (p.playerId == playerId) {
                     //                p.destroy();
                     players.removeValue(p, true);
-                    game.NUMBER_OF_PLAYERS--;
+                    PirateGame.NUMBER_OF_PLAYERS--;
                     return;
                 }
             }
