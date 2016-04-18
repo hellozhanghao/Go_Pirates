@@ -287,7 +287,6 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		Log.i("Peers", participantIds.size() + "");
 		// Checks for conditions to start game, if so - start game
 		if (shouldStartGame(room)) {
-//			initialize(new PirateGame(this), new AndroidApplicationConfiguration());
 			sessionInfo.mId=room.getParticipantId(Games.Players.getCurrentPlayerId(mGoogleApiClient));
 			updateRoom(room);
 			sessionInfo.mState="Play";

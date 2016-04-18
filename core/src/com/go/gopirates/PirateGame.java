@@ -77,7 +77,6 @@ public class PirateGame extends Game {
 
         String[] words = message.split(";");
         String action = words[0];
-
         if (action.equals("Location")) {
             int playerId = Integer.parseInt(words[1]);
 
@@ -92,9 +91,7 @@ public class PirateGame extends Game {
         } else {
             Gdx.app.log("PirateGame", message);
             int playerId = Integer.parseInt(words[1]);
-
             Pirate player = screen.getPirate(playerId);
-
             Gdx.app.log("ACTION", action + " " + playerId);
             if (action.equals("Bomb")) {
                 screen.getPirate().explosiveItems.add(new Bomb(screen, player.b2body.getPosition().x, player.b2body.getPosition().y));

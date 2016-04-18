@@ -206,7 +206,6 @@ public class PlayScreen implements Screen {
         //For phone:
         player.b2body.setLinearVelocity(controller.touchpad.getKnobPercentX() * PirateGame.DEFAULT_VELOCITY,
                 controller.touchpad.getKnobPercentY() * PirateGame.DEFAULT_VELOCITY);
-        sendVelocity();
 
         /*
         //for keyboard:
@@ -287,11 +286,7 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public void sendVelocity() {
-        game.playServices.broadcastMessage("Velocity;" + PirateGame.PLAYER_ID + ";" +
-                getPirate().b2body.getLinearVelocity().x / Gdx.graphics.getDeltaTime() + ";"
-                + getPirate().b2body.getLinearVelocity().y / Gdx.graphics.getDeltaTime());
-    }
+
     public void sendLocation(){
         game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+
                 getPirate().b2body.getPosition().x+";"+getPirate().b2body.getPosition().y+";" +
@@ -299,8 +294,6 @@ public class PlayScreen implements Screen {
     }
 
     public void checkWin() {
-        if (PirateGame.NUMBER_OF_PLAYERS < 2)
-            game.sessionInfo.mState = "win";
         if (game.sessionInfo.mState.equals("win") ) {
             game.setScreen(new WinScreen(game));
             game.sessionInfo.endSession();

@@ -38,16 +38,16 @@ public class Sword extends PrimitiveWeaponItem {
 
         switch (screen.getPirate(playerId).direction) {
             case UP:
-                bodyDef.position.set(posX, posY + ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH * 1.2f)) / PirateGame.PPM);
+                bodyDef.position.set(posX, posY + ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH * 1.5f)) / PirateGame.PPM);
                 break;
             case DOWN:
-                bodyDef.position.set(posX, posY - ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH * 1.2f)) / PirateGame.PPM);
+                bodyDef.position.set(posX, posY - ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH * 1.5f)) / PirateGame.PPM);
                 break;
             case LEFT:
-                bodyDef.position.set(posX - ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH * 1.2f)) / PirateGame.PPM, posY);
+                bodyDef.position.set(posX - ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH * 1.5f)) / PirateGame.PPM, posY);
                 break;
             case RIGHT:
-                bodyDef.position.set(posX + ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH * 1.2f)) / PirateGame.PPM, posY);
+                bodyDef.position.set(posX + ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH * 1.5f)) / PirateGame.PPM, posY);
                 break;
         }
         bodyDef.type= BodyDef.BodyType.DynamicBody;
@@ -73,16 +73,16 @@ public class Sword extends PrimitiveWeaponItem {
         if (!destroyed) {
             switch (screen.getPirate(playerId).direction) {
                 case UP:
-                    body.setTransform(posX, posY + ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH)) / PirateGame.PPM, 0);
+                    body.setTransform(posX, posY + ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH * 1.5f)) / PirateGame.PPM, 0);
                     break;
                 case DOWN:
-                    body.setTransform(posX, posY - ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH)) / PirateGame.PPM, 0);
+                    body.setTransform(posX, posY - ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH * 1.5f)) / PirateGame.PPM, 0);
                     break;
                 case LEFT:
-                    body.setTransform(posX - ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH)) / PirateGame.PPM, posY, 0);
+                    body.setTransform(posX - ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH * 1.5f)) / PirateGame.PPM, posY, 0);
                     break;
                 case RIGHT:
-                    body.setTransform(posX + ((PirateGame.TILE_SIZE/2+ SWORD_LENGTH))/PirateGame.PPM,posY,0);
+                    body.setTransform(posX + ((PirateGame.TILE_SIZE / 2 + SWORD_LENGTH * 1.5f)) / PirateGame.PPM, posY, 0);
                     break;
             }
         }
