@@ -14,7 +14,7 @@ import com.go.gopirates.screen.PlayScreen;
  */
 public class Sword extends PrimitiveWeaponItem {
 
-    private final float SWORD_LENGTH = PirateGame.TILE_SIZE / 4;
+    private final float SWORD_LENGTH = PirateGame.TILE_SIZE / 8;
     private float stateTimer;
     private boolean setSwordTofalse;
     private int playerId;
