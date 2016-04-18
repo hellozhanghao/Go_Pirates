@@ -305,11 +305,12 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		}
 
 		// Removing the pirates that left the game
-		for(int i = 0; i < participantIds.size(); i++){
-			int id = sessionInfo.mParticipantsMap.get(participantIds.get(i));
-			Log.i("PirateGame","Removing " + participantIds.get(i)+ "; " + id);
-			PirateGame.screen.getPirate(id).destroy();
-		}
+		// TODO: 19/4/16 NullpointerExeption Captured
+//		for(int i = 0; i < participantIds.size(); i++){
+//			int id = sessionInfo.mParticipantsMap.get(participantIds.get(i));
+//			Log.i("PirateGame","Removing " + participantIds.get(i)+ "; " + id);
+//			PirateGame.screen.getPirate(id).destroy();
+//		}
 	}
 	@Override
 	public void	onRoomAutoMatching(Room room) {}

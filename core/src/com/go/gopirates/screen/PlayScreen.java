@@ -289,7 +289,7 @@ public class PlayScreen implements Screen {
     public void sendLocation(){
         game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+
                 getPirate().b2body.getPosition().x+";"+getPirate().b2body.getPosition().y+";" +
-                getPirate().direction + ";" + getPirate().currentState);
+                getPirate().direction + ";" + getPirate().currentState + ";" + getPirate().b2body.getLinearVelocity().x + ";" + getPirate().b2body.getLinearVelocity().y);
     }
 
     public void checkWin() {

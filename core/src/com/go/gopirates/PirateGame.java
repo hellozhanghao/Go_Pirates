@@ -79,7 +79,6 @@ public class PirateGame extends Game {
         String action = words[0];
         if (action.equals("Location")) {
             int playerId = Integer.parseInt(words[1]);
-
             float x = Float.parseFloat(words[2]);
             float y = Float.parseFloat(words[3]);
             Pirate.Direction direction = Pirate.Direction.valueOf(words[4]);
