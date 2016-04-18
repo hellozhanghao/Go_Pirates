@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -237,9 +238,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	@Override
 	public void onP2PConnected(String participantId) {}
 	@Override
-	public void onP2PDisconnected(String participantId) {
-
-	}
+	public void	onP2PDisconnected(String participantId) {}
 	@Override
 	public void onPeerDeclined(Room room, List<String> peers) {
 		// peer declined invitation -- see if game should be canceled
@@ -254,7 +253,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	public void	onPeerJoined(Room room, List<String> participantIds) {}
 	@Override
 	public void onPeerLeft(Room room, List<String> peers) {
-		Log.i("Left", peers.toString());
+		Log.i("onPeerLeft", peers.toString());
 		// peer left -- see if game should be canceled
 		if (!mPlaying && shouldCancelGame(room)) {
 			Games.RealTimeMultiplayer.leave(gameHelper.getApiClient(), null, sessionInfo.mRoomId);
@@ -263,7 +262,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 
 		for (String player : sessionInfo.mParticipantsString) {
 			if (!peers.contains(player)) {
-				PirateGame.screen.getPirate(sessionInfo.map.get(player)).destroy();
+				PirateGame.screen.getPirate(sessionInfo.mParticipantsMap.get(player)).destroy();
 				Log.i("Left", player + "left");
 			}
 		}
@@ -304,6 +303,14 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 			Games.RealTimeMultiplayer.leave(gameHelper.getApiClient(), null, sessionInfo.mRoomId);
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		}
+
+		// Removing the pirates that left the game
+		for(int i = 0; i < participantIds.size(); i++){
+			int id = sessionInfo.mParticipantsMap.get(participantIds.get(i));
+			Log.i("PirateGame","Removing " + participantIds.get(i)+ "; " + id);
+			PirateGame.screen.removePlayer(id);
+		}
+		PirateGame.screen.checkWin();
 	}
 	@Override
 	public void	onRoomAutoMatching(Room room) {}
@@ -336,10 +343,15 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 			// let screen go to sleep
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 			// show error message, return to main screen.
+			Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
+
+			Log.i("Zhang Hao","room connected");
 		}
 		sessionInfo.mRoomId = room.getRoomId();
 		sessionInfo.mParticipants = room.getParticipants();
 		sessionInfo.mId=room.getParticipantId(Games.Players.getCurrentPlayerId(mGoogleApiClient));
+
+		Log.i("Zhang Hao",sessionInfo.mRoomId);
 	}
 
 	@Override
@@ -347,6 +359,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		if (statusCode != GamesStatusCodes.STATUS_OK) {
 			// Sleep the screen
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
 			// Show error message or do nothing, return to main screen.
 			return;
 		}

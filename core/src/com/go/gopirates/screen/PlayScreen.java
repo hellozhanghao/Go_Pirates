@@ -53,8 +53,8 @@ public class PlayScreen implements Screen {
     //Reference to our Game, used to set Screens
     public PirateGame game;
     //Multiplayer
+    private float updateLocationTimer = 0;
     private TextureAtlas atlas;
-
     //basic playscreen variables
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -286,10 +286,15 @@ public class PlayScreen implements Screen {
         }
     }
 
+    public void sendVelocity() {
+        game.playServices.broadcastMessage("Velocity;" + PirateGame.PLAYER_ID + ";" +
+                getPirate().b2body.getLinearVelocity().x / Gdx.graphics.getDeltaTime() + ";"
+                + getPirate().b2body.getLinearVelocity().y / Gdx.graphics.getDeltaTime());
+    }
     public void sendLocation(){
         game.playServices.broadcastMessage("Location;"+PirateGame.PLAYER_ID+";"+
                 getPirate().b2body.getPosition().x+";"+getPirate().b2body.getPosition().y+";" +
-                getPirate().direction + ";" + getPirate().currentState + ";" + getPirate().b2body.getLinearVelocity().x + ";" + getPirate().b2body.getLinearVelocity().y);
+                getPirate().direction + ";" + getPirate().currentState);
     }
 
     public void checkWin() {
@@ -300,7 +305,7 @@ public class PlayScreen implements Screen {
             game.setScreen(new LoseScreen(game));
             game.sessionInfo.endSession();
         }
-        if (PirateGame.PLAYERS_ALIVE <= 1) {
+        if (PirateGame.NUMBER_OF_PLAYERS <= 1) {
             game.sessionInfo.mState = "win";
         }
     }
@@ -309,10 +314,15 @@ public class PlayScreen implements Screen {
         //handle user input first
         handleInput(dt);
         handleSpawningItems();
-        sendLocation();
+        if(updateLocationTimer >= 2){
+            updateLocationTimer = 0;
+            sendLocation();
+        }
+        updateLocationTimer += dt;
+//        sendVelocity(); IS BEING CALLED RIGHT AFTER WE GET SOMETHING FROM CONTROLLER
+//        checkWin(); IS BEING CALLED ONLY WHEN THE VALUE OF mState IS CHANGED
         checkWin();
-
-
+//        Gdx.app.log("FPS", "FPS:" + 1 / dt);
         //takes 1 step in the physics simulation(60 times per second)
         world.step(1 / 60f, 6, 2);
         for (PowerUp item : powerUps)
@@ -392,8 +402,6 @@ public class PlayScreen implements Screen {
         for (PowerUp powerup : powerUps)
             powerup.draw(PirateGame.batch);
         PirateGame.batch.end();
-
-
         controller.render();
     }
 
@@ -463,5 +471,19 @@ public class PlayScreen implements Screen {
         itemsToSpawn.add(idef);
     }
 
+    public void removePlayer(int playerId){
+        try {
+            for (Pirate p : players) {
+                if (p.playerId == playerId) {
+                    //                p.destroy();
+                    players.removeValue(p, true);
+                    game.NUMBER_OF_PLAYERS--;
+                    return;
+                }
+            }
+        }catch (Exception e){
+            Gdx.app.error("Failed to remove player", e.getMessage());
+        }
+    }
 
 }

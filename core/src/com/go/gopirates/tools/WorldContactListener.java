@@ -150,6 +150,13 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Sword) fixB.getUserData()).hitOnPlayer();
                 break;
+            case PirateGame.SWORD_BIT | PirateGame.OTHER_PLAYER_BIT:
+                Gdx.app.log("Sword", "Hit!");
+                if(fixA.getFilterData().categoryBits == PirateGame.SWORD_BIT)
+                    ((Sword) fixA.getUserData()).hitOnPlayer();
+                else
+                    ((Sword) fixB.getUserData()).hitOnPlayer();
+                break;
             case PirateGame.PLAYER_BIT | PirateGame.BOMB_EXPLOSION_BIT:
                 screen.getPirate().hitInExplosion();
                 break;
