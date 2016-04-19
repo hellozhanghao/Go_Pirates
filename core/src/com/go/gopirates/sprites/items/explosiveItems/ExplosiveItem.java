@@ -19,7 +19,7 @@ import com.go.gopirates.tools.TileMapTranslator;
 public abstract class ExplosiveItem extends Sprite {
 
 
-    protected final float TIME_TO_EXPLODE = 4;
+    protected final float TIME_TO_EXPLODE = 2;
     protected final float TIME_TO_PRESENCE = 1.5f;
     protected final float EXPLOSION_TIME = 0.1f;
     protected final float BOMB_SIZE = 350f;

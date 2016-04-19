@@ -42,16 +42,17 @@ public class TutorialScreen implements Screen {
         viewport = new FitViewport(1920f, 1080f);
         stage = new Stage(viewport, batch);
         screenChanged = false;
-        numberOfTap = -1;
+        numberOfTap = 0;
         tutorials = new ArrayList<Texture>();
-        for (int i = 0; i < 17; i++) {
+        tutorials.add(new Texture("img/tutorials/background_story.png"));
+        for (int i = 0; i < 18; i++) {
             tutorials.add(new Texture("img/tutorials/tutorial_" + i + ".png"));
         }
     }
 
     @Override
     public void show() {
-        background = new Texture("img/tutorials/background_story.png");
+        background = tutorials.get(0);
         background.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         backgroundSprite = new Sprite(background);
 
@@ -67,17 +68,17 @@ public class TutorialScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (numberOfTap > 15) {
+        if (numberOfTap > 18) {
             if (Gdx.input.justTouched()) {
                 game.setScreen(new LoginScreen(game));
             }
         } else {
-            if (Gdx.input.justTouched()) {
-                numberOfTap++;
-            }
             background = tutorials.get(numberOfTap);
             background.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             backgroundSprite = new Sprite(background);
+            if (Gdx.input.justTouched()) {
+                numberOfTap++;
+            }
         }
 
 

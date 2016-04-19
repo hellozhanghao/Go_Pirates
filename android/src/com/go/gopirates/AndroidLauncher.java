@@ -30,8 +30,8 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		RoomUpdateListener, RoomStatusUpdateListener, RealTimeMessageReceivedListener {
 	// For room creation:
 	// Does not include self in player count
-	final static int MIN_PLAYERS = 3;
-	final static int MAX_PLAYERS = 3;
+	final static int MIN_PLAYERS = 1;
+	final static int MAX_PLAYERS = 1;
 	final static long MASK = 0;
 	// Waiting room UI
 	final static int RC_WAITING_ROOM = 10002;
