@@ -157,7 +157,6 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 			});
 
 		} catch (Exception e) {
-			Gdx.app.log("MainActivity", "Quick game failed: " + e.getMessage());
 		}
 	}
 

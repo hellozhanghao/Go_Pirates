@@ -42,7 +42,7 @@ public class TutorialScreen implements Screen {
         viewport = new FitViewport(1920f, 1080f);
         stage = new Stage(viewport, batch);
         screenChanged = false;
-        numberOfTap = 0;
+        numberOfTap = -1;
         tutorials = new ArrayList<Texture>();
         for (int i = 0; i < 17; i++) {
             tutorials.add(new Texture("img/tutorials/tutorial_" + i + ".png"));
@@ -51,7 +51,7 @@ public class TutorialScreen implements Screen {
 
     @Override
     public void show() {
-        background = tutorials.get(0);
+        background = new Texture("img/tutorials/background_story.png");
         background.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         backgroundSprite = new Sprite(background);
 
