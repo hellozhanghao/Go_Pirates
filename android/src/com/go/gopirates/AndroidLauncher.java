@@ -30,7 +30,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		RoomUpdateListener, RoomStatusUpdateListener, RealTimeMessageReceivedListener {
 	// For room creation:
 	// Does not include self in player count
-	final static int MIN_PLAYERS = 2;
+	final static int MIN_PLAYERS = 3;
 	final static int MAX_PLAYERS = 3;
 	final static long MASK = 0;
 	// Waiting room UI
@@ -41,6 +41,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	GoogleApiClient mGoogleApiClient;
 	// Is a game ongoing?
 	boolean mPlaying = false;
+	byte messageBuffer[];
 	private GameHelper gameHelper;
 
 	@Override
@@ -139,27 +140,20 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	}
 
 	public void broadcastMessage(final String message) {
-
 		try {
+			Gdx.app.log("Send", "Send : " + message);
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					byte[] MsgBuf = message.getBytes(Charset.forName("UTF-8"));
-
-					for (Object o : sessionInfo.mParticipants) {
-						Participant p = (Participant) o;
-						if (p.getParticipantId().equals(sessionInfo.mId)) {
-							continue;
+					for (String player : sessionInfo.mParticipantsString) {
+						if (!player.equals(sessionInfo.mId)) {
+							Games.RealTimeMultiplayer.sendUnreliableMessage(
+									gameHelper.getApiClient(),
+									message.getBytes(Charset.forName("UTF-8")),
+									sessionInfo.mRoomId, player);
 						}
-						try {
-							Games.RealTimeMultiplayer.sendUnreliableMessage(gameHelper.getApiClient(), MsgBuf, sessionInfo.mRoomId, p.getParticipantId());
-						} catch (Exception e) {
-
-						}
-						continue;
 					}
 				}
-
 			});
 
 		} catch (Exception e) {
@@ -168,10 +162,9 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	}
 
 	public void onRealTimeMessageReceived(RealTimeMessage rtm) {
-		byte buf[] = rtm.getMessageData();
 		try {
-			final String t = new String(buf);
-			PirateGame.resloveMessage(t);
+			messageBuffer = rtm.getMessageData();
+			PirateGame.resloveMessage(new String(messageBuffer));
 		} catch (Exception e) {
 		}
 	}

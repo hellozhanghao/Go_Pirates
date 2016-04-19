@@ -29,7 +29,7 @@ public class LoginScreen implements Screen {
     private Texture background;
 
     private Image quickGameButton;
-    private Image joinRoomButton;
+    private Image tutorialButton;
 
     private Stage stage;
     private PirateGame game;
@@ -70,10 +70,19 @@ public class LoginScreen implements Screen {
             }
         });
 
-        joinRoomButton=new Image(new Texture("img/JoinRoom.png"));
-        joinRoomButton.setSize(600, 200);
-        joinRoomButton.setPosition(1050, 600);
-        stage.addActor(joinRoomButton);
+        tutorialButton = new Image(new Texture("img/Tutorial.png"));
+        tutorialButton.setSize(600, 200);
+        tutorialButton.setPosition(1050, 600);
+        stage.addActor(tutorialButton);
+
+        tutorialButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.playServices.startQuickGame();
+                game.setScreen(new TutorialScreen(game));
+            }
+        });
+
         Gdx.input.setInputProcessor(stage);
     }
 
