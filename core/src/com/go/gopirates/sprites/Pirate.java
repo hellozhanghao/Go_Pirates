@@ -408,7 +408,7 @@ public class Pirate extends Sprite {
     }
 
     public void hitInExplosion(){
-        decreaseHealth(3);
+        decreaseHealth(4);
     }
 
     public void decreaseHealth(int amount) {

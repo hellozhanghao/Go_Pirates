@@ -25,8 +25,8 @@ public class PirateGame extends Game {
 
     //Tile Map setting
     public static final int TILE_SIZE=256;
-    public static final int MAP_SIZE_Y =19;
-    public static final int MAP_SIZE_X =25;
+    public static final int MAP_SIZE_Y = 11;
+    public static final int MAP_SIZE_X = 17;
     public static final float BUTTON_INTERVAL=1f;
     public static final float POWERUP_TIME=10f;
     public static final int ININTIAL_HEALTH=10;
@@ -87,6 +87,8 @@ public class PirateGame extends Game {
             screen.getPirate(playerId).direction = direction;
             screen.getPirate(playerId).currentState = currentState;
             screen.getPirate(playerId).b2body.setLinearVelocity(Float.valueOf(words[6]), Float.valueOf(words[7]));
+        } else if (action.equals("Treasure")) {
+            screen.game.sessionInfo.mState = "lose";
         } else {
             Gdx.app.log("PirateGame", message);
             int playerId = Integer.parseInt(words[1]);
@@ -102,8 +104,6 @@ public class PirateGame extends Game {
                 screen.getPirate(playerId).primitiveWeaponItems.add(new Sword(screen, Integer.valueOf(playerId)));
             } else if (action.equals("Shield")) {
                 screen.getPirate(playerId).nonInteractiveSprites.add(new ShieldSprite(screen, playerId));
-            } else if (action.equals("Treasure")) {
-                screen.game.sessionInfo.mState = "lose";
             } else if (action.equals("Die")) {
                 screen.getPirate(playerId).destroy();
             }
@@ -117,10 +117,7 @@ public class PirateGame extends Game {
         manager.load("audio/sounds/bomb.ogg", Sound.class);
         manager.load("audio/music/pirate.mp3", Music.class);
         manager.load("audio/sounds/sword.mp3", Sound.class);
-        manager.load("audio/sounds/bump.wav", Sound.class);
-        manager.load("audio/sounds/powerup_spawn.wav", Sound.class);
         manager.load("audio/sounds/powerup.wav", Sound.class);
-        manager.load("audio/sounds/powerdown.wav", Sound.class);
         manager.load("audio/sounds/TNT.mp3", Sound.class);
         manager.load("audio/sounds/coconut.mp3", Sound.class);
         manager.finishLoading();

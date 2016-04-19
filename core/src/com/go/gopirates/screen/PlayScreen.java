@@ -100,7 +100,7 @@ public class PlayScreen implements Screen {
         maploader = new TmxMapLoader();
 
 //        map = maploader.load("tiled_map/testMap2.tmx");
-        map = maploader.load("tiled_map/speedMap2.tmx");
+        map = maploader.load("tiled_map/smallMap.tmx");
 
         renderer = new OrthogonalTiledMapRenderer(map, 1 / PirateGame.PPM);
         //initialize gamecame
@@ -298,6 +298,9 @@ public class PlayScreen implements Screen {
             game.sessionInfo.endSession();
         } else if (game.sessionInfo.mState.equals("lose")) {
             game.setScreen(new LoseScreen(game));
+            game.sessionInfo.endSession();
+        } else if (game.sessionInfo.mState.equals("disconnected")) {
+            game.setScreen(new Disconnected(game));
             game.sessionInfo.endSession();
         }
         if (PirateGame.PLAYERS_ALIVE <= 1) {

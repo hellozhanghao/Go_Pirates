@@ -224,16 +224,8 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	public void onConnectedToRoom(Room room) {}
 	@Override
 	public void onDisconnectedFromRoom(Room room) {
-//		try{
-//			// leave the room
-//			Games.RealTimeMultiplayer.leave(mGoogleApiClient, null, sessionInfo.mRoomId);
-//
-//			// clear the flag that keeps the screen on
-//			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-//
-//			// show error message and return to main screen
-//		}catch (Exception e){}
 
+//			sessionInfo.mState="disconnected";
 	}
 	@Override
 	public void onP2PConnected(String participantId) {}
@@ -259,8 +251,11 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 			Games.RealTimeMultiplayer.leave(gameHelper.getApiClient(), null, sessionInfo.mRoomId);
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		}
-		for (String peer : peers) {
-			PirateGame.screen.getPirate(sessionInfo.mParticipantsMap.get(peer)).destroy();
+		try {
+			for (String peer : peers) {
+				PirateGame.screen.getPirate(sessionInfo.mParticipantsMap.get(peer)).destroy();
+			}
+		} catch (Exception e) {
 		}
 		updateRoom(room);
 	}
@@ -328,6 +323,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		// Get waiting room intent
 		Intent i = Games.RealTimeMultiplayer.getWaitingRoomIntent(gameHelper.getApiClient(), room, Integer.MAX_VALUE);
 		startActivityForResult(i, RC_WAITING_ROOM);
+		sessionInfo.mRoomId = room.getRoomId();
 	}
 
 	@Override

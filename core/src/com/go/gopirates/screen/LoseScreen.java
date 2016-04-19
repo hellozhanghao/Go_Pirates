@@ -28,6 +28,8 @@ public class LoseScreen implements Screen {
     private PirateGame game;
     private boolean screenChanged;
     private int numberOfTouch;
+    private float stateTimer;
+
     public LoseScreen(PirateGame game) {
 
         this.game = game;
@@ -37,6 +39,7 @@ public class LoseScreen implements Screen {
         stage = new Stage(viewport, batch);
         screenChanged = false;
         numberOfTouch = 0;
+        stateTimer = 0;
     }
 
     @Override
@@ -63,6 +66,11 @@ public class LoseScreen implements Screen {
         }
         if (numberOfTouch > 2) {
             game.setScreen(new LoginScreen(game));
+        }
+        stateTimer += delta;
+        if (stateTimer > 3) {
+            game.setScreen(new LoginScreen(game));
+
         }
     }
 

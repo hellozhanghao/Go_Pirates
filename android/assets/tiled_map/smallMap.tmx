@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="17" height="11" tilewidth="256" tileheight="256" nextobjectid="69">
+ <tileset firstgid="1" name="tileset" tilewidth="256" tileheight="256" tilecount="16" columns="4">
+  <image source="tileset.png" trans="ffffff" width="1024" height="1024"/>
+ </tileset>
+ <layer name="Background" width="17" height="11">
+  <data encoding="base64" compression="zlib">
+   eJzjZWBg4IViRiBmIgIzI+lBx6xAzEYEZh81Y9QMMs3gBGIuIjA3mj4Ao0wGMQ==
+  </data>
+ </layer>
+ <layer name="Graphics" width="17" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYKA+4AdiFgI0PQDMPlyYWHfA1HKg0SwkugNG8zCQFx7Ucgel4UEpGKj0AQAEuQIN
+  </data>
+ </layer>
+ <objectgroup name="Rock">
+  <object id="1" x="1024" y="256" width="256" height="256"/>
+  <object id="2" x="1536" y="256" width="256" height="256"/>
+  <object id="3" x="2048" y="256" width="256" height="256"/>
+  <object id="4" x="2560" y="256" width="256" height="256"/>
+  <object id="5" x="3072" y="256" width="256" height="256"/>
+  <object id="6" x="1024" y="768" width="256" height="256"/>
+  <object id="7" x="1536" y="1024" width="256" height="256"/>
+  <object id="8" x="1024" y="1280" width="256" height="256"/>
+  <object id="9" x="1024" y="1792" width="256" height="256"/>
+  <object id="10" x="1024" y="2304" width="256" height="256"/>
+  <object id="11" x="1536" y="2304" width="256" height="256"/>
+  <object id="12" x="2048" y="2304" width="256" height="256"/>
+  <object id="13" x="2560" y="2304" width="256" height="256"/>
+  <object id="14" x="3072" y="2304" width="256" height="256"/>
+  <object id="15" x="3072" y="1792" width="256" height="256"/>
+  <object id="16" x="3072" y="1280" width="256" height="256"/>
+  <object id="17" x="3072" y="768" width="256" height="256"/>
+  <object id="18" x="2560" y="1024" width="256" height="256"/>
+  <object id="19" x="2560" y="1280" width="256" height="256"/>
+  <object id="20" x="2560" y="1536" width="256" height="256"/>
+  <object id="21" x="2048" y="1536" width="256" height="256"/>
+  <object id="22" x="2048" y="1024" width="256" height="256"/>
+  <object id="23" x="1536" y="1280" width="256" height="256"/>
+  <object id="24" x="1536" y="1536" width="256" height="256"/>
+  <object id="63" x="768" y="0" height="2816"/>
+  <object id="64" x="768" y="2816" width="2816"/>
+  <object id="65" x="768" y="0" width="2816"/>
+  <object id="66" x="3584" y="0" height="2816"/>
+ </objectgroup>
+ <objectgroup name="Barrel">
+  <object id="25" x="1280" y="256" width="256" height="256"/>
+  <object id="26" x="1792" y="256" width="256" height="256"/>
+  <object id="27" x="2304" y="256" width="256" height="256"/>
+  <object id="28" x="2816" y="256" width="256" height="256"/>
+  <object id="29" x="1280" y="768" width="256" height="256">
+   <properties>
+    <property name="shoes" value=""/>
+   </properties>
+  </object>
+  <object id="30" x="1536" y="768" width="256" height="256">
+   <properties>
+    <property name="TNT" value=""/>
+   </properties>
+  </object>
+  <object id="31" x="1792" y="768" width="256" height="256">
+   <properties>
+    <property name="shield" value=""/>
+   </properties>
+  </object>
+  <object id="32" x="2048" y="768" width="256" height="256">
+   <properties>
+    <property name="TNT" value=""/>
+   </properties>
+  </object>
+  <object id="33" x="2304" y="768" width="256" height="256"/>
+  <object id="34" x="2560" y="768" width="256" height="256"/>
+  <object id="35" x="2816" y="768" width="256" height="256"/>
+  <object id="36" x="2816" y="1024" width="256" height="256"/>
+  <object id="37" x="2816" y="1280" width="256" height="256"/>
+  <object id="38" x="2816" y="1536" width="256" height="256"/>
+  <object id="39" x="2816" y="1792" width="256" height="256"/>
+  <object id="40" x="2560" y="1792" width="256" height="256"/>
+  <object id="41" x="2304" y="1792" width="256" height="256"/>
+  <object id="42" x="2048" y="1792" width="256" height="256">
+   <properties>
+    <property name="shoes" value=""/>
+   </properties>
+  </object>
+  <object id="43" x="1792" y="1792" width="256" height="256"/>
+  <object id="44" x="1536" y="1792" width="256" height="256">
+   <properties>
+    <property name="shield" value=""/>
+   </properties>
+  </object>
+  <object id="45" x="1280" y="1024" width="256" height="256"/>
+  <object id="46" x="1280" y="1280" width="256" height="256"/>
+  <object id="47" x="1280" y="1536" width="256" height="256"/>
+  <object id="48" x="1280" y="1792" width="256" height="256"/>
+  <object id="49" x="1280" y="2304" width="256" height="256"/>
+  <object id="50" x="1792" y="2304" width="256" height="256"/>
+  <object id="51" x="2304" y="2304" width="256" height="256"/>
+  <object id="52" x="2816" y="2304" width="256" height="256"/>
+  <object id="53" x="1792" y="1280" width="256" height="256"/>
+  <object id="54" x="2304" y="1280" width="256" height="256"/>
+ </objectgroup>
+ <objectgroup name="CoconutTree">
+  <object id="55" x="2304" y="1024" width="256" height="256"/>
+  <object id="56" x="1792" y="1024" width="256" height="256"/>
+  <object id="57" x="1792" y="1536" width="256" height="256"/>
+  <object id="68" x="2304" y="1536" width="256" height="256"/>
+ </objectgroup>
+ <objectgroup name="Treasure">
+  <object id="59" x="2048" y="1280" width="256" height="256"/>
+ </objectgroup>
+</map>

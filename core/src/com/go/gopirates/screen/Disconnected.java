@@ -13,21 +13,24 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.go.gopirates.PirateGame;
 
 /**
- * Created by zhanghao on 16/4/16.
+ * Created by zhanghao on 19/4/16.
  */
-public class WinScreen implements Screen {
+public class Disconnected implements Screen {
     Viewport viewport;
     OrthographicCamera cam;
-    int numberOfTouch;
+
     private SpriteBatch batch;
     private Sprite backgroundSprite;
     private Texture background;
+
+
     private Stage stage;
     private PirateGame game;
     private boolean screenChanged;
+    private int numberOfTouch;
     private float stateTimer;
 
-    public WinScreen(PirateGame game) {
+    public Disconnected(PirateGame game) {
 
         this.game = game;
         batch = new SpriteBatch();
@@ -41,7 +44,7 @@ public class WinScreen implements Screen {
 
     @Override
     public void show() {
-        background = new Texture("img/WinScreen.png");
+        background = new Texture("img/Disconnected.png");
         background.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         backgroundSprite = new Sprite(background);
     }
@@ -65,8 +68,9 @@ public class WinScreen implements Screen {
             game.setScreen(new LoginScreen(game));
         }
         stateTimer += delta;
-        if (stateTimer > 3f) {
+        if (stateTimer > 3) {
             game.setScreen(new LoginScreen(game));
+
         }
     }
 
