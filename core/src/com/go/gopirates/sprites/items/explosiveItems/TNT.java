@@ -15,11 +15,14 @@ import com.go.gopirates.sprites.items.noneInteractiveItems.TNTExplosionDetector;
 public class TNT extends ExplosiveItem {
 
     public Array<TNTExplosionDetector> explosionDetectors;
+    public boolean showedExplosion;
+    private float stateTimer = Float.MIN_VALUE;
 
     public TNT(PlayScreen screen, float x, float y) {
         super(screen,x,y);
         setRegion(screen.getAtlas().findRegion("object_TNT"), 0, 0, 500, 500);
         explosionDetectors=new Array<TNTExplosionDetector>();
+        showedExplosion = false;
     }
 
     @Override
@@ -42,6 +45,14 @@ public class TNT extends ExplosiveItem {
                     posY + 2 * PirateGame.TILE_SIZE / PirateGame.PPM));
         }
         setToDestroy();
+        stateTimer = 0;
+    }
+
+    public void update(float dt) {
+        super.update(dt);
+        stateTimer += stateTimer;
+        if (stateTimer > 5f)
+            showedExplosion = true;
     }
 
 }

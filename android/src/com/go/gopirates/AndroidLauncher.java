@@ -141,11 +141,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 
 	public void broadcastMessage(final String message) {
 		try {
-			Gdx.app.log("Send", "Send : " + message);
-			runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					for (String player : sessionInfo.mParticipantsString) {
+			for (String player : sessionInfo.mParticipantsString) {
 						if (!player.equals(sessionInfo.mId)) {
 							Games.RealTimeMultiplayer.sendUnreliableMessage(
 									gameHelper.getApiClient(),
@@ -153,11 +149,26 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 									sessionInfo.mRoomId, player);
 						}
 					}
-				}
-			});
-
 		} catch (Exception e) {
 		}
+//		try {
+//			Gdx.app.log("Send", "Send : " + message);
+//			runOnUiThread(new Runnable() {
+//				@Override
+//				public void run() {
+//					for (String player : sessionInfo.mParticipantsString) {
+//						if (!player.equals(sessionInfo.mId)) {
+//							Games.RealTimeMultiplayer.sendUnreliableMessage(
+//									gameHelper.getApiClient(),
+//									message.getBytes(Charset.forName("UTF-8")),
+//									sessionInfo.mRoomId, player);
+//						}
+//					}
+//				}
+//			});
+//
+//		} catch (Exception e) {
+//		}
 	}
 
 	public void onRealTimeMessageReceived(RealTimeMessage rtm) {

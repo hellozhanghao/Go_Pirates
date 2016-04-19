@@ -18,7 +18,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.go.gopirates.PirateGame;
 import com.go.gopirates.screen.PlayScreen;
-import com.go.gopirates.sprites.Pirate;
 
 
 /**
@@ -65,7 +64,6 @@ public abstract class InteractiveTileObject {
 
     public abstract void onHit();
 
-    public void onHit(Pirate pirate){}
 
     public TiledMapTileLayer.Cell getCell(){
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);

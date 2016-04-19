@@ -12,11 +12,10 @@ import com.go.gopirates.screen.PlayScreen;
  */
 public abstract class PrimitiveWeaponItem  extends Sprite{
 
+    public boolean destroyed;
     protected PlayScreen screen;
     protected World world;
-
     protected boolean toDestroy;
-    protected boolean destroyed;
     protected Body body;
     protected TiledMap map;
 

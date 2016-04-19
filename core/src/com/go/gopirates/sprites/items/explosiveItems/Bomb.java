@@ -16,7 +16,7 @@ public class Bomb extends ExplosiveItem {
 
     private final float EXPLOSION_THRESHOLD = 0.25f;
     public Array<BombExplosionDetector> explosionDetectors;
-    private boolean detectorCreated,showedExplosion;
+    public boolean detectorCreated, showedExplosion;
 
     public Bomb(PlayScreen screen, float x, float y) {
         super(screen, x, y);

@@ -312,7 +312,15 @@ public class PlayScreen implements Screen {
         for (Pirate player : players) {
             int i = 0;
             while (i < player.explosiveItems.size & player.explosiveItems.size != 0) {
-                if (player.explosiveItems.get(i).isDestroyed()) {
+                boolean safe = false;
+                if (player.explosiveItems.get(i) instanceof Bomb) {
+                    if (((Bomb) player.explosiveItems.get(i)).showedExplosion)
+                        safe = true;
+                } else if (player.explosiveItems.get(i) instanceof TNT) {
+//                    if (((TNT) player.explosiveItems.get(i)).showedExplosion)
+//                        safe=true;
+                }
+                if (safe) {
                     player.explosiveItems.removeIndex(i);
                     Gdx.app.log("RemoveItem", i + "");
                 } else {
@@ -320,6 +328,13 @@ public class PlayScreen implements Screen {
                 }
             }
 
+            //coconut
+            i = 0;
+            while (i < player.primitiveWeaponItems.size & player.primitiveWeaponItems.size != 0) {
+                if (player.primitiveWeaponItems.get(i).isDestroyed())
+                    player.primitiveWeaponItems.removeIndex(i);
+                else i++;
+            }
         }
 //            for (ExplosiveItem item : player.explosiveItems) {
 //                if (item.isDestroyed())
