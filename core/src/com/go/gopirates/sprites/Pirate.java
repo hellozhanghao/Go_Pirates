@@ -424,7 +424,6 @@ public class Pirate extends Sprite {
                 Gdx.app.log("Pirate", "Pirated is dead.");
                 screen.game.playServices.broadcastMessage("Die;" + PirateGame.PLAYER_ID);
                 screen.game.sessionInfo.mState = "lose";
-                screen.checkWin();
             }
         }
     }

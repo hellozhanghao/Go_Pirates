@@ -27,7 +27,6 @@ public class Treasure extends InteractiveTileObject {
     public void onHitbyOthers(){
         getCell().setTile(null);
         setCategoryFilter(PirateGame.NOTHING_BIT);
-        screen.checkWin();
     }
 
 }

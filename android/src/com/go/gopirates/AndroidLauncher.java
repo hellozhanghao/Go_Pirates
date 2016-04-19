@@ -31,7 +31,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	// For room creation:
 	// Does not include self in player count
 	final static int MIN_PLAYERS = 1;
-	final static int MAX_PLAYERS = 1;
+	final static int MAX_PLAYERS = 3;
 	final static long MASK = 0;
 	// Waiting room UI
 	final static int RC_WAITING_ROOM = 10002;
@@ -139,6 +139,14 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		}
 	}
 
+	public void leaveRoom() {
+		try {
+			Games.RealTimeMultiplayer.leave(mGoogleApiClient, null, sessionInfo.mRoomId);
+			Gdx.app.log("PirateGame", "Leave!");
+		} catch (Exception e) {
+		}
+	}
+
 	public void broadcastMessage(final String message) {
 		try {
 			for (String player : sessionInfo.mParticipantsString) {
@@ -229,6 +237,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	public void onDisconnectedFromRoom(Room room) {
 
 //			sessionInfo.mState="disconnected";
+		Gdx.app.log("Room", "Disconnected");
 	}
 	@Override
 	public void onP2PConnected(String participantId) {}
@@ -249,11 +258,14 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	@Override
 	public void onPeerLeft(Room room, List<String> peers) {
 		Log.i("onPeerLeft", peers.toString());
-		// peer left -- see if game should be canceled
-		if (!mPlaying && shouldCancelGame(room)) {
-			Games.RealTimeMultiplayer.leave(gameHelper.getApiClient(), null, sessionInfo.mRoomId);
-			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		for (int i = 0; i < peers.size(); i++) {
+			Log.i("onPeerLeft", "ID: " + sessionInfo.mParticipantsMap.get(peers.get(i)) + "");
 		}
+		// peer left -- see if game should be canceled
+//		if (!mPlaying && shouldCancelGame(room)) {
+//			Games.RealTimeMultiplayer.leave(gameHelper.getApiClient(), null, sessionInfo.mRoomId);
+//			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//		}
 		try {
 			for (String peer : peers) {
 				PirateGame.screen.getPirate(sessionInfo.mParticipantsMap.get(peer)).destroy();
@@ -262,6 +274,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		}
 		updateRoom(room);
 	}
+
 	public void updateRoom(Room room) {
 		sessionInfo.mParticipants = room.getParticipants();
 		sessionInfo.mRoomId = room.getRoomId();
@@ -361,4 +374,5 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		Intent i = Games.RealTimeMultiplayer.getWaitingRoomIntent(gameHelper.getApiClient(), room, Integer.MAX_VALUE);
 		startActivityForResult(i, RC_WAITING_ROOM);
 	}
+
 }

@@ -78,8 +78,11 @@ public class PirateGame extends Game {
 
     public static void resloveMessage(String message) {
         String[] words = message.split(";");
-        String action = words[0];
-        if (action.equals("Location")) {
+
+        if (!words[0].equals("Location"))
+            Gdx.app.log("MessageReceive", message);
+
+        if (words[0].equals("Location")) {
             int playerId = Integer.parseInt(words[1]);
             float x = Float.parseFloat(words[2]);
             float y = Float.parseFloat(words[3]);
@@ -89,26 +92,20 @@ public class PirateGame extends Game {
             screen.getPirate(playerId).direction = direction;
             screen.getPirate(playerId).currentState = currentState;
             screen.getPirate(playerId).b2body.setLinearVelocity(Float.valueOf(words[6]), Float.valueOf(words[7]));
-        } else if (action.equals("Treasure")) {
+        } else if (words[0].equals("Treasure")) {
             screen.game.sessionInfo.mState = "lose";
-        } else {
-            Gdx.app.log("PirateGame", message);
-            int playerId = Integer.parseInt(words[1]);
-            Pirate player = screen.getPirate(playerId);
-            Gdx.app.log("ACTION", action + " " + playerId);
-            if (action.equals("Bomb")) {
-                screen.getPirate().explosiveItems.add(new Bomb(screen, player.b2body.getPosition().x, player.b2body.getPosition().y));
-            } else if (action.equals("TNT")) {
-                screen.getPirate(playerId).explosiveItems.add(new TNT(screen, player.b2body.getPosition().x, player.b2body.getPosition().y));
-            } else if (action.equals("Coconut")) {
-                screen.getPirate(playerId).primitiveWeaponItems.add(new Coconut(screen, player.b2body.getPosition().x, player.b2body.getPosition().y, player.direction));
-            } else if (action.equals("Sword")) {
-                screen.getPirate(playerId).primitiveWeaponItems.add(new Sword(screen, Integer.valueOf(playerId)));
-            } else if (action.equals("Shield")) {
-                screen.getPirate(playerId).nonInteractiveSprites.add(new ShieldSprite(screen, playerId));
-            } else if (action.equals("Die")) {
-                screen.getPirate(playerId).destroy();
-            }
+        } else if (words[0].equals("Bomb")) {
+            screen.getPirate().explosiveItems.add(new Bomb(screen, Float.valueOf(words[2]), Float.valueOf(words[3])));
+        } else if (words[0].equals("TNT")) {
+            screen.getPirate().explosiveItems.add(new TNT(screen, Float.valueOf(words[2]), Float.valueOf(words[3])));
+        } else if (words[0].equals("Coconut")) {
+            screen.getPirate().primitiveWeaponItems.add(new Coconut(screen, Float.valueOf(words[2]), Float.valueOf(words[3]), Pirate.Direction.valueOf(words[4])));
+        } else if (words[0].equals("Sword")) {
+            screen.getPirate().primitiveWeaponItems.add(new Sword(screen, Integer.valueOf(words[1])));
+        } else if (words[0].equals("Shield")) {
+            screen.getPirate().nonInteractiveSprites.add(new ShieldSprite(screen, Integer.valueOf(words[1])));
+        } else if (words[0].equals("Die")) {
+            screen.getPirate(Integer.valueOf(words[1])).destroy();
         }
     }
 

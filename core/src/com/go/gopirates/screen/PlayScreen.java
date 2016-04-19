@@ -207,34 +207,7 @@ public class PlayScreen implements Screen {
         player.b2body.setLinearVelocity(controller.touchpad.getKnobPercentX() * PirateGame.DEFAULT_VELOCITY,
                 controller.touchpad.getKnobPercentY() * PirateGame.DEFAULT_VELOCITY);
 
-        /*
-        //for keyboard:
-        boolean moved = false;
-        if (controller.upPressed){
-            player.b2body.setLinearVelocity(0, PirateGame.DEFAULT_VELOCITY);
-            Gdx.app.log("Controller: ", "UP");
-            moved = true;
-        }
-        if (controller.downPressed) {
-            player.b2body.setLinearVelocity(0, -PirateGame.DEFAULT_VELOCITY);
-            Gdx.app.log("Controller: ", "DOWN");
-            moved = true;
-        }
-        if (controller.leftPressed) {
-            player.b2body.setLinearVelocity(-PirateGame.DEFAULT_VELOCITY, 0);
-            Gdx.app.log("Controller: ", "LEFT");
-            moved = true;
-        }
-        if (controller.rightPressed) {
-            player.b2body.setLinearVelocity(PirateGame.DEFAULT_VELOCITY, 0);
-            Gdx.app.log("Controller: ", "RIGHT");
-            moved = true;
-        }
-        if(moved)
-            sendVelocity();
 
-        Gdx.app.log("Moved", moved + "");
-        */
         //Bomb Pressed:
         if (!controller.previousBombPress & controller.bombPress & bombConfirm) {
             player.explosiveItems.add(new Bomb(this, player.b2body.getPosition().x, player.b2body.getPosition().y));
@@ -293,11 +266,12 @@ public class PlayScreen implements Screen {
     }
 
     public void checkWin() {
-        Gdx.app.log("Number", "Checking Win");
         if (game.sessionInfo.mState.equals("win") ) {
+            game.playServices.leaveRoom();
             game.setScreen(new WinScreen(game));
             game.sessionInfo.endSession();
         } else if (game.sessionInfo.mState.equals("lose")) {
+            game.playServices.leaveRoom();
             game.setScreen(new LoseScreen(game));
             game.sessionInfo.endSession();
         } else if (game.sessionInfo.mState.equals("disconnected")) {
@@ -308,6 +282,11 @@ public class PlayScreen implements Screen {
             Gdx.app.log("Number", "You are the only one left");
             game.sessionInfo.mState = "win";
         }
+    }
+
+    public void loop() {
+        Gdx.app.log("Loop", "Participants: " + game.sessionInfo.mParticipantsString.toString());
+        Gdx.app.log("Loop", "My ID: " + game.sessionInfo.mId);
     }
 
     public void cleanUpObjects() {
@@ -355,7 +334,6 @@ public class PlayScreen implements Screen {
 //                    player.primitiveWeaponItems.removeValue(primitiveWeaponItem,true);
 //            }
     }
-//    }
 
     public void update(float dt) {
         //handle user input first
@@ -363,8 +341,9 @@ public class PlayScreen implements Screen {
         handleSpawningItems();
         sendLocation();
         checkWin();
-//        cleanUpObjects();
-//        Gdx.app.log("FPS", "FPS:" + 1 / dt);
+        loop();
+        cleanUpObjects();
+
         //takes 1 step in the physics simulation(60 times per second
         world.step(1 / 60f, 6, 2);
         for (PowerUp item : powerUps)
@@ -380,7 +359,6 @@ public class PlayScreen implements Screen {
             for (NonInteractiveSprites sprite : player.nonInteractiveSprites)
                 sprite.update(dt);
             for (PrimitiveWeaponItem primitiveWeaponItem : player.primitiveWeaponItems) {
-                Gdx.app.log("Primitive Weapon", primitiveWeaponItem.getClass()+ " " +player.playerId);
                 primitiveWeaponItem.update(dt);
             }
         }

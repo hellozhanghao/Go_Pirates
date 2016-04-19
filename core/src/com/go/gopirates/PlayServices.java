@@ -10,4 +10,6 @@ public interface PlayServices
     boolean isSignedIn();
     void startQuickGame();
     void broadcastMessage(String msg);
+
+    void leaveRoom();
 }

@@ -66,6 +66,7 @@ public class LoadingScreen implements Screen {
             game.playServices.broadcastMessage("Hello World!");
             Gdx.app.log("PirateGame", game.sessionInfo.mId);
             game.sessionInfo.setUpGame();
+            PirateGame.DEFAULT_VELOCITY = 100;
             game.setScreen(new PlayScreen(game));
         }
 

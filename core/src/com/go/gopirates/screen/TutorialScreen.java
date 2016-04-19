@@ -80,16 +80,12 @@ public class TutorialScreen implements Screen {
                 numberOfTap++;
             }
         }
-
-
         batch.begin();
         backgroundSprite.draw(batch);
         batch.end();
 
         stage.act();
         stage.draw();
-
-
     }
 
     @Override
