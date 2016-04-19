@@ -105,6 +105,10 @@ public abstract class ExplosiveItem extends Sprite {
         setToDestroy = true;
     }
 
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
 }
 
 

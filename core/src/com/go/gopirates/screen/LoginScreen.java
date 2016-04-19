@@ -65,6 +65,7 @@ public class LoginScreen implements Screen {
         quickGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+//                game.sessionInfo.endSession();
                 game.playServices.startQuickGame();
                 game.setScreen(new LoadingScreen(game));
             }

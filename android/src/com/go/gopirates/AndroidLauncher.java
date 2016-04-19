@@ -246,6 +246,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		try {
 			for (String peer : peers) {
 				PirateGame.screen.getPirate(sessionInfo.mParticipantsMap.get(peer)).destroy();
+//				PirateGame.screen.removePlayer(sessionInfo.mParticipantsMap.get(peer));
 			}
 		} catch (Exception e) {
 		}

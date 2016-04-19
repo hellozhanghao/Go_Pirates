@@ -77,7 +77,6 @@ public class PirateGame extends Game {
     }
 
     public static void resloveMessage(String message) {
-
         String[] words = message.split(";");
         String action = words[0];
         if (action.equals("Location")) {

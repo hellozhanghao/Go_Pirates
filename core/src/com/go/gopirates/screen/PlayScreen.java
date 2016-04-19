@@ -308,15 +308,47 @@ public class PlayScreen implements Screen {
         }
     }
 
+    public void cleanUpObjects() {
+        for (Pirate player : players) {
+            int i = 0;
+            while (i < player.explosiveItems.size & player.explosiveItems.size != 0) {
+                if (player.explosiveItems.get(i).isDestroyed()) {
+                    player.explosiveItems.removeIndex(i);
+                    Gdx.app.log("RemoveItem", i + "");
+                } else {
+                    i++;
+                }
+            }
+
+        }
+//            for (ExplosiveItem item : player.explosiveItems) {
+//                if (item.isDestroyed())
+//                    player.explosiveItems.re
+
+//                if (item instanceof Bomb)
+//                    for (BombExplosionDetector bombExplosionDetector :((Bomb) item).explosionDetectors)
+//                        bombExplosionDetector.update(dt);
+//            }
+//            for (NonInteractiveSprites sprite : player.nonInteractiveSprites)
+//                sprite.update(dt);
+//            for (PrimitiveWeaponItem primitiveWeaponItem : player.primitiveWeaponItems) {
+//                Gdx.app.log("Primitive Weapon", primitiveWeaponItem.getClass()+ " " +player.playerId);
+//                primitiveWeaponItem.update(dt);
+//                if(primitiveWeaponItem.isDestroyed())
+//                    player.primitiveWeaponItems.removeValue(primitiveWeaponItem,true);
+//            }
+    }
+//    }
+
     public void update(float dt) {
         //handle user input first
         handleInput(dt);
         handleSpawningItems();
         sendLocation();
         checkWin();
-
+        cleanUpObjects();
 //        Gdx.app.log("FPS", "FPS:" + 1 / dt);
-        //takes 1 step in the physics simulation(60 times per second)
+        //takes 1 step in the physics simulation(60 times per second
         world.step(1 / 60f, 6, 2);
         for (PowerUp item : powerUps)
             item.update(dt);
