@@ -432,6 +432,7 @@ public class Pirate extends Sprite {
     public void destroy() {
         toDestroy = true;
         PirateGame.PLAYERS_ALIVE--;
+        Gdx.app.log("PirateGame", "Some player destroyed");
     }
 
     public enum Direction {UP, DOWN, LEFT, RIGHT}

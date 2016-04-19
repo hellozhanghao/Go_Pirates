@@ -257,13 +257,11 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		try {
 			for (String peer : peers) {
 				PirateGame.screen.getPirate(sessionInfo.mParticipantsMap.get(peer)).destroy();
-//				PirateGame.screen.removePlayer(sessionInfo.mParticipantsMap.get(peer));
 			}
 		} catch (Exception e) {
 		}
 		updateRoom(room);
 	}
-
 	public void updateRoom(Room room) {
 		sessionInfo.mParticipants = room.getParticipants();
 		sessionInfo.mRoomId = room.getRoomId();
@@ -355,7 +353,6 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		if (statusCode != GamesStatusCodes.STATUS_OK) {
 			// Sleep the screen
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
 			// Show error message or do nothing, return to main screen.
 			return;
 		}

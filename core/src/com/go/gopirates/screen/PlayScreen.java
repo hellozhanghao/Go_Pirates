@@ -293,6 +293,7 @@ public class PlayScreen implements Screen {
     }
 
     public void checkWin() {
+        Gdx.app.log("Number", "Checking Win");
         if (game.sessionInfo.mState.equals("win") ) {
             game.setScreen(new WinScreen(game));
             game.sessionInfo.endSession();
@@ -304,6 +305,7 @@ public class PlayScreen implements Screen {
             game.sessionInfo.endSession();
         }
         if (PirateGame.PLAYERS_ALIVE <= 1) {
+            Gdx.app.log("Number", "You are the only one left");
             game.sessionInfo.mState = "win";
         }
     }
@@ -361,7 +363,7 @@ public class PlayScreen implements Screen {
         handleSpawningItems();
         sendLocation();
         checkWin();
-        cleanUpObjects();
+//        cleanUpObjects();
 //        Gdx.app.log("FPS", "FPS:" + 1 / dt);
         //takes 1 step in the physics simulation(60 times per second
         world.step(1 / 60f, 6, 2);
@@ -380,13 +382,15 @@ public class PlayScreen implements Screen {
             for (PrimitiveWeaponItem primitiveWeaponItem : player.primitiveWeaponItems) {
                 Gdx.app.log("Primitive Weapon", primitiveWeaponItem.getClass()+ " " +player.playerId);
                 primitiveWeaponItem.update(dt);
-                if(primitiveWeaponItem.isDestroyed())
-                    player.primitiveWeaponItems.removeValue(primitiveWeaponItem,true);
             }
         }
-        Pirate player = getPirate();
-
         //update gamecam
+        updateCam();
+        updatePowerUp();
+    }
+
+    public void updateCam() {
+        Pirate player = getPirate();
         gamecam.setToOrtho(false, PirateGame.V_WIDTH / PirateGame.PPM, PirateGame.V_HEIGHT / PirateGame.PPM);
         if (player.b2body.getPosition().x < (PirateGame.V_WIDTH / PirateGame.PPM) / 2)
             gamecam.position.x = gamePort.getWorldWidth() / 2;
@@ -404,7 +408,6 @@ public class PlayScreen implements Screen {
         gamecam.update();
         //tell our renderer to draw only what our camera can see in our game world.
         renderer.setView(gamecam);
-        updatePowerUp();
     }
 
     @Override
@@ -420,12 +423,11 @@ public class PlayScreen implements Screen {
         //Clear the game screen with Black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         //render our game map
         renderer.render();
 
         //renderer our Box2DDebugLines
-        b2dr.render(world, gamecam.combined);
+//        b2dr.render(world, gamecam.combined);
 
         PirateGame.batch.begin();
         PirateGame.batch.setProjectionMatrix(gamecam.combined);
@@ -512,19 +514,5 @@ public class PlayScreen implements Screen {
         itemsToSpawn.add(idef);
     }
 
-    public void removePlayer(int playerId){
-        try {
-            for (Pirate p : players) {
-                if (p.playerId == playerId) {
-                    //                p.destroy();
-                    players.removeValue(p, true);
-                    PirateGame.NUMBER_OF_PLAYERS--;
-                    return;
-                }
-            }
-        }catch (Exception e){
-            Gdx.app.error("Failed to remove player", e.getMessage());
-        }
-    }
 
 }
