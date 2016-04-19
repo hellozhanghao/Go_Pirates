@@ -35,11 +35,15 @@ public class SessionInfo {
         PirateGame.PLAYERS_ALIVE = mParticipants.size();
         Gdx.app.log("PirateGame",String.valueOf(mParticipants.size()));
         Collections.sort(mParticipantsString);
+        mParticipantsMap = new HashMap<String, Integer>();
         for (int i = 0; i < mParticipantsString.size(); i++) {
             mParticipantsMap.put(mParticipantsString.get(i), i);
             Gdx.app.log("mParticipantsMap", mParticipantsString.get(i) + " " + i);
         }
         PirateGame.PLAYER_ID = mParticipantsMap.get(mId);
+        Gdx.app.log("Session", mParticipantsMap.toString());
+        Gdx.app.log("Session", "My ID: " + PirateGame.PLAYER_ID);
+        Gdx.app.log("Session", mParticipantsString.toString());
     }
 
     public void endSession(){

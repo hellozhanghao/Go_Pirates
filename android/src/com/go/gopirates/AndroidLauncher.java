@@ -30,7 +30,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		RoomUpdateListener, RoomStatusUpdateListener, RealTimeMessageReceivedListener {
 	// For room creation:
 	// Does not include self in player count
-	final static int MIN_PLAYERS = 1;
+	final static int MIN_PLAYERS = 2;
 	final static int MAX_PLAYERS = 3;
 	final static long MASK = 0;
 	// Waiting room UI
@@ -259,12 +259,8 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 			Games.RealTimeMultiplayer.leave(gameHelper.getApiClient(), null, sessionInfo.mRoomId);
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		}
-
-		for (String player : sessionInfo.mParticipantsString) {
-			if (!peers.contains(player)) {
-				PirateGame.screen.getPirate(sessionInfo.mParticipantsMap.get(player)).destroy();
-				Log.i("Left", player + "left");
-			}
+		for (String peer : peers) {
+			PirateGame.screen.getPirate(sessionInfo.mParticipantsMap.get(peer)).destroy();
 		}
 		updateRoom(room);
 	}

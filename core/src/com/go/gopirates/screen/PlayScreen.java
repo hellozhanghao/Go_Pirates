@@ -2,7 +2,6 @@ package com.go.gopirates.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -72,7 +71,6 @@ public class PlayScreen implements Screen {
 
     //sprites
     private Array<Pirate> players;
-    private Music music;
 
     //powerups
     private Array<PowerUp> powerUps;
@@ -100,7 +98,9 @@ public class PlayScreen implements Screen {
 
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
-        map = maploader.load("tiled_map/testMap2.tmx");
+
+//        map = maploader.load("tiled_map/testMap2.tmx");
+        map = maploader.load("tiled_map/speedMap2.tmx");
 
         renderer = new OrthogonalTiledMapRenderer(map, 1 / PirateGame.PPM);
         //initialize gamecame
@@ -365,6 +365,7 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         //separate our update logic from render
         update(delta);
+        Gdx.app.log("Number", PirateGame.PLAYERS_ALIVE + "");
 
         //Clear the game screen with Black
         Gdx.gl.glClearColor(0, 0, 0, 1);
