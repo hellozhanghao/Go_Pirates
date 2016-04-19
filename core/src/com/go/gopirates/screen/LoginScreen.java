@@ -78,7 +78,6 @@ public class LoginScreen implements Screen {
         tutorialButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.playServices.startQuickGame();
                 game.setScreen(new TutorialScreen(game));
             }
         });

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.go.gopirates.PirateGame;
@@ -31,6 +32,7 @@ public class TutorialScreen implements Screen {
     private boolean screenChanged;
     private int numberOfTap;
     private ArrayList<Texture> tutorials;
+    private Image next;
 
     public TutorialScreen(PirateGame game) {
 
@@ -52,6 +54,12 @@ public class TutorialScreen implements Screen {
         background = tutorials.get(0);
         background.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         backgroundSprite = new Sprite(background);
+
+
+        next = new Image(new Texture("img/tutorials/next.png"));
+        next.setSize(450, 150);
+        next.setPosition(1450, 900);
+        stage.addActor(next);
     }
 
     @Override
@@ -59,13 +67,20 @@ public class TutorialScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (numberOfTap > 16) {
-            game.setScreen(new LoginScreen(game));
+        if (numberOfTap > 15) {
+            if (Gdx.input.justTouched()) {
+                game.setScreen(new LoginScreen(game));
+            }
+        } else {
+            if (Gdx.input.justTouched()) {
+                numberOfTap++;
+            }
+            background = tutorials.get(numberOfTap);
+            background.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            backgroundSprite = new Sprite(background);
         }
-        background = tutorials.get(numberOfTap);
-        if (Gdx.input.justTouched()) {
-            numberOfTap++;
-        }
+
+
         batch.begin();
         backgroundSprite.draw(batch);
         batch.end();

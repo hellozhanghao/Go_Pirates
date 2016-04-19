@@ -73,6 +73,9 @@ public class PirateGame extends Game {
         this.playServices = playServices;
     }
 
+    public PirateGame() {
+    }
+
     public static void resloveMessage(String message) {
 
         String[] words = message.split(";");
